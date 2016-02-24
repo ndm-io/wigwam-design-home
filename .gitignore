@@ -33,9 +33,10 @@ bower_modules
 
 server/config/secrets.js
 server/product_images
-seerver/public
+server/public
 server/uploads
 
 .idea
+.DS_Store
 
 
