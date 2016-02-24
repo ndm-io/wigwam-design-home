@@ -1,13 +1,14 @@
 {
-  "name": "AngularJS-Gulp-Browserify-Starter",
-  "description": "Base AngularJS application with gulp and browserify",
-  "main": "app.js",
+  "name": "wigwam-design-home",
+  "description": "Wigwam Template",
+  "main": "studio/app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/goodbomb/angular-gulp-browserify-starter"
+    "url": "https://github.com/ndm-io/wigwam-design-home"
   },
-  "authors": "Ben Scott <bscott@tekalstudios.com>",
-  "private": false,
+  "authors": [
+    "Rob Atherton <robather@googlemail.com>"
+  ],
   "devDependencies": {
     "angular-mocks": "~1.4.2"
   },
@@ -27,5 +28,17 @@
     "jquery": "~2.1.4",
     "lodash": "~3.10.1",
     "restangular": "~1.5.1"
-  }
+  },
+  "homepage": "https://github.com/ndm-io/wigwam-design-home",
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }

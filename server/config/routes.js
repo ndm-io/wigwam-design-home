@@ -2,6 +2,7 @@
 //var secrets = require('./secrets');
 //var dataController = require('../controllers/data');
 var homeController = require('../controllers/home');
+var studioController = require('../modules/studio/studioController');
 //var apiController = require('../controllers/api');
 //var tweetController = require('../controllers/tweet');
 //var userController = require('../controllers/user');
@@ -20,6 +21,11 @@ exports.initRoutes = function (app, passport, passportConf, io) {
      */
     app.get('/', homeController.index);
     app.get('/about', homeController.about);
+
+    /**
+     * Studio Route
+     */
+    app.get('/studio', studioController.index);
 };
 
 //exports.init = function (app, passport, passportConf, io) {

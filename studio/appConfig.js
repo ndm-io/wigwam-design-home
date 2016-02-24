@@ -11,6 +11,8 @@ function appConfig($urlRouterProvider, $locationProvider) {
     // For any unmatched url, redirect to /
     $urlRouterProvider.otherwise('/');
 
+    console.log('appConfig');
+
 }
 
 appConfig.$inject = ['$urlRouterProvider', '$locationProvider'];
