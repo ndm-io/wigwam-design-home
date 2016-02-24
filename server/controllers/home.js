@@ -1,11 +1,16 @@
+var CONST = require('../config/constants');
 
-var path = require('path');
+var root = {root: CONST.HTMLDIR()};
 
 exports.index = function (req, res) {
 
-  res.sendFile('index.html', { root: path.join(__dirname, '../public/html') });
+    res.sendFile('index.html', root);
 
 };
 
+exports.about = function (req, res) {
 
+    res.sendFile('about.html', root);
+
+};
 	

@@ -3,9 +3,9 @@ Project: Vortex
 Version: 1.0.3
 ------------------------------------------------------------------ */
 
-@import url("../css_1");
-@import url("../css_2");
-@import url("../css_3");
+@import url("./css_1");
+@import url("./css_2");
+@import url("./css_3");
 
 /* ------------------------------------------------------------------
 General Styles

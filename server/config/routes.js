@@ -1,7 +1,7 @@
 //var User = require('../models/User');
 //var secrets = require('./secrets');
 //var dataController = require('../controllers/data');
-//var homeController = require('../controllers/home');
+var homeController = require('../controllers/home');
 //var apiController = require('../controllers/api');
 //var tweetController = require('../controllers/tweet');
 //var userController = require('../controllers/user');
@@ -13,13 +13,13 @@
 //var upload = multer({dest: 'uploads/'});
 
 
-exports.init = function (app, passport, passportConf, io) {
+exports.initRoutes = function (app, passport, passportConf, io) {
 
     /**
      * Main route for SPA
      */
     app.get('/', homeController.index);
-
+    app.get('/about', homeController.about);
 };
 
 //exports.init = function (app, passport, passportConf, io) {
