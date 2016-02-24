@@ -60,7 +60,6 @@ var vortexScriptsOrder = [
     "custom.js"
 ];
 
-//var orderOpts = {base: '/home/js'};
 
 gulp.task('scripts', function () {
     gulp.src(paths.scripts.src)
