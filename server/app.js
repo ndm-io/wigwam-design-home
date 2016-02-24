@@ -109,12 +109,9 @@ app.use(express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
 
 routes.initRoutes(app, passport, passportConf);
 
-//TODO Make these pages
 
 // Handle 404
 app.use(function (req, res) {
-    //res.status(400);
-    //res.render('error.jade', {title: '404: Page Not Found', content:'Sorry, the page you are looking for cannot be found. We are looking into it!'});
     res.status(404);
     res.sendFile('error.html', root);
 });
@@ -122,8 +119,6 @@ app.use(function (req, res) {
 // Handle 500
 app.use(function (error, req, res, next) {
     console.log(error);
-    //res.status(500);
-    //res.render('error.jade', {title: '500: Internal Error', content:'Sorry, there has been some kind of an error!'});
     res.status(500);
     res.sendFile('error.html', root);
 });
