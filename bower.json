@@ -27,7 +27,8 @@
     "font-awesome": "~4.4.0",
     "jquery": "~2.1.4",
     "lodash": "~3.10.1",
-    "restangular": "~1.5.1"
+    "restangular": "~1.5.1",
+    "angular-ui-bootstrap": "^1.1.2"
   },
   "homepage": "https://github.com/ndm-io/wigwam-design-home",
   "moduleType": [

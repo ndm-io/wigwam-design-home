@@ -8,6 +8,7 @@ var ProjectModels = require('../models/Project');
 var Project = ProjectModels.model('Project');
 
 var secrets = require('./secrets');
+var CONSTS = require('../config/constants');
 
 String.prototype.toObjectId = function() {
   return new ObjectId(this.toString());
@@ -44,8 +45,6 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, function(email, passw
 
 exports.isAuthenticated = function(req, res, next) {
   if (req.isAuthenticated()) return next();
-  //res.redirect('/');
-  return;
 };
 
 
@@ -53,7 +52,7 @@ exports.isAuthenticated = function(req, res, next) {
 
 exports.isPrivileged = function(req, res, next) {
 	if (!req.user) { res.sendStatus(401); return; }
-	if (req.user.hasPrivilegeFor(req.path) || req.user.isPrivileged) {
+	if (req.user.hasRole(req.role)) {
 		return next();
 	} else {
 		res.sendStatus(401);
@@ -84,10 +83,10 @@ exports.attachProject = function(req, res, next) {
 	}
 	
 	Project.findOne(query)
-		.populate('clients', '-password -isPrivileged')
+		.populate('clients', '-password')
 		.deepPopulate(Project.deepPopProps())
 		.exec(function (err, project) {
-			if (req.user.isPrivileged) {
+			if (req.user.hasRole(CONSTS.ROLES.editor)) {
 				req.project = project;
 				return next();
 			} else {
@@ -109,16 +108,3 @@ exports.attachProject = function(req, res, next) {
 	);
 	
 };
-
-
-/*
-exports.isAuthorized = function(req, res, next) {
-  var provider = req.path.split('/').slice(-1)[0];
-
-  if (_.find(req.user.tokens, { kind: provider })) {
-    next();
-  } else {
-    res.redirect('/auth/' + provider);
-  }
-};
-*/

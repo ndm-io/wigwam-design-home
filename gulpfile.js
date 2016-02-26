@@ -64,8 +64,10 @@ var defaults = ['scripts',
     'assets',
     'img',
     'studioCss',
+    'studioVendorCss',
+    'studioCommonImg',
+    'studioVendorJs',
     'studioBrowserify',
-    'studioFonts',
     'watchStudio',
     'watchHome'
 ];

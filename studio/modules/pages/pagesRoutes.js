@@ -22,21 +22,8 @@ function pageRoutes($stateProvider) {
         }
     };
 
-    var wigwam = {
-        name: 'pages.wigwam',
-        url: '^/wigwam',
-        template: '<div wigwam-view></div>',
-        data: {
-            moduleClasses: 'page',
-            pageClasses: 'wigwam',
-            pageTitle: 'Wigwam',
-            pageDescription: 'Wigwam App Dashboard'
-        }
-    };
-
     $stateProvider.state(pages);
     $stateProvider.state(about);
-    $stateProvider.state(wigwam);
 
 }
 

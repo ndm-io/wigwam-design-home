@@ -3,6 +3,7 @@
 //var dataController = require('../controllers/data');
 var homeController = require('../controllers/home');
 var studioController = require('../modules/studio/studioController');
+var loginController = require('../modules/studio/loginController');
 //var apiController = require('../controllers/api');
 //var tweetController = require('../controllers/tweet');
 //var userController = require('../controllers/user');
@@ -13,19 +14,60 @@ var studioController = require('../modules/studio/studioController');
 //var multer = require('multer');
 //var upload = multer({dest: 'uploads/'});
 
+var c = require('./constants');
+var roles = c.ROLES;
+var apiPrefix = c.API_PREFIX;
 
+var urls = {
+    home: {
+        url: '/',
+        role: roles.anon,
+        fn: homeController.index
+    },
+    about: {
+        url: '/about',
+        role: roles.anon,
+        fn: homeController.about
+    },
+    studio: {
+        url: '/studio',
+        role: roles.anon,
+        fn: studioController.index
+    },
+    login: {
+        url: apiPrefix + 'login',
+        role: roles.anon,
+        fn: loginController.login
+    },
+    logout: {
+        url: apiPrefix + 'logout',
+        role: roles.anon,
+        fn: loginController.logout
+    }
+};
+
+exports.urls = urls;
 exports.initRoutes = function (app, passport, passportConf, io) {
 
     /**
-     * Main route for SPA
+     * Main routes for SPA
      */
-    app.get('/', homeController.index);
-    app.get('/about', homeController.about);
+
+
+    app.get(urls.home.url, urls.home.fn);
+    app.get(urls.about.url, urls.about.fn);
 
     /**
      * Studio Route
      */
-    app.get('/studio', studioController.index);
+    app.get(urls.studio.url, urls.studio.fn);
+
+    /**
+     * API Routes
+     */
+
+    app.post(urls.login.url, passport.authenticate('local'), urls.login.fn);
+    app.post(urls.logout.url, urls.logout.fn);
 };
 
 //exports.init = function (app, passport, passportConf, io) {

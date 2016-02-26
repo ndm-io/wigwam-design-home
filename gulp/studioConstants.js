@@ -26,9 +26,14 @@ var paths = {
         src: './studio/app.js',
         watch: [
             './studio/*.js',
-            './studio/**/*.js'
+            './studio/**/*.js',
+            './studio/**/*.html'
         ],
         dest: 'server/public/js'
+    },
+    templateJS :{
+        src:'studio/common/templateJs/**/*.js',
+        dest:'server/public/js'
     },
     vendorJS: {
         src: [

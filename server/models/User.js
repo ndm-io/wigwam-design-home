@@ -1,11 +1,8 @@
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt-nodejs');
-var crypto = require('crypto');
-var GeoJSON = require('mongoose-geojson-schema');
-
-Array.prototype.contains = function (element) {
-    return this.indexOf(element) > -1;
-};
+var mongoose = require('mongoose'),
+    bcrypt = require('bcrypt-nodejs'),
+    crypto = require('crypto'),
+    GeoJSON = require('mongoose-geojson-schema');
+   // _ = require('lodash');
 
 var userSchema = new mongoose.Schema({
     email: {type: String, unique: true, lowercase: true},
@@ -37,6 +34,7 @@ var userSchema = new mongoose.Schema({
     },
     authorizedRoutes: [String],
     isPrivileged: {type: Boolean, default: false},
+    role: {type: Number, default: 0},
 
     resetPasswordToken: String,
     resetPasswordExpires: Date
@@ -78,8 +76,8 @@ userSchema.methods.comparePassword = function (candidatePassword, cb) {
 /**
  * Check user has privilege for route
  */
-userSchema.methods.hasPrivilegeFor = function (routeUrl) {
-    return this.authorizedRoutes.contains(routeUrl);
+userSchema.methods.hasRole = function (role) {
+    return this.role >= role;
 };
 
 userSchema.methods.model = function () {
@@ -90,10 +88,9 @@ userSchema.methods.model = function () {
         address: this.address,
         profile: this.profile,
         settings: this.settings,
-        authorizedRoutes: this.authorizedRoutes,
-        isPrivileged: this.isPrivileged
+        role: this.role
     };
-}
+};
 
 /**
  * Get URL to a user's gravatar.

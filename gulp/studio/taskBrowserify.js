@@ -2,7 +2,7 @@ var browserify = require('browserify'),
     gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     source = require('vinyl-source-stream'),
-    buffer = require('vinyl-buffer');;
+    buffer = require('vinyl-buffer');
 
 var paths = require('../studioConstants').paths;
 

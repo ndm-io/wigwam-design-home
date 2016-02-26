@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "angular": "^1.5.0",
+    "angular-ui-bootstrap": "^1.1.2",
     "bower": "^1.7.7",
     "browserify": "^11.2.0",
     "browserify-istanbul": "^0.2.1",
@@ -86,6 +87,7 @@
   },
   "dependencies": {
     "angular": "^1.5.0",
+    "angular-ui-bootstrap": "^1.1.2",
     "async": "^0.9.0",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.9.2",
