@@ -9,14 +9,33 @@ function homeRoutes($stateProvider, USER_ROLES) {
         data: {
             moduleClasses: 'page', // assign a module class to the <body> tag
             pageClasses: 'home', // assign a page-specific class to the <body> tag
-            pageTitle: 'Home', // set the title in the <head> section of the index.html file
-            pageDescription: 'Meta Description goes here', // meta description in <head>
+            pageTitle: ':: Wigwam Design ::', // set the title in the <head> section of the index.html file
+            pageDescription: 'Wigwam Design Studio Online Interior', // meta description in <head>
             authorizationLevel: USER_ROLES.guest
         }
     };
 
-    $stateProvider.state(home);
+    var profile = {
+        name:'home.profile',
+        parent:home,
+        template:'<div profile-view></div>'
+    };
 
+    var messages = {
+        name:'home.messages',
+        parent:home,
+        template:'<div messages-view></div>'
+    };
+
+    var calendar = {
+        name:'home.calendar',
+        parent:home,
+        template:'<div calendar-view></div>'
+    };
+
+    $stateProvider.state(home);
+    $stateProvider.state(messages);
+    $stateProvider.state(calendar);
 }
 
 homeRoutes.$inject = ['$stateProvider', 'USER_ROLES'];

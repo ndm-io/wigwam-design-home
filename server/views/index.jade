@@ -1,17 +1,19 @@
 doctype html
 html(ng-app='app')
 head
+    base(href="/")
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, maximum-scale = 1.0')
     meta(name='fragment', content='!')
     meta(name='csrf-token', content=_csrf)
-    title :: Wigwam Design :: Studio ::
-    link(href='/css/vendor.css', rel='stylesheet')
-    link(href='/css/admin.style.min.css', rel='stylesheet')
+    meta(name="description" content="{{pageDescription}}")
+    title(ng-bind="pageTitle")
+    link(href='css/vendor.css', rel='stylesheet')
+    link(href='css/admin.style.min.css', rel='stylesheet')
     body#skin-blur-lights(ng-class='bodyClasses', ng-controller='MainCtrl')
         .page
             section.main
                 #ui-view(ui-view, autoscroll='false')
 
-        script(src='/js/vendor.js')
-        script(src='/js/bundle.js')
+        script(src='js/vendor.js')
+        script(src='js/bundle.js')

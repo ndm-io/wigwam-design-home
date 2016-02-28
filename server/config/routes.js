@@ -34,6 +34,17 @@ var urls = {
         role: roles.anon,
         fn: studioController.index
     },
+    profile: {
+        url: '/profile',
+        role: roles.anon,
+        fn: function (req, res) {
+            if (req.isAuthenticated()) {
+                res.send(req.user.model());
+            } else {
+                res.sendStatus(401);
+            }
+        }
+    },
     login: {
         url: apiPrefix + 'login',
         role: roles.anon,
@@ -53,7 +64,6 @@ exports.initRoutes = function (app, passport, passportConf, io) {
      * Main routes for SPA
      */
 
-
     app.get(urls.home.url, urls.home.fn);
     app.get(urls.about.url, urls.about.fn);
 
@@ -66,6 +76,7 @@ exports.initRoutes = function (app, passport, passportConf, io) {
      * API Routes
      */
 
+    app.get(urls.profile.url, urls.profile.fn);
     app.post(urls.login.url, passport.authenticate('local'), urls.login.fn);
     app.post(urls.logout.url, urls.logout.fn);
 };

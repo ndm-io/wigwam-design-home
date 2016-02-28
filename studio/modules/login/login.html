@@ -3,27 +3,37 @@
         <h1>WIGWAM DESIGN STUDIO</h1>
     </header>
 
+    <!-- Alert -->
+    <div ng-show="showAlert()" class="alert alert-danger">
+        Oh snap! Change a few things up and try submitting again.
+    </div>
+
     <div class="clearfix"></div>
 
     <!-- Login -->
-    <form class="box tile animated {{active('login')}}" id="box-login"
-          ng-submit="submit(credentials)" novalidate>
+    <iframe src="" name="sink"
+            style="display:none"></iframe>
+        <form class="box tile animated {{active('login')}}" id="box-login"
+              action="" target="sink" method="post"
+              ng-submit="submit(credentials)" novalidate form-autofill-fix>
 
-        <h2 class="m-t-0 m-b-15">Login</h2>
-        <input type="text" class="login-control m-b-10" placeholder="Email Address"
-               ng-model="credentials.email">
-        <input type="password" class="login-control" placeholder="Password"
-               ng-model="credentials.password">
+            <h2 class="m-t-0 m-b-15">Login</h2>
+            <input type="text" class="login-control m-b-10" placeholder="Email Address"
+                   ng-model="credentials.email">
+            <input type="password" class="login-control" placeholder="Password"
+                   ng-model="credentials.password">
 
-        <div class="space-sep20">&nbsp;</div>
+            <div class="space-sep20">&nbsp;</div>
 
-        <button class="btn btn-sm m-r-5" type="submit">Sign In</button>
+            <button class="btn btn-sm m-r-5" type="submit">Sign In</button>
 
-        <small>
-            <a class="box-switcher" data-switch="box-register" ng-click="setBox('register')">Don't have an Account?</a> or
-            <a class="box-switcher" data-switch="box-reset" ng-click="setBox('forgot')">Forgot Password?</a>
-        </small>
-    </form>
+            <small>
+                <a class="box-switcher" data-switch="box-register" ng-click="setBox('register')">Don't have an Account?</a>
+                or
+                <a class="box-switcher" data-switch="box-reset" ng-click="setBox('forgot')">Forgot Password?</a>
+            </small>
+        </form>
+    </iframe>
 
     <!-- Register -->
     <form class="box animated tile {{active('register')}}" id="box-register">
@@ -36,7 +46,8 @@
 
         <button class="btn btn-sm m-r-5">Register</button>
 
-        <small><a class="box-switcher" data-switch="box-login" ng-click="setBox('login')">Already have an Account?</a></small>
+        <small><a class="box-switcher" data-switch="box-login" ng-click="setBox('login')">Already have an Account?</a>
+        </small>
     </form>
 
     <!-- Forgot Password -->
@@ -48,7 +59,9 @@
 
         <button class="btn btn-sm m-r-5">Reset Password</button>
 
-        <small><a class="box-switcher" data-switch="box-login" ng-click="setBox('login')">Already have an Account?</a></small>
+        <small><a class="box-switcher" data-switch="box-login" ng-click="setBox('login')">Already have an Account?</a>
+        </small>
     </form>
+
 
 </section>

@@ -5,6 +5,16 @@
 var AuthService = function (CommsFactory, SessionService, ROUTES, USER_ROLES) {
     var authService = {};
 
+    authService.profile = function () {
+        return CommsFactory.http
+            .get(ROUTES.profile)
+            .then(function (res) {
+                console.log('created', res.data);
+                SessionService.create(res.data);
+                return res.data;
+            });
+    };
+
     authService.login = function (credentials) {
         return CommsFactory.http
             .post(ROUTES.login, credentials)

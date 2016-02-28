@@ -4,7 +4,8 @@ var CONSTANTS = (function () {
     var API = '/api/v1/';
     return {
         login: API + 'login',
-        logout: API + 'logout'
+        logout: API + 'logout',
+        profile: 'profile'
     };
 }());
 

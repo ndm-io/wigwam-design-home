@@ -1,38 +1,22 @@
 'use strict';
-function MainCtrl($scope, USER_ROLES, AuthService, ModalService, AUTH_EVENTS, DIALOG_NAMES) {
+function MainCtrl($scope, USER_ROLES, AuthService, SessionService, $state) {
     var vm = $scope;
 
 
     vm.userRoles = USER_ROLES;
     vm.isAuthorized = AuthService.isAuthorized;
 
-    var _user = null;
-
-    vm.currentUser = function (user) {
-        if (user) {
-            _user = user;
-        }
-        console.log(_user);
-        return _user;
+    vm.currentUser = function () {
+        return SessionService.user;
     };
 
     vm.logout = function () {
-        AuthService.logout();
+        $state.go('logout');
     };
 
-    //vm.$on(AUTH_EVENTS.notAuthenticated, function () {
-    //    ModalService.open(DIALOG_NAMES.login)
-    //        .then(function(result){
-    //            console.log('MainCtrl', result);
-    //        })
-    //});
-
-    vm.$on(AUTH_EVENTS.loginSuccess, function (event, data) {
-        vm.currentUser(data);
-    })
-
+    //$state.transitionTo('home.detail');
 
 }
 
-MainCtrl.$inject = ['$scope', 'USER_ROLES', 'AuthService', 'ModalService', 'AUTH_EVENTS', 'DIALOG_NAMES'];
+MainCtrl.$inject = ['$scope', 'USER_ROLES', 'AuthService', 'SessionService', '$state'];
 module.exports = MainCtrl;

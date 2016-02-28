@@ -34,7 +34,7 @@ var userSchema = new mongoose.Schema({
     },
     authorizedRoutes: [String],
     isPrivileged: {type: Boolean, default: false},
-    role: {type: Number, default: 0},
+    role: {type: Number, default: 1},
 
     resetPasswordToken: String,
     resetPasswordExpires: Date
