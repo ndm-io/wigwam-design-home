@@ -16,26 +16,28 @@ function homeRoutes($stateProvider, USER_ROLES) {
     };
 
     var profile = {
-        name:'home.profile',
-        parent:home,
-        template:'<div profile-view></div>'
+        name: 'home.profile',
+        parent: home,
+        template: '<div profile-view></div>'
     };
 
     var messages = {
-        name:'home.messages',
-        parent:home,
-        template:'<div messages-view></div>'
+        name: 'home.messages',
+        parent: home,
+        template: '<div messages-view></div>'
     };
 
     var calendar = {
-        name:'home.calendar',
-        parent:home,
-        template:'<div calendar-view></div>'
+        name: 'home.calendar',
+        parent: home,
+        template: '<div calendar-view></div>'
     };
 
     $stateProvider.state(home);
     $stateProvider.state(messages);
     $stateProvider.state(calendar);
+
+
 }
 
 homeRoutes.$inject = ['$stateProvider', 'USER_ROLES'];

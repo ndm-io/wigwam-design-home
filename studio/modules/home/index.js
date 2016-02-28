@@ -4,6 +4,7 @@ module.exports = angular.module('modules.home', [
         require('./header').name,
         require('./sidebar').name,
         require('./messages').name,
+        require('./profile').name,
         require('./calendar').name,
         require('./breadcrumb').name
     ])
