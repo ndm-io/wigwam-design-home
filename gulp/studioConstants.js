@@ -14,6 +14,10 @@ var paths = {
         ],
         dest: 'server/public/html'
     },
+    json: {
+        src: 'studio/html/json/**/*.*json',
+        dest: 'server/public/html/json'
+    },
     fonts:{
         src:'studio/fonts/**/*',
         dest:'server/public/fonts'

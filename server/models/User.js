@@ -12,7 +12,7 @@ var userSchema = new mongoose.Schema({
         address1: {type: String, default: ''},
         address2: {type: String, default: ''},
         address3: {type: String, default: ''},
-        postcode: {type: String, default: ''},
+        postcode: {type: String, default: ''}
     },
     loc: GeoJSON.Feature,
     facebook: String,

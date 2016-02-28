@@ -1,0 +1,49 @@
+.subunit.SCT {
+    fill: #c5cedd;
+}
+.subunit.WLS {
+    fill: #c4ffc4;
+}
+.subunit.NIR {
+    fill: #cdc;
+}
+.subunit.ENG {
+    fill: #ffc4c4;
+}
+.subunit.IRL {
+    display: none;
+}
+.subunit-boundary {
+    fill: none;
+    stroke: #777;
+    stroke-dasharray: 2, 2;
+    stroke-linejoin: round;
+}
+.subunit-boundary.IRL {
+    stroke: #aaa;
+}
+.subunit-label {
+    fill: #777;
+    fill-opacity: .5;
+    font-size: 10px;
+    font-weight: 300;
+    text-anchor: middle;
+}
+.boundary {
+    fill: none;
+    stroke: rgba(50, 50, 50, .5);
+}
+.news-polygon {
+    fill: none;
+    stroke: grey;
+}
+.news-circle {
+    fill: rgba(50, 50, 50, .5);
+    stroke: rgba(10, 10, 10.7);
+    cursor: pointer;
+}
+.news-label {
+    fill: rgba(50, 50, 50, .5);
+    font-size: 10px;
+    cursor: pointer;
+}

@@ -9,7 +9,13 @@ var CommsFactory = function($rootScope, $http) {
     http.defaults.headers.post["X-CSRF-Token"] = $('meta[name="csrf-token"]').attr("content");
 
     return {
-        http: http
+        http: http,
+        ukChart: function () {
+            return http.get('/html/json/uk.topojson')
+                .then(function (response) {
+                    return response.data;
+                });
+        }
     }
 
 };

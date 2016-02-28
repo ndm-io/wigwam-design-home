@@ -6,7 +6,7 @@
         <!-- Profile Menu -->
         <div class="text-center s-widget m-b-25 dropdown {{profileOpen()}}" id="profile-menu">
             <a href="" data-toggle="dropdown" ng-click="toggleProfileOpen()">
-                <img class="profile-pic animated" src="img/profile-pic.jpg" alt="">
+                <img class="profile-pic animated" ng-src="{{user.gravatar()}}" alt="User Gravatar">
             </a>
             <ul class="dropdown-menu profile-menu text-center">
                 <li><a ui-sref="home.profile">My Profile</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
@@ -14,8 +14,8 @@
                 <li><a href="">Settings</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                 <li><a ui-sref="logout">Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
             </ul>
-            <h4 class="m-0">Malinda Hollaway</h4>
-            @malinda-h
+            <h4 class="m-0">{{user.profile.firstname}} {{user.profile.surname}}</h4>
+            {{user.email}}
         </div>
 
         <!-- Calendar -->
