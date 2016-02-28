@@ -14,7 +14,7 @@ function MainCtrl($scope, USER_ROLES, AuthService, SessionService, $state) {
         $state.go('logout');
     };
 
-    //$state.transitionTo('home.detail');
+    $state.transitionTo('home.dash');
 
 }
 
