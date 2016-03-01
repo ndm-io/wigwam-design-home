@@ -18,11 +18,69 @@
         <div class="col-md-3">
             <div class="tile">
                 <h2 class="tile-title">Locations</h2>
-                <uk-chart outline='mapOutline' data='mapNewsPoints' blog-entry='blogEntry' lad-boundaries='mapLad'></uk-chart>
+                <uk-chart outline='mapOutline' data='mapNewsPoints' blog-entry='blogEntry'
+                          lad-boundaries='mapLad'></uk-chart>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div show-tab initial-active="home" class="tab-container tile media">
+                <ul class="tab pull-left tab-vertical nav nav-tabs" style="height: auto;">
+                    <li class="{{activeClass('home')}}">
+                        <a ng-click="click('home')">Home</a>
+                    </li>
+                    <li class="{{activeClass('profile')}}">
+                        <a ng-click="click('profile')">Profile</a>
+                    </li>
+                    <li class="{{activeClass('messages')}}">
+                        <a ng-click="click('messages')">Messages</a>
+                    </li>
+
+                </ul>
+
+                <div class="tab-content media-body">
+                    <div class="tab-pane {{activeClass('home')}}">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="inputName1" class="col-md-2 control-label">Name</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control input-sm" id="inputName1" placeholder="...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail1" class="col-md-2 control-label">Email Address</label>
+                                <div class="col-md-10">
+                                    <input type="email" class="form-control input-sm" id="inputEmail1"
+                                           placeholder="...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputMessage" class="col-md-2 control-label">Message</label>
+                                <div class="col-md-10">
+                                    <textarea class="form-control auto-size input-sm" id="inputMessage"
+                                              placeholder="..."
+                                              style="overflow: hidden; word-wrap: break-word; resize: none; height: 48px;"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button type="submit" class="btn btn-info btn-sm m-t-10">SUBMIT FORM</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane {{activeClass('profile')}}">
+                    </div>
+                    <div class="tab-pane {{activeClass('messages')}}">
+                    </div>
+                </div>
 
             </div>
         </div>
     </div>
 </div>
+
 
 

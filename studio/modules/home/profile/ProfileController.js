@@ -10,7 +10,6 @@ var ProfileCtrl = function ($scope, SessionService, CommsFactory) {
             vm.mapOutline = response;
         });
 
-
 };
 
 ProfileCtrl.$inject = ['$scope', 'SessionService', 'CommsFactory'];

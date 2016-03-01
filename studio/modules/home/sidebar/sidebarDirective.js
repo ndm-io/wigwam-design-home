@@ -9,4 +9,4 @@ module.exports = function sidebarDirective() {
         scope: true,
         template: require('./sidebar.html')
     }
-}
+};
