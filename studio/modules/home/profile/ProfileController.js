@@ -4,7 +4,6 @@ var ProfileCtrl = function ($scope, SessionService, CommsFactory) {
 
     var vm = $scope;
     vm.user = SessionService.user;
-    vm.mapOutline;
 
     CommsFactory.ukChart()
         .then(function (response) {

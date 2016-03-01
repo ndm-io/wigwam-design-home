@@ -3,7 +3,7 @@
 var Promise = require('promise');
 var $ = require('jquery');
 
-var CommsFactory = function($rootScope, $http) {
+var CommsFactory = function($rootScope, $http, ROUTES) {
 
     var http = $http;
     http.defaults.headers.post["X-CSRF-Token"] = $('meta[name="csrf-token"]').attr("content");
@@ -11,7 +11,7 @@ var CommsFactory = function($rootScope, $http) {
     return {
         http: http,
         ukChart: function () {
-            return http.get('/html/json/uk.topojson')
+            return http.get(ROUTES.ukChart)
                 .then(function (response) {
                     return response.data;
                 });
@@ -20,5 +20,5 @@ var CommsFactory = function($rootScope, $http) {
 
 };
 
-CommsFactory.$inject = ['$rootScope', '$http'];
+CommsFactory.$inject = ['$rootScope', '$http', 'ROUTES'];
 module.exports = CommsFactory;

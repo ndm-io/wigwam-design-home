@@ -2,10 +2,16 @@ var Base = require('./WWBase');
 var crypto = require('crypto');
 
 function User(json) {
-    Base.call(this, json)
+    if (json) {
+        this.initFromJson(json);
+    }
 }
 
-User.prototype = Object.create(Base.prototype);
+User.prototype.initPrimitives = Base.initPrimitives;
+
+User.prototype.initFromJson = function (json) {
+    this.initPrimitives(json);
+};
 
 User.prototype.gravatar = function (size) {
     size = size || 200;

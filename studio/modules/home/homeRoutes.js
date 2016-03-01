@@ -16,9 +16,9 @@ function homeRoutes($stateProvider, USER_ROLES) {
     };
 
     var dash = {
-        name:'home.dash',
-        parent:home,
-        template:'<div dash-view></div>'
+        name: 'home.dash',
+        parent: home,
+        template: '<div dash-view></div>'
     };
 
     var profile = {

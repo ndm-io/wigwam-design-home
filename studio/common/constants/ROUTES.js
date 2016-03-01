@@ -5,7 +5,8 @@ var CONSTANTS = (function () {
     return {
         login: API + 'login',
         logout: API + 'logout',
-        profile: 'profile'
+        profile: 'profile',
+        ukChart: '/html/json/uk.topojson'
     };
 }());
 

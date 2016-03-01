@@ -1,16 +1,14 @@
+function Base() {
 
-var reISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|(\+|-)([\d|:]*))?$/;
-
-function Base(json) {
-    this.genGuid();
-    this.initPrimitives(json);
 }
 
-Base.prototype.initPrimitives = function (json) {
+Base.reISO = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*))(?:Z|(\+|-)([\d|:]*))?$/;
+
+Base.initPrimitives = function (json) {
     for (var key in json) {
         if (json.hasOwnProperty(key) && !Array.isArray(json[key])) {
             if (typeof json[key] === 'string') {
-                if (reISO.test(json[key])) {
+                if (Base.reISO.test(json[key])) {
                     this[key] = new Date(json[key]);
                 } else {
                     this[key] = json[key];
@@ -22,7 +20,7 @@ Base.prototype.initPrimitives = function (json) {
     }
 };
 
-Base.prototype.initArrayProperty = function (property, jsonArray, type) {
+Base.initArrayProperty = function (property, jsonArray, type) {
     this[property] = [];
     if (!jsonArray) return;
     for (var i = 0; i < jsonArray.length; i++) {
@@ -38,21 +36,18 @@ Base.prototype.initArrayProperty = function (property, jsonArray, type) {
 };
 
 
+Base.guid = function () {
 
-Base.prototype.genGuid = function () {
-    var guid = (function() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-        }
-        return function() {
-            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-                s4() + '-' + s4() + s4() + s4();
-        };
-    })();
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
 
-    this.guid = guid();
+
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
+
 
 };
 

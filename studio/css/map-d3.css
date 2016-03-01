@@ -1,14 +1,14 @@
 .subunit.SCT {
-    fill: #c5cedd;
+    fill: #828f92;
 }
 .subunit.WLS {
-    fill: #c4ffc4;
+    fill: #928287;
 }
 .subunit.NIR {
-    fill: #cdc;
+    fill: #829285;
 }
 .subunit.ENG {
-    fill: #ffc4c4;
+    fill: #ab8886;
 }
 .subunit.IRL {
     display: none;
@@ -39,7 +39,7 @@
 }
 .news-circle {
     fill: rgba(50, 50, 50, .5);
-    stroke: rgba(10, 10, 10.7);
+    stroke: rgba(10, 10, 10.7, .9);
     cursor: pointer;
 }
 .news-label {
