@@ -15,6 +15,11 @@ var ukChart = function () {
 
     var uk, g, path, svg, projection;
 
+    var drag;
+
+    var m0,
+        o0;
+
     var init = function () {
 
         projection = d3.geo.albers()
@@ -27,11 +32,32 @@ var ukChart = function () {
         path = d3.geo.path()
             .projection(projection);
 
+        drag = d3.behavior.drag()
+            .on("dragstart", function() {
+                var proj = projection.rotate();
+                m0 = [d3.event.sourceEvent.pageX, d3.event.sourceEvent.pageY];
+                o0 = [-proj[0],-proj[1]];
+            })
+            .on("drag", function() {
+                if (m0) {
+                    var m1 = [d3.event.sourceEvent.pageX, d3.event.sourceEvent.pageY],
+                        o1 = [o0[0] + (m0[0] - m1[0]) / 4, o0[1] + (m1[1] - m0[1]) / 4];
+                    projection.rotate([-o1[0], -o1[1]]);
+                }
+
+                // Update the map
+                path = d3.geo.path().projection(projection);
+                d3.selectAll("path").attr("d", path);
+            });
+
+
 
         scope.$watch('outline', function (data) {
             uk = data;
             drawOutline();
         });
+
+
     };
 
     var resize = function () {
@@ -56,7 +82,8 @@ var ukChart = function () {
             .attr("width", width)
             .attr("height", height);
 
-        g = svg.append("g");
+        g = svg.append("g")
+            .call(drag);
 
         g.append("g")
             .attr("id", "outline")
@@ -82,19 +109,6 @@ var ukChart = function () {
             .attr("d", path)
             .attr("class", "subunit-boundary IRL");
 
-        g.selectAll(".subunit-label")
-            .data(topojson.feature(uk, uk.objects.subunits).features)
-            .enter().append("text")
-            .attr("class", function (d) {
-                return "subunit-label " + d.id;
-            })
-            .attr("transform", function (d) {
-                return "translate(" + path.centroid(d) + ")";
-            })
-            .attr("dy", ".35em")
-            .text(function (d) {
-                return d.properties.name;
-            });
     };
 
     function link($scope, element) {

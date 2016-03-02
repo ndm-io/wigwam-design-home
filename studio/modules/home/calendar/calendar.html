@@ -1,29 +1,22 @@
 <h4 class="page-title">CALENDAR</h4>
 
-<div class="block-area">
-    <div class="alert alert-info alert-dismissable fade in">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        Click on a Day to add an Event.
-    </div>
-</div>
-
 <div class="col-md-8 clearfix">
 
-    <div id="calendar" class="p-relative p-10 m-b-20">
+    <div id="calendar" calendar-widget class="p-relative p-10 m-b-20">
         <!-- Calendar Views -->
         <ul class="calendar-actions list-inline clearfix">
             <li class="p-r-0">
-                <a data-view="month" href="#" class="tooltips" title="Month">
+                <a ng-click="view('month')" title="Month">
                     <i class="sa-list-month"></i>
                 </a>
             </li>
             <li class="p-r-0">
-                <a data-view="agendaWeek" href="#" class="tooltips" title="Week">
+                <a ng-click="view('basicWeek')" title="Week">
                     <i class="sa-list-week"></i>
                 </a>
             </li>
             <li class="p-r-0">
-                <a data-view="agendaDay" href="#" class="tooltips" title="Day">
+                <a ng-click="view('basicDay')" title="Day">
                     <i class="sa-list-day"></i>
                 </a>
             </li>
@@ -34,78 +27,14 @@
 <div class="col-md-4">
     <h4 class="m-l-5">Upcoming Events</h4>
     <div class="listview narrow">
-        <div class="media p-l-5">
-            <div class="pull-left">
-                <img width="40" src="img/profile-pics/1.jpg" alt="">
-            </div>
-            <div class="media-body">
-                <small class="text-muted">Today at 5:30 PM</small><br>
-                <a class="t-overflow" href="">Cras molestie fermentum nibh, ac semper</a>
-            </div>
-        </div>
-        <div class="media p-l-5">
+
+        <div class="media p-l-5" ng-repeat="event in upComingEvents">
             <div class="media-body">
                 <small class="text-muted">Tomorrow at 8:56 PM</small><br>
-                <a class="t-overflow" href="">Suspendisse in purus ut nibh placerat</a>
+                <a class="t-overflow" href="">event.title</a>
             </div>
         </div>
-        <div class="media p-l-5">
-            <div class="media-body">
-                <small class="text-muted">13/05/2014 at 7:45 AM</small><br>
-                <a class="t-overflow" href="">Cras pulvinar euismod nunc quis gravida. Suspendisse pharetra</a>
-            </div>
-        </div>
-        <div class="media p-l-5">
-            <div class="pull-left">
-                <img width="40" src="img/profile-pics/2.jpg" alt="">
-            </div>
-            <div class="media-body">
-                <small class="text-muted">15/05/2014 at 10:23 AM</small><br>
-                <a class="t-overflow" href="">Integer a eros dapibus, vehicula quam accumsan, tincidunt purus</a>
-            </div>
-        </div>
-        <div class="media p-l-5">
-            <div class="pull-left">
-                <img width="40" src="img/profile-pics/3.jpg" alt="">
-            </div>
-            <div class="media-body">
-                <small class="text-muted">15/05/2014 at 11:50 AM</small><br>
-                <a class="t-overflow" href="">Vehicula regquam accumsan, tincidunt purus</a>
-            </div>
-        </div>
-        <div class="media p-l-5">
-            <div class="media-body">
-                <small class="text-muted">16/05/2014 at 2:40 PM</small><br>
-                <a class="t-overflow" href="">Lim sutson seruspendisse in purus ut nibh wood</a>
-            </div>
-        </div>
-        <div class="media p-l-5">
-            <div class="media-body">
-                <small class="text-muted">17/05/2014 at 5:23 AM</small><br>
-                <a class="t-overflow" href="">Palwin pulvinar euismod nunc quis gravida. Pharetra</a>
-            </div>
-        </div>
-        <div class="media p-l-5">
-            <div class="media-body">
-                <small class="text-muted">19/05/2014 at 7:23 PM</small><br>
-                <a class="t-overflow" href="">Arena soon be cook loas nunc eisumes wentro bin</a>
-            </div>
-        </div>
-        <div class="media p-l-5">
-            <div class="pull-left">
-                <img width="40" src="img/profile-pics/5.jpg" alt="">
-            </div>
-            <div class="media-body">
-                <small class="text-muted">21/05/2014 at 10:10 AM</small><br>
-                <a class="t-overflow" href="">Lorem regquam accumsan, tincidunt ipsum persit</a>
-            </div>
-        </div>
-        <div class="media p-l-5">
-            <div class="media-body">
-                <small class="text-muted">23/05/2014 at 12:50 PM</small><br>
-                <a class="t-overflow" href="">Winsoo gravity for twelve eharetra and lorem ipsum</a>
-            </div>
-        </div>
+
     </div>
 </div>
 

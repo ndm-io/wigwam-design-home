@@ -59,7 +59,8 @@ var paths = {
     vendorCSS: {
         src: [
             './bower_components/bootstrap/dist/css/bootstrap.css', // v3.1.1
-            './bower_components/font-awesome/css/font-awesome.css' // v4.1.0
+            './bower_components/font-awesome/css/font-awesome.css', // v4.1.0
+            './bower_components/fullcalendar/dist/fullcalendar.css'
         ],
         dest: 'server/public/css'
     }
