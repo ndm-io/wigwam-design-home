@@ -118,6 +118,7 @@
     "instagram-node": "^0.5.1",
     "jade": "^1.7.0",
     "lastfm": "^0.9.2",
+    "leaflet": "^0.7.7",
     "less": "^1.7.5",
     "lodash": "^2.4.1",
     "lusca": "^1.0.2",
@@ -156,6 +157,7 @@
     "twit": "^1.1.18",
     "twitter": "*",
     "uglify-js": "^2.4.15",
+    "ui-leaflet": "^1.0.0",
     "validator": "^3.22.1",
     "yui": "^3.18.1"
   }
