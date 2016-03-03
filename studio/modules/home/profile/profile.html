@@ -20,17 +20,9 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="tile">
-                        <h2 class="tile-title">Default Project Location <span class="pull-right">GPS {{loc}}</span></h2>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <clickable-map event-handler="handle" model="mapModel"></clickable-map>
-                            </div>
-                            <div class="col-md-6">
-                                <input class="form-control input-sm m-b-10" type="text" placeholder="Search...">
-                            </div>
-                        </div>
-                    </div>
+                   <location-selector title="Default Project Location"
+                                      map-model="mapModel"
+                                      event-handler="handle"></location-selector>
                 </div>
             </div>
         </div>

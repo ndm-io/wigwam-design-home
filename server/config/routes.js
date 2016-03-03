@@ -4,6 +4,9 @@
 var homeController = require('../controllers/home');
 var studioController = require('../modules/studio/studioController');
 var loginController = require('../modules/studio/loginController');
+
+var geocodeController = require('../modules/studio/geocodeController');
+
 //var apiController = require('../controllers/api');
 //var tweetController = require('../controllers/tweet');
 //var userController = require('../controllers/user');
@@ -45,6 +48,16 @@ var urls = {
             }
         }
     },
+    geocode: {
+        url: apiPrefix + 'geocode',
+        role: roles.anon,
+        fn: geocodeController.geocode
+    },
+    reverse: {
+        url: apiPrefix + 'reverse',
+        role: roles.anon,
+        fn: geocodeController.reverse
+    },
     login: {
         url: apiPrefix + 'login',
         role: roles.anon,
@@ -79,6 +92,9 @@ exports.initRoutes = function (app, passport, passportConf, io) {
     app.get(urls.profile.url, urls.profile.fn);
     app.post(urls.login.url, passport.authenticate('local'), urls.login.fn);
     app.post(urls.logout.url, urls.logout.fn);
+
+    app.post(urls.geocode.url, passportConf.isAuthenticated, urls.geocode.fn);
+    app.post(urls.reverse.url, passportConf.isAuthenticated, urls.reverse.fn);
 };
 
 //exports.init = function (app, passport, passportConf, io) {

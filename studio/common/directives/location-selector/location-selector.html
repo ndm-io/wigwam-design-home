@@ -1,0 +1,33 @@
+<div class="tile">
+    <h2 class="tile-title">{{title}} <span class="pull-right">GPS {{loc}}</span></h2>
+    <div class="row">
+        <div class="col-md-6">
+            <clickable-map id="locationSelector"
+                           event-handler="eventHandler"
+                           map-model="locationSelectorCtrl.mapModel">
+
+            </clickable-map>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <input type="text" class="form-control m-b-10" ng-model="searchText">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn m-r-5" ng-click="search()">Search</button>
+                    <button class="btn m-r-5" ng-click="useCurrent()">Use Current</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="block-title">Address</h3>
+                    <address>
+                        <span ng-repeat="line in address">{{line}}<br></span>
+                    </address>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

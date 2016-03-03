@@ -3,7 +3,7 @@
 var Promise = require('promise');
 var $ = require('jquery');
 
-var CommsFactory = function($rootScope, $http, ROUTES) {
+var CommsFactory = function ($rootScope, $http, ROUTES) {
 
     var http = $http;
     http.defaults.headers.post["X-CSRF-Token"] = $('meta[name="csrf-token"]').attr("content");
@@ -15,6 +15,18 @@ var CommsFactory = function($rootScope, $http, ROUTES) {
                 .then(function (response) {
                     return response.data;
                 });
+        },
+        geocode: function (address) {
+            return http.post(ROUTES.geocode, {address: address}, {})
+                .then(function (response) {
+                    return response.data;
+                })
+        },
+        reverse: function (coords) {
+            return http.post(ROUTES.reverse, coords, {})
+                .then(function (response) {
+                    return response.data;
+                })
         }
     }
 

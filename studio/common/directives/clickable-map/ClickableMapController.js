@@ -1,19 +1,24 @@
 'use strict';
 
-var ClickableMapCtrl = function ($scope) {
-    var vm = $scope;
+var ClickableMapCtrl = function ($scope, leafletMarkerEvents) {
 
-    //angular.extend(vm, vm.clickableMapCtrl.model);
+    $scope.$watch('mapId', function (n, o) {
 
-    console.log(vm);
+        if (!n) return;
 
-    vm.$on("leafletDirectiveMarker.map.dragend", function(event, args) {
-        vm.clickableMapCtrl.eventHandler(event, args);
+        var markerEvents = leafletMarkerEvents.getAvailableEvents();
+
+        for (var k in markerEvents) {
+            var eventName = 'leafletDirectiveMarker.' + n + '.' + markerEvents[k];
+            $scope.$on(eventName, function (event, args) {
+                $scope.clickableMapCtrl.eventHandler(eventName, event, args);
+            });
+        }
+
     });
-
 
 
 };
 
-ClickableMapCtrl.$inject = ['$scope'];
+ClickableMapCtrl.$inject = ['$scope', 'leafletMarkerEvents'];
 module.exports = ClickableMapCtrl;

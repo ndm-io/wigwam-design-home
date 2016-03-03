@@ -2,16 +2,21 @@
 
 module.exports = function clickableMapDirective () {
 
+    var link = function (scope, el, attr) {
+        scope.mapId = 'map-' + attr.id;
+    };
+
     return {
+        link:link,
         controller: 'ClickableMapCtrl',
         controllerAs: 'clickableMapCtrl',
         bindToController: true,
         restrict: 'EA',
         scope: {
-            model:'=',
+            mapModel:'=',
             eventHandler: '='
         },
         template: require('./clickable-map.html')
 
     };
-}
+};

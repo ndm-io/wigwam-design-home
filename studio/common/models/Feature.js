@@ -22,4 +22,15 @@ Feature.prototype.resetCoordinates = function () {
     this.geometry.coordinates.length = 0;
 };
 
+Feature.prototype.marker = function () {
+    if (this.geometry.coordinates.length == 0) {
+        return {};
+    }
+    return {
+        lat: this.geometry.coordinates[1],
+        lng: this.geometry.coordinates[0]
+    }
+};
+
+
 module.exports = Feature;
