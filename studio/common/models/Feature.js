@@ -23,8 +23,8 @@ Feature.prototype.resetCoordinates = function () {
 };
 
 Feature.prototype.marker = function () {
-    if (this.geometry.coordinates.length == 0) {
-        return {};
+    if (!this.verified()) {
+        return {lat:'??', lng:'??'};
     }
     return {
         lat: this.geometry.coordinates[1],

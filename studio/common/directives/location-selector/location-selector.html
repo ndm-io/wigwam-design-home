@@ -10,22 +10,28 @@
         </div>
         <div class="col-md-6">
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-12">
+                    <p>&nbsp;</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7 col-md-offset-1">
                     <input type="text" class="form-control m-b-10" ng-model="searchText">
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-4">
                     <button class="btn m-r-5" ng-click="search()">Search</button>
-                    <button class="btn m-r-5" ng-click="useCurrent()">Use Current</button>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <h3 class="block-title">Address</h3>
                     <address>
                         <span ng-repeat="line in address">{{line}}<br></span>
                     </address>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn m-r-5" ng-click="useCurrent()">Use Current</button>
+                    <span ng-show="loading">Loading...</span>
                 </div>
             </div>
         </div>

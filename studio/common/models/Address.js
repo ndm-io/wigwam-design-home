@@ -13,7 +13,6 @@ Address.prototype.initPrimitives = Base.initPrimitives;
 Address.prototype.initFromJson = function (json) {
     this.initPrimitives(json);
     this.loc = new Feature('Point', json.loc.geometry.coordinates, json.loc.properties);
-    console.log(this);
 };
 
 Address.prototype.initFromGeocoder = function (gcResult) {
@@ -27,7 +26,13 @@ Address.prototype.initFromGeocoder = function (gcResult) {
 };
 
 Address.prototype.address = function () {
-    return [this.address1, this.address2, this.address3, this.postcode];
+    var keys = ['address1', 'address2', 'address3', 'postcode'];
+    var array = [];
+    var self = this;
+    _.each(keys, function (key) {
+       if (self[key]) array.push(self[key]);
+    });
+    return array;
 };
 
 Address.prototype.formattedGPSLocation = function () {
@@ -36,11 +41,11 @@ Address.prototype.formattedGPSLocation = function () {
 };
 
 Address.prototype.marker = function () {
-    return this.feature.marker();
-}
+    return this.loc.marker();
+};
 
 Address.prototype.isVerified = function () {
-    return (this.loc.geometry.coordinates.length > 0);
+    return (this.loc.verified());
 };
 
 module.exports = Address;
