@@ -10,11 +10,16 @@ require('angular-sanitize');
 require('domready/ready');
 require('lodash');
 require('restangular');
+require('leaflet');
+require('ui-leaflet');
+require('angular-simple-logger');
 
 module.exports = angular.module('common',
     [
         'ui.bootstrap',
         'ui.router',
+        'nemLogging',
+        'ui-leaflet',
         'ngAnimate',
         'ngCookies',
         'ngResource',
@@ -25,3 +30,4 @@ module.exports = angular.module('common',
         require('./resources').name,
         require('./services').name
     ]);
+

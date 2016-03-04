@@ -1,6 +1,8 @@
 'use strict';
 
-var ProfileCtrl = function ($scope, SessionService, CommsFactory) {
+var MapModel = require('../../../common/models/MapModel');
+
+var ProfileCtrl = function ($scope, SessionService, CommsFactory, leafletMarkerEvents) {
 
     var vm = $scope;
     vm.user = SessionService.user;
@@ -10,7 +12,15 @@ var ProfileCtrl = function ($scope, SessionService, CommsFactory) {
             vm.mapOutline = response;
         });
 
+    vm.mapModel = MapModel(vm.user, leafletMarkerEvents);
+
+    vm.handle = function (eventName, e, args, address) {
+        if (address) {
+            console.log('profile new address', address);
+        }
+    };
+
 };
 
-ProfileCtrl.$inject = ['$scope', 'SessionService', 'CommsFactory'];
+ProfileCtrl.$inject = ['$scope', 'SessionService', 'CommsFactory', 'leafletMarkerEvents'];
 module.exports = ProfileCtrl;

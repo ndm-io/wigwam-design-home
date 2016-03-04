@@ -6,7 +6,9 @@ var CONSTANTS = (function () {
         login: API + 'login',
         logout: API + 'logout',
         profile: 'profile',
-        ukChart: '/html/json/uk.topojson'
+        ukChart: '/html/json/uk.topojson',
+        geocode: API + 'geocode',
+        reverse: API + 'reverse'
     };
 }());
 

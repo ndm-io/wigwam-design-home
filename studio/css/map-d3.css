@@ -1,14 +1,14 @@
 .subunit.SCT {
-    fill: #828f92;
+    fill: rgba(10,10,10,0.5);
 }
 .subunit.WLS {
-    fill: #928287;
+    fill: rgba(10,10,10,0.7);
 }
 .subunit.NIR {
-    fill: #829285;
+    fill: rgba(10,10,10,0.5);
 }
 .subunit.ENG {
-    fill: #ab8886;
+    fill: rgba(10,10,10,0.7);
 }
 .subunit.IRL {
     display: none;
