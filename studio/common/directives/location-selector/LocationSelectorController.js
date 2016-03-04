@@ -5,35 +5,25 @@ var GeoLocator = require('../../models/GeoLocator');
 
 var LocationSelectorCtrl = function ($scope, GeocodeFactory, $timeout) {
 
+    var _mapModel = $scope.locationSelectorCtrl.mapModel;
+
     var handleResult = function (en, e, args, json) {
         $timeout(function () {
             var address = new Address();
             address.initFromGeocoder(json);
-            $scope.locationSelectorCtrl.eventHandler(en, e, args, address);
+            _mapModel.address = address;
             $scope.loc = address.formattedGPSLocation();
             $scope.address = address.address();
             updateMarkerLocation(address);
+            $scope.locationSelectorCtrl.eventHandler(en, e, args, address);
         });
     };
 
     var updateMarkerLocation = function (address) {
-        var marker = address.marker();
-        marker.draggable = true;
-
-        var mapModel = $scope.locationSelectorCtrl.mapModel;
-
-        if (mapModel.markers && mapModel.markers.defaultLocation) {
-            mapModel.markers.defaultLocation = marker;
-        } else {
-            mapModel.markers = {
-                defaultLocation: marker
-            }
-        }
-
-        mapModel.center.lat = marker.lat;
-        mapModel.center.lng = marker.lng;
-
-        $scope.$apply();
+        $timeout(function () {
+            _mapModel.updateMarker(address);
+            $scope.$apply();
+        });
     };
 
     var geoLocator = new GeoLocator();
@@ -52,11 +42,11 @@ var LocationSelectorCtrl = function ($scope, GeocodeFactory, $timeout) {
             });
     };
 
-    $scope.loc = $scope.locationSelectorCtrl.mapModel.address.formattedGPSLocation();
+    $scope.loc = _mapModel.address.formattedGPSLocation();
     $scope.searchText = '';
 
-    if ($scope.locationSelectorCtrl.mapModel.address.isVerified) {
-        $scope.address = $scope.locationSelectorCtrl.mapModel.address.address();
+    if (_mapModel.address.isVerified) {
+        $scope.address = _mapModel.address.address();
     }
 
     $scope.eventHandler = function (en, e, args) {
@@ -78,10 +68,14 @@ var LocationSelectorCtrl = function ($scope, GeocodeFactory, $timeout) {
 
     $scope.search = function () {
         var text = $scope.searchText;
-        if (text.length > 2) geocode('geocode', text) //GeocodeFactory.geocode(text)
+        if (text.length > 2) geocode('geocode', text)
             .then(function (json) {
                 handleResult(undefined, undefined, undefined, json[0]);
             });
+    };
+
+    $scope.centerOnMarker = function () {
+        _mapModel.centerOnMarker();
     };
 
     $scope.useCurrent = function () {
@@ -91,13 +85,16 @@ var LocationSelectorCtrl = function ($scope, GeocodeFactory, $timeout) {
                 return {lat: location.coords.latitude, lng: location.coords.longitude};
             })
             .then(function (marker) {
-                return geocode('reverse', marker); // GeocodeFactory.reverse(marker);
+                return geocode('reverse', marker);
             })
             .then(function (json) {
                 handleResult(undefined, undefined, undefined, json[0]);
             });
     };
 
+    $scope.opacity = function () {
+        return ($scope.loading) ? '1.0' : '0.0';
+    };
 };
 
 LocationSelectorCtrl.$inject = ['$scope', 'GeocodeFactory', '$timeout'];

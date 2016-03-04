@@ -15,18 +15,43 @@ Address.prototype.initFromJson = function (json) {
     this.loc = new Feature('Point', json.loc.geometry.coordinates, json.loc.properties);
 };
 
-Address.prototype.initFromGeocoder = function (gcResult) {
-    this.address1 = gcResult.streetNumber;
-    this.address2 = gcResult.streetName;
-    this.address3 = gcResult.county;
-    this.postcode = gcResult.zipcode;
+Address.prototype.initFromGeocoder = function (res) {
 
-    this.loc = new Feature('Point', [gcResult.longitude, gcResult.latitude]);
+    var lines = [res.streetNumber, res.streetName, res.county, res.zipcode];
+    var keys = this.addressKeys();
+
+    var n = 0, i = 0;
+    var self = this;
+
+    _.each(lines, function (line) {
+        self[keys[i]] = '';
+        if (line) {
+            self[keys[n]] = line;
+            n++;
+        }
+        i++;
+    });
+
+    this.loc = new Feature('Point', [res.longitude, res.latitude]);
     return this;
 };
 
+Address.prototype.addressKeys = function () {
+    return ['address1', 'address2', 'address3', 'postcode'];
+};
+
+Address.prototype.placeholderForKey = function (key) {
+    var vals = {
+        'address1': 'House Name and Street',
+        'address2': 'Locale',
+        'address3': 'County',
+        'postcode': 'Postcode'
+    };
+    return vals[key];
+};
+
 Address.prototype.address = function () {
-    var keys = ['address1', 'address2', 'address3', 'postcode'];
+    var keys = this.addressKeys();
     var array = [];
     var self = this;
     _.each(keys, function (key) {

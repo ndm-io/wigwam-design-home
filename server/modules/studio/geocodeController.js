@@ -16,9 +16,10 @@ exports.geocode = function (req, res) {
         return;
     }
 
+    address.countryCode = 'gb';
+
     geocoder.geocode(address)
         .then(function (result) {
-            console.log(result);
             res.send(result);
         })
 };
@@ -33,7 +34,6 @@ exports.reverse = function (req, res){
 
     geocoder.reverse(coords)
         .then(function(response) {
-            console.log(response);
             res.send(response);
         })
         .catch(function(err) {
