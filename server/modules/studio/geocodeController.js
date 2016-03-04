@@ -7,7 +7,7 @@ var extra = {
 };
 
 var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra);
-var postcodeRe = /(?:[A-Za-z]\d ?\d[A-Za-z]{2})|(?:[A-Za-z][A-Za-z\d]\d ?\d[A-Za-z]{2})|(?:[A-Za-z]{2}\d{2} ?\d[A-Za-z]{2})|(?:[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]{2})|(?:[A-Za-z]{2}\d[A-Za-z] ?\d[A-Za-z]{2})/gi;
+var postcodeRe = /[A-Z]{1,2}[0-9][0-9A-Z]?\s?[0-9][A-Z]{2}/i;
 
 var PostcodesIO = require('postcodesio-client');
 var postcodes = new PostcodesIO();
