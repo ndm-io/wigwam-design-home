@@ -37,6 +37,7 @@ var MapModel = function (user, leafletMarkerEvents) {
             }
         },
         updateMarker: function (address) {
+            if (!address) return;
             var marker = address.marker();
             marker.draggable = true;
 

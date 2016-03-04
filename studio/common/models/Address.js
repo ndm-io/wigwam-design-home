@@ -5,6 +5,8 @@ var Feature = require('./Feature');
 function Address (json) {
     if (json) {
         this.initFromJson(json);
+    } else {
+        this.loc = new Feature();
     }
 }
 
@@ -16,23 +18,18 @@ Address.prototype.initFromJson = function (json) {
 };
 
 Address.prototype.initFromGeocoder = function (res) {
+    if (!res) {
+        return new Address();
+    }
 
-    var lines = [res.streetNumber, res.streetName, res.county, res.zipcode];
-    var keys = this.addressKeys();
-
-    var n = 0, i = 0;
-    var self = this;
-
-    _.each(lines, function (line) {
-        self[keys[i]] = '';
-        if (line) {
-            self[keys[n]] = line;
-            n++;
-        }
-        i++;
-    });
+    this.address1 = res.streetNumber;
+    this.address2 = res.streetName;
+    this.address3 = res.county || res.city;
+    this.postcode = res.zipcode;
 
     this.loc = new Feature('Point', [res.longitude, res.latitude]);
+
+    console.log(this);
     return this;
 };
 
@@ -61,6 +58,7 @@ Address.prototype.address = function () {
 };
 
 Address.prototype.formattedGPSLocation = function () {
+    if (!this.loc) return '::';
     var marker = this.loc.marker();
     return marker.lat + ' : ' + marker.lng;
 };

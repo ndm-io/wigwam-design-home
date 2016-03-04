@@ -7,6 +7,11 @@ var extra = {
 };
 
 var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra);
+var postcodeRe = /(?:[A-Za-z]\d ?\d[A-Za-z]{2})|(?:[A-Za-z][A-Za-z\d]\d ?\d[A-Za-z]{2})|(?:[A-Za-z]{2}\d{2} ?\d[A-Za-z]{2})|(?:[A-Za-z]\d[A-Za-z] ?\d[A-Za-z]{2})|(?:[A-Za-z]{2}\d[A-Za-z] ?\d[A-Za-z]{2})/gi;
+
+var PostcodesIO = require('postcodesio-client');
+var postcodes = new PostcodesIO();
+
 
 exports.geocode = function (req, res) {
     var address = req.body.address;
@@ -16,12 +21,48 @@ exports.geocode = function (req, res) {
         return;
     }
 
-    address.countryCode = 'gb';
+    if (postcodeRe.test(address)) {
+        geocodePostcode(req, res, address.replace(/ /g,''));
+    } else {
+        geocode(req, res, address);
+    }
 
-    geocoder.geocode(address)
+};
+
+var geocode = function (req, res, data) {
+    data.countryCode = 'gb';
+    geocoder.geocode(data)
         .then(function (result) {
             res.send(result);
+        });
+};
+
+var geocodePostcode = function (req, res, data) {
+    postcodes
+        .lookup(data)
+        .then(function (postcode) {
+            return markerFromPostcode(postcode);
         })
+        .then(function (marker) {
+            res.send([marker]);
+        })
+        .catch(function (err) {
+            res.statusCode(500);
+            res.send({error:err});
+        });
+};
+
+var markerFromPostcode = function (p) {
+    return {
+        latitude: p.latitude,
+        longitude: p.longitude,
+        streetNumber: '',
+        streetName: '',
+        county: p.admin_district,
+        city: p.parish,
+        state: p.admin_district,
+        zipcode: p.postcode
+    };
 };
 
 exports.reverse = function (req, res){
@@ -34,7 +75,15 @@ exports.reverse = function (req, res){
 
     geocoder.reverse(coords)
         .then(function(response) {
-            res.send(response);
+            return postcodes
+                .reverseGeocode(coords.lat, coords.lon)
+                .then(function (postcode) {
+                    response[0].zipcode = postcode.postcode;
+                    return response;
+                });
+        })
+        .then(function (data) {
+            res.send(data);
         })
         .catch(function(err) {
             console.log(err);
