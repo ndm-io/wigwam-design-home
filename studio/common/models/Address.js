@@ -29,7 +29,6 @@ Address.prototype.initFromGeocoder = function (res) {
 
     this.loc = new Feature('Point', [res.longitude, res.latitude]);
 
-    console.log(this);
     return this;
 };
 
