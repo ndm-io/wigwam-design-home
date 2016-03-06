@@ -1,5 +1,5 @@
 /**
- *
+ * @name Feature
  */
 
 function Feature(type, coordinates, properties) {
