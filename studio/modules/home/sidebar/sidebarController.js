@@ -2,6 +2,7 @@
 
 var SidebarCtrl = function ($scope, SessionService) {
 
+
     var vm = $scope,
         _profileOpen = false;
 
