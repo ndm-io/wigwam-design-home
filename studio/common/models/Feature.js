@@ -1,3 +1,7 @@
+/**
+ *
+ */
+
 function Feature(type, coordinates, properties) {
     this.type = 'Feature';
     this.geometry = {
