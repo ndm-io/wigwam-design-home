@@ -8,7 +8,8 @@ var CONSTANTS = (function () {
         profile: 'profile',
         ukChart: '/html/json/uk.topojson',
         geocode: API + 'geocode',
-        reverse: API + 'reverse'
+        reverse: API + 'reverse',
+        updateAddress: API + 'updateaddress'
     };
 }());
 

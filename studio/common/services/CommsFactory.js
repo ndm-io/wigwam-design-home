@@ -20,13 +20,20 @@ var CommsFactory = function ($rootScope, $http, ROUTES) {
             return http.post(ROUTES.geocode, {address: address}, {})
                 .then(function (response) {
                     return response.data;
-                })
+                });
         },
         reverse: function (coords) {
             return http.post(ROUTES.reverse, coords, {})
                 .then(function (response) {
                     return response.data;
-                })
+                });
+        },
+        updateAddress: function (address) {
+            return http.post(ROUTES.updateAddress, {address: address}, {})
+                .then(function (response) {
+                    console.log(response);
+                    return response.data;
+                });
         }
     }
 

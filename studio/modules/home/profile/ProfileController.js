@@ -16,7 +16,10 @@ var ProfileCtrl = function ($scope, SessionService, CommsFactory, leafletMarkerE
 
     vm.handle = function (eventName, e, args, address) {
         if (address) {
-            console.log('profile new address', address);
+            CommsFactory.updateAddress(address)
+                .then(function (data) {
+                    console.log(data);
+                });
         }
     };
 

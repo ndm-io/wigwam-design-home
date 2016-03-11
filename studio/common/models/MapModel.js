@@ -5,8 +5,7 @@ var MapModel = function (user, leafletMarkerEvents) {
     var center = function () {
         if (user.hasVerifiedAddress()) {
             var marker = user.address.marker();
-            marker.draggable = true;
-            marker.message = 'Default Location';
+            marker.zoom = 12;
             return marker;
         }
         return {
@@ -25,6 +24,7 @@ var MapModel = function (user, leafletMarkerEvents) {
                 enable: leafletMarkerEvents.getAvailableEvents()
             }
         },
+        markers: {},
         loc: ':',
         height: '250px',
         address: user.address,
@@ -40,7 +40,6 @@ var MapModel = function (user, leafletMarkerEvents) {
             if (!address) return;
             var marker = address.marker();
             marker.draggable = true;
-
             if (this.markers && this.markers.defaultLocation) {
                 this.markers.defaultLocation = marker;
             } else {
@@ -61,7 +60,9 @@ var MapModel = function (user, leafletMarkerEvents) {
     };
 
     if (user.hasVerifiedAddress()) {
-        model.markers = user.address.loc.marker();
+        var marker = user.address.loc.marker();
+        marker.draggable = true;
+        model.markers.defaultLocation = marker;
     }
 
     return model;

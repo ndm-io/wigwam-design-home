@@ -92,6 +92,11 @@ var LocationSelectorCtrl = function ($scope, GeocodeFactory, $timeout) {
             });
     };
 
+    $scope.submit = function () {
+        $scope.locationSelectorCtrl.eventHandler(undefined, undefined, undefined, _mapModel.address);
+        $scope.address = _mapModel.address.address();
+    };
+
     $scope.opacity = function () {
         return ($scope.loading) ? '1.0' : '0.0';
     };

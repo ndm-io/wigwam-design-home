@@ -22,7 +22,7 @@ exports.geocode = function (req, res) {
     }
 
     if (postcodeRe.test(address)) {
-        geocodePostcode(req, res, address.replace(/ /g,''));
+        geocodePostcode(req, res, address.replace(/ /g, ''));
     } else {
         geocode(req, res, address);
     }
@@ -48,7 +48,7 @@ var geocodePostcode = function (req, res, data) {
         })
         .catch(function (err) {
             res.statusCode(500);
-            res.send({error:err});
+            res.send({error: err});
         });
 };
 
@@ -65,7 +65,7 @@ var markerFromPostcode = function (p) {
     };
 };
 
-exports.reverse = function (req, res){
+exports.reverse = function (req, res) {
     var coords = req.body;
 
     if (!coords.lat || !coords.lon) {
@@ -74,7 +74,7 @@ exports.reverse = function (req, res){
     }
 
     geocoder.reverse(coords)
-        .then(function(response) {
+        .then(function (response) {
             return postcodes
                 .reverseGeocode(coords.lat, coords.lon)
                 .then(function (postcode) {
@@ -85,7 +85,7 @@ exports.reverse = function (req, res){
         .then(function (data) {
             res.send(data);
         })
-        .catch(function(err) {
+        .catch(function (err) {
             console.log(err);
         });
 };

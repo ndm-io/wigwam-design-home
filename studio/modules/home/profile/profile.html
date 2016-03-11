@@ -12,9 +12,6 @@
                                 <img class="profile-pic" ng-src="{{user.gravatar()}}" alt="">
                             </a>
                         </div>
-                        <div class="p-5 m-t-15">
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -37,46 +34,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div show-tab initial-active="name" class="tab-container tile media">
-
-                <ul class="tab pull-left tab-vertical nav nav-tabs" style="height: auto;">
-                    <li class="{{activeClass('name')}}">
-                        <a ng-click="click('name')">Name</a>
-                    </li>
-                    <li class="{{activeClass('location')}}">
-                        <a ng-click="click('location')">Location</a>
-                    </li>
-                </ul>
-
-                <div class="tab-content media-body">
-                    <div class="tab-pane {{activeClass('name')}}">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label for="inputName1" class="col-md-2 control-label">Name</label>
-                                <div class="col-md-10">
-                                    <input type="text" class="form-control input-sm" id="inputName1" placeholder="...">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail1" class="col-md-2 control-label">Email Address</label>
-                                <div class="col-md-10">
-                                    <input type="email" class="form-control input-sm" id="inputEmail1"
-                                           placeholder="...">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" class="btn btn-info btn-sm m-t-10">SUBMIT CHANGES</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="tab-pane {{activeClass('location')}}">
-
-                    </div>
-                </div>
-
-            </div>
+            <personal-details></personal-details>
         </div>
     </div>
 </div>
