@@ -88,6 +88,9 @@ userSchema.methods.model = function () {
         phone: this.phone,
         address: this.address,
         profile: this.profile,
+        facebook: this.facebook,
+        twitter: this.twitter,
+        instagram: this.instagram,
         settings: this.settings,
         role: this.role
     };

@@ -13,6 +13,7 @@ var ProfileCtrl = function ($scope, SessionService, CommsFactory, leafletMarkerE
         });
 
     vm.mapModel = MapModel(vm.user, leafletMarkerEvents);
+    vm.gravatar = vm.user.gravatar();
 
     vm.handle = function (eventName, e, args, address) {
         if (address) {

@@ -7,7 +7,9 @@ var SidebarCtrl = function ($scope, SessionService) {
     var vm = $scope,
         _profileOpen = false;
 
-    vm.user = SessionService.user;
+    vm.ss = SessionService;
+
+    vm.gravatar = vm.ss.user.gravatar();
 
     vm.profileOpen = function () {
         return (_profileOpen) ? 'open' : '';

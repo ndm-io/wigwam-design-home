@@ -7,34 +7,113 @@
         <li class="{{activeClass('location')}}">
             <a ng-click="click('location')">Location</a>
         </li>
+        <li class="{{activeClass('socialmedia')}}">
+            <a ng-click="click('socialmedia')">Social Media</a>
+        </li>
     </ul>
 
     <div class="tab-content media-body">
         <div class="tab-pane {{activeClass('name')}}">
             <form class="form-horizontal" role="form">
                 <div class="form-group">
-                    <label for="inputName1" class="col-md-2 control-label">First Name</label>
+                    <label for="inputFirstname" class="col-md-2 control-label">First Name</label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control input-sm" id="inputName1" placeholder="...">
+                        <input type="text"
+                               class="form-control input-sm"
+                               id="inputFirstname"
+                               placeholder="..."
+                               ng-model="user.profile.firstname">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail1" class="col-md-2 control-label">Email Address</label>
+                    <label for="inputSurname" class="col-md-2 control-label">Surname</label>
                     <div class="col-md-10">
-                        <input type="email" class="form-control input-sm" id="inputEmail1"
-                               placeholder="...">
+                        <input type="text"
+                               class="form-control input-sm"
+                               id="inputSurname"
+                               placeholder="..."
+                               ng-model="user.profile.surname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail" class="col-md-2 control-label">Email Address</label>
+                    <div class="col-md-10">
+                        <input type="email"
+                               class="form-control input-sm"
+                               id="inputEmail"
+                               placeholder="..."
+                               ng-model="user.email">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-info btn-sm m-t-10">SUBMIT CHANGES</button>
+                        <button type="submit"
+                                ng-click="submitForm()"
+                                class="btn btn-info btn-sm m-t-10">
+                            SUBMIT CHANGES
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
         <div class="tab-pane {{activeClass('location')}}">
-
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="block-title">Your Default Project Location</h3>
+                    <address>
+                        <span ng-repeat="line in user.address.address()">{{line}}<br></span>
+                    </address>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane {{activeClass('socialmedia')}}">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="inputFacebook" class="col-md-2 control-label">
+                        <i class="fa fa-facebook-square"></i>
+                    </label>
+                    <div class="col-md-10">
+                        <input type="text"
+                               class="form-control input-sm"
+                               id="inputFacebook"
+                               placeholder="Facebook"
+                               ng-model="user.facebook">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputTwitter" class="col-md-2 control-label">
+                        <i class="fa fa-twitter-square"></i>
+                    </label>
+                    <div class="col-md-10">
+                        <input type="text"
+                               class="form-control input-sm"
+                               id="inputTwitter"
+                               placeholder="Twitter"
+                               ng-model="user.twitter">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputInstagram" class="col-md-2 control-label">
+                        <i class="fa fa-instagram"></i>
+                    </label>
+                    <div class="col-md-10">
+                        <input type="text"
+                               class="form-control input-sm"
+                               id="inputInstagram"
+                               placeholder="Instagram"
+                               ng-model="user.instagram">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit"
+                                ng-click="submitForm()"
+                                class="btn btn-info btn-sm m-t-10">
+                            SUBMIT CHANGES
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-
 </div>

@@ -34,6 +34,12 @@ var CommsFactory = function ($rootScope, $http, ROUTES) {
                     console.log(response);
                     return response.data;
                 });
+        },
+        updateProfile: function (data) {
+            return http.post(ROUTES.updateProfile, {data: data}, {})
+                .then(function (response) {
+                    return response.data;
+                });
         }
     }
 

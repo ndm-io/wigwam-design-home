@@ -74,6 +74,11 @@ var urls = {
         url: apiPrefix + 'updateaddress',
         role: roles.anon,
         fn: userController.updateAddress
+    },
+    updateProfile: {
+        url: apiPrefix + 'updateprofile',
+        role: roles.anon,
+        fn: userController.updateProfile
     }
 };
 
@@ -104,7 +109,7 @@ exports.initRoutes = function (app, passport, passportConf, io) {
     app.post(urls.reverse.url, passportConf.isAuthenticated, urls.reverse.fn);
 
     app.post(urls.updateAddress.url, passportConf.isAuthenticated, urls.updateAddress.fn);
-
+    app.post(urls.updateProfile.url, passportConf.isAuthenticated, urls.updateProfile.fn);
 
 };
 
