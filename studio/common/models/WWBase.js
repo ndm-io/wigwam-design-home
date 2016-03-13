@@ -51,4 +51,29 @@ Base.guid = function () {
 
 };
 
+Base.getSetHtml = function (html, headingKey) {
+    var base64Key = 'base64Encoded';
+
+    if (html) {
+        if (headingKey) {
+            this[headingKey] = this.headingFromHtml(html);
+        }
+
+        this[base64Key] = btoa(html.replace(/<p hidden>(.*?)<.p>/, '').replace(/[^\x00-\x7F]/g, ""));
+        this._html = undefined;
+    } else {
+        if (!this._html) this._html = atob(this[base64Key]);
+        return this._html;
+    }
+};
+
+Base.headingFromHtml = function (html) {
+    var hiddenMatches = html.match("<p hidden>(.*?)<.p>");
+    if (hiddenMatches && hiddenMatches.length > 0 && hiddenMatches[1] != '') return hiddenMatches[1].toLowerCase();
+
+    var matches = html.match("<h.>(.*?)<.h.>");
+    if (matches) return (matches.length > 0) ? matches[1].toLowerCase() : '';
+    return 'misc';
+};
+
 module.exports = Base;

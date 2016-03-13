@@ -13,6 +13,7 @@ User.prototype.initPrimitives = Base.initPrimitives;
 User.prototype.initFromJson = function (json) {
     this.initPrimitives(json);
     this.address = new Address(json.address);
+    this.profile = json.profile;
 };
 
 User.prototype.gravatar = function (size) {
@@ -25,18 +26,6 @@ User.prototype.gravatar = function (size) {
 
 User.prototype.hasVerifiedAddress = function () {
     return (this.address.isVerified());
-};
-
-User.prototype.profileForUpload = function () {
-    var r = {
-        firstname: this.profile.firstname || '',
-        surname: this.profile.surname || '',
-        email: this.email || '',
-        facebook: this.facebook || '',
-        twitter: this.twitter || '',
-        instagram: this.instagram || ''
-    };
-    return r;
 };
 
 module.exports = User;
