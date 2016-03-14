@@ -10,7 +10,8 @@ var CONSTANTS = (function () {
         geocode: API + 'geocode',
         reverse: API + 'reverse',
         updateAddress: API + 'updateaddress',
-        updateProfile: API + 'updateprofile'
+        updateProfile: API + 'updateprofile',
+        projects: API + 'projects'
     };
 }());
 

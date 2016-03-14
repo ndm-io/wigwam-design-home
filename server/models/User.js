@@ -7,7 +7,6 @@ var mongoose = require('mongoose'),
 var userSchema = new mongoose.Schema({
     email: {type: String, unique: true, lowercase: true},
     password: String,
-    phone: {type: String, default: ''},
     address: {
         address1: {type: String, default: ''},
         address2: {type: String, default: ''},
@@ -16,10 +15,6 @@ var userSchema = new mongoose.Schema({
         loc: GeoJSON.Feature
     },
     loc: GeoJSON.Feature,
-    facebook: String,
-    twitter: String,
-    google: String,
-    instagram: String,
     tokens: Array,
     settings: {
         messagePageSize: {type: Number, default: 5}
@@ -27,11 +22,17 @@ var userSchema = new mongoose.Schema({
     profile: {
         firstname: {type: String, default: ''},
         surname: {type: String, default: ''},
+        phone: {type: String, default: ''},
         company: {type: String, default: ''},
         gender: {type: String, default: ''},
         location: {type: String, default: ''},
         website: {type: String, default: ''},
-        picture: {type: String, default: ''}
+        picture: {type: String, default: ''},
+        facebook: {type: String, default: ''},
+        twitter: {type: String, default: ''},
+        google: {type: String, default: ''},
+        instagram: {type: String, default: ''},
+        preferredContact: {type: String, default: 'phone'}
     },
     authorizedRoutes: [String],
     isPrivileged: {type: Boolean, default: false},

@@ -14,6 +14,9 @@ require('leaflet');
 require('ui-leaflet');
 require('angular-simple-logger');
 
+marked = require('marked/lib/marked.js');
+require('angular-md/dist/angular-md');
+
 module.exports = angular.module('common',
     [
         'ui.bootstrap',
@@ -25,6 +28,7 @@ module.exports = angular.module('common',
         'ngResource',
         'ngSanitize',
         'restangular',
+        'yaru22.md',
         require('./constants').name,
         require('./directives').name,
         require('./resources').name,

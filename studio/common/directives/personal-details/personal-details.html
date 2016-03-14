@@ -1,4 +1,4 @@
-<div show-tab initial-active="name" class="tab-container tile media">
+<div show-tab initial-active="name" class="tab-container tile media" style="min-height: 300px">
 
     <ul class="tab pull-left tab-vertical nav nav-tabs" style="height: auto;">
         <li class="{{activeClass('name')}}">
@@ -7,14 +7,20 @@
         <li class="{{activeClass('location')}}">
             <a ng-click="click('location')">Location</a>
         </li>
-        <li class="{{activeClass('socialmedia')}}">
-            <a ng-click="click('socialmedia')">Social Media</a>
+        <li class="{{activeClass('contact')}}">
+            <a ng-click="click('contact')">Contact Details</a>
         </li>
     </ul>
 
     <div class="tab-content media-body">
         <div class="tab-pane {{activeClass('name')}}">
+
+            <div class="col-md-12">
+                <h3 class="block-title">Your Name</h3>
+            </div>
+
             <form class="form-horizontal" role="form">
+
                 <div class="form-group">
                     <label for="inputFirstname" class="col-md-2 control-label">First Name</label>
                     <div class="col-md-10">
@@ -25,6 +31,7 @@
                                ng-model="user.profile.firstname">
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="inputSurname" class="col-md-2 control-label">Surname</label>
                     <div class="col-md-10">
@@ -35,16 +42,7 @@
                                ng-model="user.profile.surname">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputEmail" class="col-md-2 control-label">Email Address</label>
-                    <div class="col-md-10">
-                        <input type="email"
-                               class="form-control input-sm"
-                               id="inputEmail"
-                               placeholder="..."
-                               ng-model="user.email">
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <button type="submit"
@@ -54,56 +52,115 @@
                         </button>
                     </div>
                 </div>
+
             </form>
         </div>
         <div class="tab-pane {{activeClass('location')}}">
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="block-title">Your Default Project Location</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 col-md-offset-1">
                     <address>
                         <span ng-repeat="line in user.address.address()">{{line}}<br></span>
                     </address>
                 </div>
             </div>
+
         </div>
-        <div class="tab-pane {{activeClass('socialmedia')}}">
+
+
+        <div class="tab-pane {{activeClass('contact')}}">
+
+            <div class="col-md-12">
+                <h3 class="block-title">Your Contact Details</h3>
+            </div>
+
             <form class="form-horizontal" role="form">
+
+                <div class="form-group">
+                    <label for="inputPhone" class="col-md-2 control-label">
+                        <span style="font-size: large"><i class="fa fa-phone-square"></i></span>
+                    </label>
+                    <div class="col-md-8">
+                        <input type="text"
+                               class="form-control input-sm {{preferred('phone')}}"
+                               id="inputPhone"
+                               placeholder="Mobile Phone"
+                               ng-model="user.profile.phone">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-sm btn-alt m-r-5" ng-click="user.profile.preferredContact = 'phone'">
+                            Choose
+                        </button>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="inputFacebook" class="col-md-2 control-label">
-                        <i class="fa fa-facebook-square"></i>
+                        <span style="font-size: large"><i class="fa fa-facebook-square"></i></span>
                     </label>
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         <input type="text"
-                               class="form-control input-sm"
+                               class="form-control input-sm {{preferred('facebook')}}"
                                id="inputFacebook"
                                placeholder="Facebook"
-                               ng-model="user.facebook">
+                               ng-model="user.profile.facebook">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-sm btn-alt m-r-5" ng-click="user.profile.preferredContact = 'facebook'">
+                            Choose
+                        </button>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="inputTwitter" class="col-md-2 control-label">
-                        <i class="fa fa-twitter-square"></i>
+                        <span style="font-size: large"><i class="fa fa-twitter-square"></i></span>
                     </label>
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         <input type="text"
-                               class="form-control input-sm"
+                               class="form-control input-sm {{preferred('twitter')}}"
                                id="inputTwitter"
                                placeholder="Twitter"
-                               ng-model="user.twitter">
+                               ng-model="user.profile.twitter">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-sm btn-alt m-r-5" ng-click="user.profile.preferredContact = 'twitter'">
+                            Choose
+                        </button>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="inputInstagram" class="col-md-2 control-label">
-                        <i class="fa fa-instagram"></i>
+                        <span style="font-size: large"><i class="fa fa-instagram"></i></span>
                     </label>
-                    <div class="col-md-10">
+                    <div class="col-md-8">
                         <input type="text"
-                               class="form-control input-sm"
+                               class="form-control input-sm {{preferred('instagram')}}"
                                id="inputInstagram"
                                placeholder="Instagram"
-                               ng-model="user.instagram">
+                               ng-model="user.profile.instagram">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-sm btn-alt m-r-5" ng-click="user.profile.preferredContact = 'instagram'">
+                            Choose
+                        </button>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-3">
+                        <p>
+                            You prefer us to contact you by {{user.profile.preferredContact}}
+                        </p>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <button type="submit"
@@ -113,6 +170,7 @@
                         </button>
                     </div>
                 </div>
+
             </form>
         </div>
     </div>

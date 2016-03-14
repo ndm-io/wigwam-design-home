@@ -4,6 +4,7 @@
 
 module.exports = angular.module('common.services', [])
     .factory('DataFactory', require('./DataFactory.js'))
+    .factory('MetricFactory', require('./MetricFactory.js'))
     .factory('CommsFactory', require('./CommsFactory.js'))
     .factory('AuthService', require('./AuthService.js'))
     .factory('SessionService', require('./SessionService.js'))

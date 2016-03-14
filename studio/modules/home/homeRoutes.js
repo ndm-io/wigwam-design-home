@@ -33,6 +33,17 @@ function homeRoutes($stateProvider, USER_ROLES) {
         template: '<div messages-view></div>'
     };
 
+    var message = {
+        name: 'home.message',
+        params: {
+            messageGuid: null,
+            projectGuid: null,
+            message: null
+        },
+        parent: home,
+        template: '<div message-view></div>'
+    };
+
     var calendar = {
         name: 'home.calendar',
         parent: home,
@@ -42,6 +53,7 @@ function homeRoutes($stateProvider, USER_ROLES) {
     $stateProvider.state(home);
     $stateProvider.state(dash);
     $stateProvider.state(messages);
+    $stateProvider.state(message);
     $stateProvider.state(profile);
     $stateProvider.state(calendar);
 

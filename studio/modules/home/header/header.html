@@ -7,7 +7,7 @@
             <div class="pull-left tm-icon">
                 <a data-drawer="messages" class="drawer-toggle" ui-sref="home.messages">
                     <i class="sa-top-message"></i>
-                    <i class="n-count animated">5</i>
+                    <i class="n-count animated" ng-show="unreadMessages() > 0">{{unreadMessages()}}</i>
                     <span>Messages</span>
                 </a>
             </div>

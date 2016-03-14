@@ -1,6 +1,6 @@
 'use strict';
 
-var Promise = require('promise');
+//var Promise = require('promise');
 var $ = require('jquery');
 
 var CommsFactory = function ($rootScope, $http, ROUTES) {
@@ -31,17 +31,22 @@ var CommsFactory = function ($rootScope, $http, ROUTES) {
         updateAddress: function (address) {
             return http.post(ROUTES.updateAddress, {address: address}, {})
                 .then(function (response) {
-                    console.log(response);
                     return response.data;
                 });
         },
         updateProfile: function (data) {
-            return http.post(ROUTES.updateProfile, {data: data}, {})
+            return http.post(ROUTES.updateProfile, {profile: data}, {})
+                .then(function (response) {
+                    return response.data;
+                });
+        },
+        projects: function () {
+            return http.get(ROUTES.projects)
                 .then(function (response) {
                     return response.data;
                 });
         }
-    }
+    };
 
 };
 

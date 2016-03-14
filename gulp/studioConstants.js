@@ -52,7 +52,8 @@ var paths = {
             './bower_components/bootstrap/dist/js/bootstrap.js',
             './bower_components/domready/ready.js',
             './bower_components/lodash/lodash.js',
-            './bower_components/restangular/dist/restangular.js'
+            './bower_components/restangular/dist/restangular.js',
+            './bower_components/angular-md/dist/angular-md.min.js'
         ],
         dest:'server/public/js'
     },

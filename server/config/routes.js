@@ -8,6 +8,7 @@ var loginController = require('../modules/studio/loginController');
 var geocodeController = require('../modules/studio/geocodeController');
 
 var userController = require('../modules/studio/userController');
+var apiController = require('../modules/studio/apiController');
 
 //var apiController = require('../controllers/api');
 //var tweetController = require('../controllers/tweet');
@@ -79,6 +80,11 @@ var urls = {
         url: apiPrefix + 'updateprofile',
         role: roles.anon,
         fn: userController.updateProfile
+    },
+    projects: {
+        url: apiPrefix + 'projects',
+        role: roles.anon,
+        fn: apiController.projects
     }
 };
 
@@ -110,6 +116,8 @@ exports.initRoutes = function (app, passport, passportConf, io) {
 
     app.post(urls.updateAddress.url, passportConf.isAuthenticated, urls.updateAddress.fn);
     app.post(urls.updateProfile.url, passportConf.isAuthenticated, urls.updateProfile.fn);
+
+    app.get(urls.projects.url, passportConf.isAuthenticated, urls.projects.fn);
 
 };
 

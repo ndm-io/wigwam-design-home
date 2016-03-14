@@ -1,0 +1,44 @@
+<h4 class="page-title b-0">Messages</h4>
+
+<div class="listview list-click">
+    <header class="listview-header media">
+        <ul class="list-inline pull-right m-t-5 m-b-0">
+            <li class="pagin-value hidden-xs">35-70</li>
+            <li>
+                <a href="" ui-sref="home.messages" title="Previous" class="tooltips">
+                    <i class="sa-list-back"></i>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="list-inline list-mass-actions pull-left">
+            <li class="m-r-10">
+                <a href="" ui-sref="home.messages" title="Back to Inbox" class="tooltips">
+                    <i class="sa-list-back"></i>
+                </a>
+            </li>
+
+        </ul>
+
+        <div class="clearfix"></div>
+    </header>
+
+    <h2 class="page-title">Re: Regarding website updates</h2>
+
+    <div class="media message-header o-visible">
+        <img src="img/profile-pics/6.jpg" alt="" class="pull-left" width="40">
+        <div class="media-body">
+            <span class="f-bold pull-left m-b-5">{{message.createdBy}}</span>
+            <div class="clearfix"></div>
+                            <span class="dropdown m-t-5">
+                                To <a href="" class="underline">Me</a> on 12th February 2014
+                            </span>
+        </div>
+    </div>
+
+    <div class="p-15">
+        <md ng-model="html"></md>
+    </div>
+
+    <hr class="whiter">
+</div>
