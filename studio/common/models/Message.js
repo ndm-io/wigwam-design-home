@@ -69,12 +69,20 @@ Message.prototype.resetSummary = function () {
     this._summary = undefined;
 };
 
+Message.prototype.rankTokens = (function () {
+    var textRank = new TextRank();
+    return function (tokens) {
+        var graph = textRank.sentExGraph(tokens);
+        return textRank.rank(graph, 40);
+    };
+}());
+
 Message.prototype.summary = function (snippet_length) {
     var ret;
     if (!this._summary) {
         var tokens = this.tokens();
-        var graph = TextRank.sentExGraph(tokens);
-        var ws = TextRank.rank(graph, 40);
+        var ws = this.rankTokens(tokens);
+
         if (ws.length > 0) {
             this._summary = ws[0].name.join(' ');
             ret = this._summary;
@@ -108,7 +116,7 @@ Message.prototype.tokens = function () {
 };
 
 Message.prototype.sentences = function () {
-    return nlp.pos(this.text()).sentences;
+    return nlp.text(this.text()).sentences;
 };
 
 Message.prototype.sentencesAsText = function () {
@@ -120,7 +128,7 @@ Message.prototype.sentencesAsText = function () {
 };
 
 Message.prototype.sentenceTokens = function (sentence) {
-    return sentence.tokens.map(function (t) {
+    return sentence.terms.map(function (t) {
         return t.text;
     });
 };

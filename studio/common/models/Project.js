@@ -1,6 +1,8 @@
 var Base = require('./WWBase.js');
 var Message = require('./Message');
 var Feature = require('./Feature');
+var Client = require('./User');
+
 
 function Project() {
     this.guid = Base.guid();
@@ -44,7 +46,7 @@ Project.prototype.initAsConcept = function (user) {
 Project.prototype.initFromJson = function (json) {
     if (!json) return;
     this.initPrimitives(json);
-    //this.initArrayProperty('clients', json.clients, Client);
+    this.initArrayProperty('clients', json.clients, Client);
     //this.initArrayProperty('tasks', json.tasks, Task);
     //this.initArrayProperty('events', json.events, Task);
     this.initArrayProperty('messages', json.messages, Message);
