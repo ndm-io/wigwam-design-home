@@ -31,7 +31,7 @@
             </li>
         </ul>
 
-        <input class="input-sm col-md-4 pull-right message-search" type="text" placeholder="Search....">
+        <input class="input-sm col-md-4 pull-right message-search" type="text" ng-model="search.$" placeholder="Search....">
 
         <div class="clearfix"></div>
     </header>
@@ -41,7 +41,7 @@
 <div class="message-list list-container" ng-repeat="project in projects">
     <h3 class="block-title">{{project.name || "Your Concept"}}</h3>
     <h3 class="block-title">{{project.guid}}</h3>
-    <div class="media" ng-repeat="message in project.messages">
+    <div class="media" ng-repeat="message in project.messages | filter:search:strict">
         <a class="media-body" href="" ui-sref="home.message({messageGuid: message.guid, projectGuid: project.guid, message:message})">
             <div class="pull-left list-title">
                 <span class="t-overflow f-bold">{{message.createdBy}}</span>
