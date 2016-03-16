@@ -28,4 +28,10 @@ User.prototype.hasVerifiedAddress = function () {
     return (this.address.isVerified());
 };
 
+User.prototype.formattedName = function () {
+    var fullname = this.profile.firstname + ' ' + this.profile.surname;
+    if (fullname.length > 1) return fullname;
+    return this.email;
+};
+
 module.exports = User;

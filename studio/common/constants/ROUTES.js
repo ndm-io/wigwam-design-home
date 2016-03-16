@@ -6,6 +6,7 @@ var CONSTANTS = (function () {
         login: API + 'login',
         logout: API + 'logout',
         profile: 'profile',
+        sendToken: API + 'sendtoken',
         ukChart: '/html/json/uk.topojson',
         geocode: API + 'geocode',
         reverse: API + 'reverse',

@@ -1,67 +1,60 @@
-<section id="login" ng-controller="LoginCtrl">
-    <header>
-        <h1>WIGWAM DESIGN STUDIO</h1>
-    </header>
+<header id="header" class="media">
+    <a href="" id="menu-toggle"></a>
+    <a class="logo pull-left" ui-sref="home">Wigwam Design Studio</a>
 
-    <!-- Alert -->
-    <div ng-show="showAlert()" class="alert alert-danger">
-        Oh snap! Change a few things up and try submitting again.
+    <div class="media-body">
+        <div class="media" id="top-menu">
+
+            <div id="time" class="pull-right">
+                <span id="hours"></span>
+                :
+                <span id="min"></span>
+                :
+                <span id="sec"></span>
+            </div>
+
+
+        </div>
     </div>
+</header>
+<aside id="sidebar">
 
-    <div class="clearfix"></div>
+    <div class="side-widgets overflow">
+        <div class="s-widget m-b-25">
+            <p class="text-center">
+                <span style="font-size: x-large"> <i class="fa fa-lock"></i> </span>
+            </p>
+        </div>
 
-    <!-- Login -->
-    <iframe src="" name="sink"
-            style="display:none"></iframe>
-        <form class="box tile animated {{active('login')}}" id="box-login"
-              action="" target="sink" method="post"
-              ng-submit="submit(credentials)" novalidate form-autofill-fix>
+    </div>
+    <ul class="list-unstyled side-menu">
+    </ul>
 
-            <h2 class="m-t-0 m-b-15">Login</h2>
-            <input type="text" class="login-control m-b-10" placeholder="Email Address"
-                   ng-model="credentials.email">
-            <input type="password" class="login-control" placeholder="Password"
-                   ng-model="credentials.password">
+</aside>
+<section id="content" ng-controller="LoginCtrl">
 
-            <div class="space-sep20">&nbsp;</div>
+    <div class="block-area">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="tile">
+                    <h2 class="tile-title">LOGIN</h2>
+                    <div class="p-10">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="inputEmail" class="col-md-2 control-label">Email</label>
+                                <input type="email" class="form-control input-sm" id="inputEmail"
+                                       placeholder="Email">
 
-            <button class="btn btn-sm m-r-5" type="submit">Sign In</button>
-
-            <small>
-                <a class="box-switcher" data-switch="box-register" ng-click="setBox('register')">Don't have an Account?</a>
-                or
-                <a class="box-switcher" data-switch="box-reset" ng-click="setBox('forgot')">Forgot Password?</a>
-            </small>
-        </form>
-    </iframe>
-
-    <!-- Register -->
-    <form class="box animated tile {{active('register')}}" id="box-register">
-        <h2 class="m-t-0 m-b-15">Register</h2>
-        <input type="text" class="login-control m-b-10" placeholder="Full Name">
-        <input type="text" class="login-control m-b-10" placeholder="Username">
-        <input type="email" class="login-control m-b-10" placeholder="Email Address">
-        <input type="password" class="login-control m-b-10" placeholder="Password">
-        <input type="password" class="login-control m-b-20" placeholder="Confirm Password">
-
-        <button class="btn btn-sm m-r-5">Register</button>
-
-        <small><a class="box-switcher" data-switch="box-login" ng-click="setBox('login')">Already have an Account?</a>
-        </small>
-    </form>
-
-    <!-- Forgot Password -->
-    <form class="box animated tile {{active('forgot')}}" id="box-reset">
-        <h2 class="m-t-0 m-b-15">Reset Password</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu risus. Curabitur commodo lorem
-            fringilla enim feugiat commodo sed ac lacus.</p>
-        <input type="email" class="login-control m-b-20" placeholder="Email Address">
-
-        <button class="btn btn-sm m-r-5">Reset Password</button>
-
-        <small><a class="box-switcher" data-switch="box-login" ng-click="setBox('login')">Already have an Account?</a>
-        </small>
-    </form>
-
-
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-sm m-r-5"
+                                        ng-click="submit(credentials)">Sign In
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

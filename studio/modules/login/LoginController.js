@@ -2,35 +2,27 @@
 
 function LoginCtrl($scope, $rootScope, AuthService, AUTH_EVENTS, $state) {
     var vm = $scope,
-        box = 'login',
         status = 'waiting';
 
     vm.credentials = {
-        email: '',
-        password: ''
-    };
-
-    vm.active = function (type) {
-        return (type === box) ? 'active' : '';
-    };
-
-    vm.setBox = function (type) {
-        box = type;
+        user: ''
     };
 
     vm.submit = function (credentials) {
-        AuthService.login(credentials).then(function (user) {
-            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, user);
-            $state.go('home');
-        }, function () {
-            $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-            status = 'error';
-        });
+        AuthService.sendToken(credentials)
+            .then(function (response) {
+                //TODO change state
+                console.log('login ctrl success change state', response);
+            }, function (err) {
+                console.log('login ctrl error', err);
+                $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+                status = 'error';
+            });
     };
 
     vm.showAlert = function () {
         return (status === 'error');
-    }
+    };
 }
 
 LoginCtrl.$inject = ['$scope', '$rootScope', 'AuthService', 'AUTH_EVENTS', '$state'];

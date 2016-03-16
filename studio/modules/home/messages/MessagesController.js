@@ -10,7 +10,7 @@ var HomeMessagesController = function ($scope, DataFactory, MetricFactory) {
 
     DataFactory.projects()
         .then(function (projects) {
-           vm.projects = projects;
+            vm.projects = projects;
         });
 
     vm.refresh = function () {
@@ -18,7 +18,7 @@ var HomeMessagesController = function ($scope, DataFactory, MetricFactory) {
     };
 
     vm.totalMessageCount = function () {
-       return MetricFactory.totalMessages();
+        return MetricFactory.totalMessages();
     };
 
 };

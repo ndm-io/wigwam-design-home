@@ -8,27 +8,31 @@ var AuthService = function (CommsFactory, SessionService, ROUTES, USER_ROLES) {
     authService.profile = function () {
 
         if (SessionService.user) {
+            console.log('returning fom cache: ', SessionService.user);
             return Promise.resolve(SessionService.user);
         }
         return CommsFactory.http
             .get(ROUTES.profile)
             .then(function (res) {
+                console.log('creating: ', res.data);
                 return SessionService.create(res.data);
             });
     };
 
-    authService.login = function (credentials) {
+    authService.sendToken = function (credentials) {
+        console.log('attempting to cause a tokento be sent');
         return CommsFactory.http
-            .post(ROUTES.login, credentials)
-            .then(function (res) {
-                SessionService.create(res.data);
-                return res.data;
+            .post(ROUTES.sendToken, credentials)
+            .then(function (response) {
+                console.log('send token resposne', response);
+                return response;
             });
     };
 
     authService.logout = function () {
+
         return CommsFactory.http
-            .post(ROUTES.logout, {})
+            .post(ROUTES.logout)
             .then(function (res) {
                 SessionService.destroy();
                 return res.data;
