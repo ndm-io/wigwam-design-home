@@ -39,19 +39,19 @@
                 <div class="tile">
                     <h2 class="tile-title">LOGIN</h2>
                     <div class="p-10">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label for="inputEmail" class="col-md-2 control-label">Email</label>
-                                <input type="email" class="form-control input-sm" id="inputEmail"
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <input class="form-control input-lg m-b-10"
+                                       type="email"
+                                       ng-model="credentials.user"
                                        placeholder="Email">
-
                             </div>
-                            <div class="form-group">
-                                <button class="btn btn-sm m-r-5"
-                                        ng-click="submit(credentials)">Sign In
-                                </button>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-lg btn-alt m-r-5" ng-click="submit(credentials)">Login</button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
