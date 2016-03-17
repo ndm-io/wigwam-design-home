@@ -55,6 +55,26 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="tile">
+                    <h2 class="tile-title">INFO</h2>
+                    <div class="p-10">
+                        <p>
+                            {{message}}
+                        </p>
+                        <p class="text-center">
+                            <span style="font-size: x-large">
+                                <span ng-switch="state">
+                                    <span ng-switch-when="success"><i class="fa fa-thumbs-o-up"></i> </span>
+                                    <span ng-switch-when="error"><i class="fa fa-exclamation"></i></span>
+                                    <span ng-switch-when="invalid"><i class="fa fa-thumbs-o-down"></i></span>
+                                    <span ng-switch-default><i class="fa fa-ellipsis-h"></i></span>
+                                </span>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

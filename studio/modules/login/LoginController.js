@@ -1,29 +1,37 @@
 'use strict';
 
-function LoginCtrl($scope, $rootScope, AuthService, AUTH_EVENTS, $state) {
+var Messages = require('./login-messages');
+var emailValidator = require('../../../server/modules/email-validator');
+
+function LoginCtrl($scope, AuthService) {
     var vm = $scope,
-        status = 'waiting';
+        msgs = Messages;
 
     vm.credentials = {
         user: ''
     };
 
-    vm.submit = function (credentials) {
-        AuthService.sendToken(credentials)
-            .then(function (response) {
-                //TODO change state
-                console.log('login ctrl success change state', response);
-            }, function (err) {
-                console.log('login ctrl error', err);
-                $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-                status = 'error';
-            });
-    };
+    vm.message = msgs.info;
+    vm.state = 'waiting';
 
-    vm.showAlert = function () {
-        return (status === 'error');
+    vm.submit = function (credentials) {
+        if (!emailValidator(credentials.user)) {
+            vm.message = msgs.invalid;
+            vm.state = 'invalid';
+            return;
+        }
+
+        AuthService.sendToken(credentials)
+            .then(function () {
+                vm.message = msgs.success;
+                vm.state = 'success';
+                vm.credentials.user = '';
+            }, function () {
+                vm.message = msgs.error;
+                vm.state = 'error';
+            });
     };
 }
 
-LoginCtrl.$inject = ['$scope', '$rootScope', 'AuthService', 'AUTH_EVENTS', '$state'];
+LoginCtrl.$inject = ['$scope', 'AuthService'];
 module.exports = LoginCtrl;
