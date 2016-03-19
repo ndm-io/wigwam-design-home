@@ -157,6 +157,7 @@
     "simple-recaptcha": "*",
     "socket.io": "*",
     "stripe": "^2.8.0",
+    "swig-email-templates": "^2.0.0",
     "topojson": "^1.6.24",
     "trim": "*",
     "tumblr.js": "^0.0.4",

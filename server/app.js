@@ -14,7 +14,7 @@ var methodOverride = require('method-override');
 
 var _ = require('lodash');
 var MongoStore = require('connect-mongo')(session);
-var flash = require('express-flash');
+//var flash = require('express-flash');
 var path = require('path');
 var mongoose = require('mongoose');
 var expressValidator = require('express-validator');
@@ -30,8 +30,8 @@ var userController = require('./modules/studio/userController');
  */
 var secrets = require('./config/secrets');
 var routes = require('./config/routes');
-var CONST = require('./config/constants.js');
-var root = {root: CONST.HTMLDIR()};
+//var CONST = require('./config/constants.js');
+//var root = {root: CONST.HTMLDIR()};
 
 /**
  * Create Express server.
@@ -60,13 +60,10 @@ var csrfExclude = ['/incoming'];
  * Passwordless Init
  */
 
+var delivery = require('./modules/delivery');
 passwordless.init(new PasswordlessMongoStore(secrets.passwordless), {userProperty: 'pUser'});
-passwordless.addDelivery(
-    function (tokenToSend, uidToSend, recipient, callback) {
-        var text = secrets.host() + '?token=' + tokenToSend + '&uid=' + encodeURIComponent(uidToSend);
-        console.log('send token', text);
-        callback();
-    });
+passwordless.addDelivery(delivery);
+
 /**
  * Express configuration.
  */
@@ -95,7 +92,7 @@ app.use(session({
 }));
 
 
-app.use(flash());
+//app.use(flash());
 app.use(function (req, res, next) {
     // CSRF protection.
     if (_.contains(csrfExclude, req.path)) return next();

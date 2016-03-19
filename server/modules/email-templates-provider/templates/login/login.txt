@@ -1,0 +1,9 @@
+Welcome to Wigwam Design.
+
+Passwords are difficult to remember and generally insecure.
+So instead we confirm your identity by using something which you own, your email address.
+
+All you have to do is click the link below and you will be securely logged in.
+This link can only be used once and expires soon. Don't worry though you can always request another one.
+
+{{link}}

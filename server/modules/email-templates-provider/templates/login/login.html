@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Wigwam Design</title>
+    <link href="./login/login-style.css" media="all" rel="stylesheet" type="text/css" />
+</head>
+
+<body itemscope itemtype="http://schema.org/EmailMessage">
+
+<table class="body-wrap">
+    <tr>
+        <td></td>
+        <td class="container" width="600">
+            <div class="content">
+                <table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="action" itemscope itemtype="http://schema.org/ConfirmAction">
+                    <tr>
+                        <td class="content-wrap">
+                            <meta itemprop="name" content="Confirm Email"/>
+                            <table width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td class="content-block">
+                                        <img src="./login/logo_wigwam_email_150x137.png">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block">
+                                        <p>
+                                            Welcome to Wigwam Design
+                                        </p>
+                                        <p>
+                                            Passwords are difficult to remember and generally insecure. So instead
+                                            we confirm your identity by using something which you own, your email address.
+                                        </p>
+                                        <p>
+                                            All you have to do is click the link below and you will be securely logged in. This
+                                            link can only be used once and expires soon. Don't worry though you can always
+                                            request another one.
+                                        </p>
+                                        <p>
+                                            If you didn't request a login to our site then we are very sorry. Somebody
+                                            has attempted to login with your email address. Don't worry they won't get
+                                            very far, if they try again our system should catch them at it.
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">
+                                        <a href="{{link}}" class="btn-primary" itemprop="url">&#x1f512; Secure Login</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block">
+                                        <p>
+                                            {{link}}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+                <div class="footer">
+                    <table width="100%">
+                        <tr>
+                            <td class="aligncenter content-block">Follow <a href="{{identities.twitter.url}}">{{identities.twitter.handle}}</a> on Twitter.</td>
+                        </tr>
+                    </table>
+                </div></div>
+        </td>
+        <td></td>
+    </tr>
+</table>
+
+</body>
+</html>
