@@ -1,8 +1,8 @@
 var serverDir = 'server',
-    publicDir = serverDir + '/public';
+    publicDir = serverDir + '/public',
+    secrets = require('./secrets');
 
 var constants = {
-
     apiPrefix: '/api/v1/',
     consts:  {
         htmlDir : function () {
@@ -17,6 +17,12 @@ var constants = {
         guest: 1,
         editor: 2,
         admin: 3
+    },
+    identities: {
+        twitter: {
+            handle:'@SJIDesign',
+            url:'http://www.twitter.com/sjidesign'
+        }
     }
 };
 
@@ -29,6 +35,8 @@ module.exports.HTMLDIR = function () {
 module.exports.STUDIODIR = function () {
     return constants.consts.studioDir();
 };
+
+module.exports.identities = constants.identities;
 
 module.exports.ROLES = constants.roles;
 

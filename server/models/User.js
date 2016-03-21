@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
     crypto = require('crypto'),
     GeoJSON = require('mongoose-geojson-schema');
-   // _ = require('lodash');
+// _ = require('lodash');
 
 var userSchema = new mongoose.Schema({
     email: {type: String, unique: true, lowercase: true},
@@ -17,7 +17,8 @@ var userSchema = new mongoose.Schema({
     loc: GeoJSON.Feature,
     tokens: Array,
     settings: {
-        messagePageSize: {type: Number, default: 5}
+        messagePageSize: {type: Number, default: 5},
+        startState: {type: String, default: 'home.dashboard'}
     },
     profile: {
         firstname: {type: String, default: ''},

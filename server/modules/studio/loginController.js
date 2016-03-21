@@ -1,9 +1,17 @@
 
+var emailValidator = require('../email-validator');
 
 exports.sendToken = function (passwordless) {
     return function (req, res, next) {
-        return passwordless.requestToken(function (user, delivery, callback) {
-            callback(null, user);
+        return passwordless.requestToken(function (user, delivery, callback, req) {
+
+           emailValidator(user)
+               .then(function (email) {
+                   callback(null, email);
+               })
+               .catch(function () {
+                   callback(null, null);
+               });
 
         })(req, res, next);
     };

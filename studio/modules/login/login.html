@@ -35,43 +35,43 @@
 
     <div class="block-area">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="tile">
                     <h2 class="tile-title">LOGIN</h2>
                     <div class="p-10">
                         <div class="row">
-                            <div class="col-md-10 col-md-offset-1">
-                                <input class="form-control input-lg m-b-10"
-                                       type="email"
-                                       ng-model="credentials.user"
-                                       placeholder="Email">
+                            <div class="col-md-8">
+                               <div class="row">
+                                   <div class="col-md-12">
+                                       <input class="form-control input-lg m-b-10"
+                                              type="email"
+                                              ng-model="credentials.user"
+                                              placeholder="Email">
+                                   </div>
+                               </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <button class="btn btn-lg btn-alt m-r-5" ng-click="submit(credentials)">Login</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                                <button class="btn btn-lg btn-alt m-r-5" ng-click="submit(credentials)">Login</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="tile">
-                    <h2 class="tile-title">INFO</h2>
-                    <div class="p-10">
-                        <p>
-                            {{message}}
-                        </p>
-                        <p class="text-center">
+                            <div class="col-md-4">
+                                <p>
+                                    {{log.message}}
+                                </p>
+                                <p class="text-center">
                             <span style="font-size: x-large">
-                                <span ng-switch="state">
+                                <span ng-switch="log.state">
                                     <span ng-switch-when="success"><i class="fa fa-thumbs-o-up"></i> </span>
+                                    <span ng-switch-when="sending"><i class="fa fa-tasks"></i> </span>
                                     <span ng-switch-when="error"><i class="fa fa-exclamation"></i></span>
                                     <span ng-switch-when="invalid"><i class="fa fa-thumbs-o-down"></i></span>
                                     <span ng-switch-default><i class="fa fa-ellipsis-h"></i></span>
                                 </span>
                             </span>
-                        </p>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

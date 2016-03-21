@@ -1,13 +1,17 @@
 
-var Promise = require('promise'),
-    EmailTemplates = require('swig-email-templates');
+var Promise         = require('promise'),
+    EmailTemplates  = require('swig-email-templates'),
+    identities      = require('../../config/constants').identities,
+    templates       = new EmailTemplates({root:'./server/modules/email-templates-provider/templates/'});
 
-var templates = new EmailTemplates({root:'./server/modules/email-templates-provider/templates/'});
+var urls = {
+    login:'./login/login.html'
+};
 
-exports.loginEmail = function (data) {
-
+var renderTemplate = function (tmpl, data) {
     return new Promise(function (resolve, reject) {
-        templates.render('login.html', data, function(err, html, text) {
+        data.identities = identities;
+        templates.render(tmpl, data, function(err, html, text) {
             if (err) {
                 reject(Error('Unable to render'));
             } else {
@@ -15,4 +19,8 @@ exports.loginEmail = function (data) {
             }
         });
     });
+};
+
+exports.loginEmail = function (data) {
+    return renderTemplate(urls.login, data);
 };

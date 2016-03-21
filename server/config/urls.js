@@ -49,11 +49,6 @@ module.exports = {
         role: roles.anon,
         fn: geocodeController.reverse
     },
-    login: {
-        url: apiPrefix + 'login',
-        role: roles.anon,
-        fn: loginController.login
-    },
     logout: {
         url: apiPrefix + 'logout',
         role: roles.anon,

@@ -6,12 +6,12 @@ var validateEmail = require('../email-validator');
 var updateUserObj = function (obj, key, req, res) {
     User.findById(req.user.id, function (err, user) {
         if (err) {
-            res.send({error:err});
+            res.send({error: err});
         } else {
             user[key] = obj;
-            user.save(function(err) {
+            user.save(function (err) {
                 if (err) return;
-                res.send({status:'success'});
+                res.send({status: 'success'});
             });
         }
     });
@@ -28,17 +28,25 @@ exports.updateProfile = function (req, res) {
 };
 
 exports.userMiddleware = function (req, res, next) {
-    if (req.pUser && validateEmail(req.pUser)) {
-        User.findOne({email: req.pUser}, function (err, user) {
-            if (!user) {
-                user = new User({email:req.pUser});
-                user.save();
-            }
-            req.user = user;
+
+    if (!req.pUser) {
+        next();
+        return;
+    }
+
+    validateEmail(req.pUser)
+        .then(function (email) {
+            User.findOne({email: email}, function (err, user) {
+                if (!user) {
+                    user = new User({email: req.pUser});
+                    user.save();
+                }
+                req.user = user;
+                next();
+            });
+        })
+        .catch(function (err) {
             next();
         });
-    } else {
-        next();
-    }
 
 };

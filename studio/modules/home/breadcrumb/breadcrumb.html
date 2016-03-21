@@ -1,6 +1,6 @@
 <!-- Breadcrumb -->
 <ol class="breadcrumb hidden-xs">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Library</a></li>
-    <li class="active">Data</li>
+    <li ng-repeat="crumb in breadcrumbs">
+        {{crumb.name}}
+    </li>
 </ol>

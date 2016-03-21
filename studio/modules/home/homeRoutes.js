@@ -15,8 +15,8 @@ function homeRoutes($stateProvider, USER_ROLES) {
         }
     };
 
-    var dash = {
-        name: 'home.dash',
+    var dashboard = {
+        name: 'home.dashboard',
         parent: home,
         template: '<div dash-view></div>'
     };
@@ -51,7 +51,7 @@ function homeRoutes($stateProvider, USER_ROLES) {
     };
 
     $stateProvider.state(home);
-    $stateProvider.state(dash);
+    $stateProvider.state(dashboard);
     $stateProvider.state(messages);
     $stateProvider.state(message);
     $stateProvider.state(profile);

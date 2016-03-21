@@ -1,6 +1,6 @@
 var secrets = require('../../config/secrets');
 var emailProvider = require('../email-templates-provider');
-var fs = require('fs');
+var emailer = require('../emailer');
 
 module.exports = function (tokenToSend, uidToSend, recipient, callback) {
     var link = secrets.host() + '?token=' + tokenToSend + '&uid=' + encodeURIComponent(uidToSend);
@@ -10,14 +10,17 @@ module.exports = function (tokenToSend, uidToSend, recipient, callback) {
 
     emailProvider.loginEmail(ctx)
         .then(function (emailData) {
-            fs.writeFile('./html.html', emailData.html, 'utf8', function (err){
-                console.log(err);
-                callback();
-            });
-
+            return {
+                to: uidToSend,
+                from: "'Wigwam' <noreply@wigwam.design>",
+                subject: 'One time login code',
+                html: emailData.html,
+                text: emailData.text
+            };
         })
-        .catch(function (err) {
-            console.log(err);
-        });
+        .then(emailer.sendMail)
+        .then(callback)
+        .catch(callback);
+
 
 };
