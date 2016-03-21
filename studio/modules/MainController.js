@@ -21,9 +21,6 @@ function MainCtrl($scope, USER_ROLES, AuthService, SessionService, $state, $time
             });
         });
 
-    SessionService.onReady(function (user) {
-        console.log('fn version', user);
-    });
 }
 
 MainCtrl.$inject = ['$scope', 'USER_ROLES', 'AuthService', 'SessionService', '$state', '$timeout'];

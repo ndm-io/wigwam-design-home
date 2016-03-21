@@ -1,17 +1,19 @@
-
 var emailValidator = require('../email-validator');
 
 exports.sendToken = function (passwordless) {
     return function (req, res, next) {
         return passwordless.requestToken(function (user, delivery, callback, req) {
-
-           emailValidator(user)
-               .then(function (email) {
-                   callback(null, email);
-               })
-               .catch(function () {
-                   callback(null, null);
-               });
+            emailValidator(user)
+                .then(function (email) {
+                    // produce the new token for user
+                    return email;
+                })
+                .then(function (email) {
+                    callback(null, email);
+                })
+                .catch(function () {
+                    callback(null, null);
+                });
 
         })(req, res, next);
     };
@@ -29,14 +31,16 @@ exports.profile = function (req, res) {
     }
 };
 
-exports.login = function (req, res) {
-    res.send(req.user.model());
-};
+//exports.login = function (req, res) {
+//    res.send(req.user.model());
+//};
 
 exports.logout = function (passwordless) {
-   return function (req, res, next) {
-       req.session.destroy();
-       passwordless.logout();
-       res.sendStatus(200);
-   };
+    return function (req, res, next) {
+        req.session.destroy();
+        passwordless.logout();
+        req.user.ioToken = undefined;
+        req.user.save();
+        res.sendStatus(200);
+    };
 };

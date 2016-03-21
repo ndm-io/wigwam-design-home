@@ -14,19 +14,29 @@ var methodOverride = require('method-override');
 
 var _ = require('lodash');
 var MongoStore = require('connect-mongo')(session);
-//var flash = require('express-flash');
+
 var path = require('path');
 var mongoose = require('mongoose');
 var expressValidator = require('express-validator');
 var connectAssets = require('connect-assets');
 
-// Passwordless dependencies
+/**
+ * Passwordless dependencies
+ */
+
 
 var passwordless = require('passwordless');
 var PasswordlessMongoStore = require('passwordless-mongostore');
 var userController = require('./modules/studio/userController');
 
-/** API keys and Passport configuration.
+/**
+ * Socket IO
+ */
+
+var IORouter = require('./modules/IORouter');
+
+/**
+ * API keys
  */
 var secrets = require('./config/secrets');
 var routes = require('./config/routes');
@@ -92,7 +102,6 @@ app.use(session({
 }));
 
 
-//app.use(flash());
 app.use(function (req, res, next) {
     // CSRF protection.
     if (_.contains(csrfExclude, req.path)) return next();
@@ -122,6 +131,13 @@ app.use(express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
  */
 
 routes.initRoutes(app, passwordless);
+
+IORouter.initIO(http);
+
+/**
+ * Error handling routes
+ */
+
 
 // Handle 404
 app.use(function (req, res) {

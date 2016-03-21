@@ -9,4 +9,5 @@ module.exports = angular.module('common.services', [])
     .factory('AuthService', require('./AuthService.js'))
     .factory('SessionService', require('./SessionService.js'))
     .factory('AuthInterceptor', require('./AuthInterceptor.js'))
-    .factory('GeocodeFactory', require('./GeocodeFactory.js'));
+    .factory('GeocodeFactory', require('./GeocodeFactory.js'))
+    .factory('IOFactory', require('./IOFactory.js'));
