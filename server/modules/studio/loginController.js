@@ -5,13 +5,10 @@ exports.sendToken = function (passwordless) {
         return passwordless.requestToken(function (user, delivery, callback, req) {
             emailValidator(user)
                 .then(function (email) {
-                    // produce the new token for user
-                    return email;
-                })
-                .then(function (email) {
                     callback(null, email);
                 })
-                .catch(function () {
+                .catch(function (err) {
+                    console.log(err);
                     callback(null, null);
                 });
 

@@ -1,0 +1,16 @@
+<div class="tile">
+    <h2 class="tile-title">
+        Chat
+    </h2>
+    <div class="row">
+        <div class="col-md-12">
+            <span ng-repeat="user in chatModel.withUsers()">{{user.profile.firstname}}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button type="btn btn-alt" ng-click="leaveRoom(chatModel)">Leave</button>
+        </div>
+    </div>
+
+</div>

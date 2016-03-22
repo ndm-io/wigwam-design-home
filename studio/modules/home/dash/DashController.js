@@ -2,6 +2,10 @@
 
 var DashCtrl = function ($scope, DataFactory) {
 
+    $scope.chats = function () {
+        return DataFactory.chats();
+    };
+
 };
 
 DashCtrl.$inject = ['$scope', 'DataFactory'];

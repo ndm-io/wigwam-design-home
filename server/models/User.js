@@ -1,7 +1,8 @@
 var mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
     crypto = require('crypto'),
-    GeoJSON = require('mongoose-geojson-schema');
+    GeoJSON = require('mongoose-geojson-schema'),
+    Promise = require('promise');
 // _ = require('lodash');
 
 var userSchema = new mongoose.Schema({
@@ -38,41 +39,10 @@ var userSchema = new mongoose.Schema({
     authorizedRoutes: [String],
     isPrivileged: {type: Boolean, default: false},
     role: {type: Number, default: 1},
-    ioToken: {type:String}
+    ioToken: {type: String},
+    socketId: {type: String},
+    chatStatus: {type: String, default: 'offline'}
 });
-
-///**
-// * Hash the password for security.
-// * "Pre" is a Mongoose middleware that executes before each user.save() call.
-// */
-//
-//userSchema.pre('save', function (next) {
-//    var user = this;
-//
-//    if (!user.isModified('password')) return next();
-//
-//    bcrypt.genSalt(5, function (err, salt) {
-//        if (err) return next(err);
-//
-//        bcrypt.hash(user.password, salt, null, function (err, hash) {
-//            if (err) return next(err);
-//            user.password = hash;
-//            next();
-//        });
-//    });
-//});
-//
-///**
-// * Validate user's password.
-// * Used by Passport-Local Strategy for password validation.
-// */
-//
-//userSchema.methods.comparePassword = function (candidatePassword, cb) {
-//    bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
-//        if (err) return cb(err);
-//        cb(null, isMatch);
-//    });
-//};
 
 /**
  * Check user has privilege for route
@@ -93,8 +63,42 @@ userSchema.methods.model = function () {
         instagram: this.instagram,
         settings: this.settings,
         role: this.role,
-        ioToken: this.ioToken
+        ioToken: this.ioToken,
+        socketId: this.socketId,
+        chatStatus: this.chatStatus
     };
+};
+
+userSchema.methods.card = function () {
+    return {
+        _id: this._id,
+        email: this.email,
+        phone: this.phone,
+        profile: this.profile,
+        facebook: this.facebook,
+        twitter: this.twitter,
+        instagram: this.instagram,
+        role: this.role,
+        socketId: this.socketId,
+        chatStatus: this.chatStatus
+    };
+};
+
+userSchema.statics.designers = function designers() {
+    var model = this;
+    return new Promise(function (resolve, reject) {
+        model
+            .where('role').gte(2)
+            .where('chatStatus', 'online')
+            .select('email profile chatStatus twitter facebook role socketId')
+            .exec(function (err, docs) {
+                if (err) {
+                    reject(new Error('Unable to query designers'));
+                } else {
+                    resolve(docs);
+                }
+            });
+    });
 };
 
 /**

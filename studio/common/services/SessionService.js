@@ -1,13 +1,19 @@
 'use strict';
 
 var User = require('../models/User');
-var io = require('socket.io-client');
+var Promise = require('promise');
 var _ = require('lodash');
 
 var SessionService = function () {
 
-    var _fns = [],
-        _io = undefined;
+    var _promises = [];
+
+    var doPromises = function (user) {
+        _.each(_promises, function (resolve) {
+            resolve(user);
+        });
+        _promises.length = 0;
+    };
 
     this.create = function (user) {
         this.user = new User(user);
@@ -15,16 +21,7 @@ var SessionService = function () {
         this.userRole = user.role;
         var that = this;
 
-        _.each(_fns, function (resolve) {
-           resolve(that.user);
-        });
-
-        _io = io();
-        _io.on('connect', function () {
-            _io.emit('authentication.authenticate', {email: that.user.email, ioToken: that.user.ioToken});
-        });
-
-        this.io = _io;
+        doPromises(that.user);
 
         return this;
     };
@@ -35,14 +32,15 @@ var SessionService = function () {
     };
 
 
-    this.onReady = function (fn) {
-        if (fn) {
-            _fns.push(fn)
-        } else {
-            return new Promise(function (resolve, reject) {
-                _fns.push(resolve);
-            });
+    this.onReady = function () {
+
+        if (this.user) {
+            return Promise.resolve(this.user);
         }
+
+        return new Promise(function (resolve, reject) {
+            _promises.push(resolve);
+        });
     };
 
     return this;

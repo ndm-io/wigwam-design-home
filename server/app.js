@@ -40,8 +40,8 @@ var IORouter = require('./modules/IORouter');
  */
 var secrets = require('./config/secrets');
 var routes = require('./config/routes');
-//var CONST = require('./config/constants.js');
-//var root = {root: CONST.HTMLDIR()};
+var CONST = require('./config/constants.js');
+var root = {root: CONST.HTMLDIR()};
 
 /**
  * Create Express server.
@@ -114,6 +114,7 @@ app.use(passwordless.acceptToken({successRedirect: '/studio/#/'}));
 
 app.use(userController.userMiddleware);
 
+
 app.use(function (req, res, next) {
     // Remember original destination before login.
     var path = req.path.split('/')[1];
@@ -146,7 +147,7 @@ app.use(function (req, res) {
 });
 
 // Handle 500
-app.use(function (error, req, res, next) {
+app.use(function (error, req, res) {
     res.status(500);
     res.sendFile('error.html', root);
 });

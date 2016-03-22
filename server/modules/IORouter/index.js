@@ -8,7 +8,7 @@ exports.initIO = function (server) {
 
     sio.on('connection', function (socket) {
 
-        MessageHandler.attachHandlersToSocket(socket);
+        MessageHandler.attachHandlersToSocket(sio, socket);
 
     });
 

@@ -1,6 +1,8 @@
 'use strict';
 
-var SidebarCtrl = function ($scope, $rootScope, SessionService) {
+var Chat = require('../../../common/models/Chat');
+
+var SidebarCtrl = function ($scope, $rootScope, SessionService, DataFactory) {
 
     // Side bar
 
@@ -19,6 +21,23 @@ var SidebarCtrl = function ($scope, $rootScope, SessionService) {
         _profileOpen = !_profileOpen;
     };
 
+    vm.designers = function () {
+        return DataFactory.designers();
+    };
+
+    vm.requestChat = function (designer) {
+        var data = {
+            occupants: [designer, SessionService.user],
+            instigator: SessionService.user
+        };
+
+        console.log(data);
+
+        var chat = new Chat(data);
+
+        DataFactory.instigateChat(chat);
+    };
+
     // Route Changes
 
     //$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){
@@ -26,5 +45,5 @@ var SidebarCtrl = function ($scope, $rootScope, SessionService) {
     //});
 };
 
-SidebarCtrl.$inject = ['$scope', '$rootScope', 'SessionService'];
+SidebarCtrl.$inject = ['$scope', '$rootScope', 'SessionService', 'DataFactory'];
 module.exports = SidebarCtrl;

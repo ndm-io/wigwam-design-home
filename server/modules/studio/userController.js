@@ -29,6 +29,7 @@ exports.updateProfile = function (req, res) {
 
 exports.userMiddleware = function (req, res, next) {
 
+
     if (!req.pUser) {
         next();
         return;
@@ -37,15 +38,14 @@ exports.userMiddleware = function (req, res, next) {
     validateEmail(req.pUser)
         .then(function (email) {
             User.findOne({email: email}, function (err, user) {
-                if (!user) {
-                    user = new User({email: req.pUser});
-                    user.save();
-                }
+
+                if (!user) return new Error('No such user');
                 req.user = user;
                 next();
             });
         })
         .catch(function (err) {
+            console.log(err);
             next();
         });
 
