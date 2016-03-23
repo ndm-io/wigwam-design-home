@@ -31,11 +31,7 @@ var SidebarCtrl = function ($scope, $rootScope, SessionService, DataFactory) {
             instigator: SessionService.user
         };
 
-        console.log(data);
-
-        var chat = new Chat(data);
-
-        DataFactory.instigateChat(chat);
+        DataFactory.instigateChat(new Chat(data));
     };
 
     // Route Changes

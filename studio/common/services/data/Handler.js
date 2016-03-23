@@ -31,13 +31,13 @@ var Handler = function (SocketFactory, cache) {
         });
     };
 
-    var handleRemove = function (event, fn) {
+    var handle = function (event, fn) {
         SocketFactory.on(event, fn);
     };
 
     return {
         handleUpdate: handleUpdate,
-        handleRemove: handleRemove
+        handle: handle
     };
 };
 

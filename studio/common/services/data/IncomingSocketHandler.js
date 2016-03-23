@@ -4,6 +4,7 @@ var _ = require('lodash'),
     types = require('../../../../server/config/IOTypes'),
     User = require('../../../common/models/User'),
     Chat = require('../../../common/models/Chat'),
+    Message = require('../../../common/models/Message'),
     Handler = require('./Handler');
 
 var IncomingSocketHandler = function (SocketFactory, cache) {
@@ -12,28 +13,19 @@ var IncomingSocketHandler = function (SocketFactory, cache) {
     handler.handleUpdate(types.designersAvailable, {prop: 'designers', model: User, clobber: true});
     handler.handleUpdate(types.requestChat, {prop: 'chats', model: Chat, clobber: false});
 
-    handler.handleRemove(types.userLeftRoom, function (data) {
-        var room = data.room, user = data.user;
+    handler.handle(types.userLeftRoom, function (data) {
+        cache.removeUserFromRoom(data.user, data.room);
+    });
 
-        var chat = _.find(cache.chats, function (chat) {
-            return chat.name === room;
-        });
+    handler.handle(types.chatMessage, function (data) {
+        var room = data.room, json = data.message;
 
-        console.log(chat.occupants);
+        var message = new Message();
+        message.initFromJson(json);
 
-        _.remove(chat.occupants, function (occ) {
-            return occ.email === user.email;
-        });
-
-        if (chat.occupants.length === 0) {
-            _.remove(c.chats, function (chat) {
-                return chat.name === room;
-            });
-        }
-
+        cache.addMessageToRoom(message, room);
     });
 };
-
 
 
 module.exports = IncomingSocketHandler;

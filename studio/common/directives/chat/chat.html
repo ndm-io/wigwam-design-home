@@ -2,20 +2,70 @@
     <h2 class="tile-title">
         Chat
     </h2>
-    <div class="row">
-        <div class="col-md-12">
-            <span ng-repeat="user in chatModel.withUsers()">{{user.profile.firstname}}</span>
-        </div>
+
+    <div class="tile-config">
+        <a data-toggle="dropdown" class="tile-menu" title="Leave Chat" ng-click="leaveRoom(chatModel)"></a>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <button type="btn btn-alt" ng-click="leaveRoom(chatModel)">Leave</button>
+
+    <div class="quick-chat-user-container">
+        <div class="quick-chat-user-gravatar" ng-repeat="user in chatModel.withUsers()">
+            <img ng-src="{{user.gravatar(20)}}"
+                 class="img-circle img-thumbnail m-r-10 m-b-10">
         </div>
+
     </div>
-    <div class="row" ng-repeat="message in chatModel.messages">
-        <div class="col-md-12">
-            {{message}}
+
+    <hr class="whiter">
+
+    <div class="quick-chat-message-container">
+        <div class="row" ng-repeat="message in chatModel.messages">
+            <div class="col-md-12">
+                <div class="quick-chat-message">
+                    {{message.html()}}
+                </div>
+            </div>
         </div>
     </div>
 
+    <div class="panel-footer">
+        <div class="input-group">
+            <input type="text" class="form-control input-sm"
+                   placeholder="Write your message here..."
+                   ng-model="text"
+                   ng-keypress="send(text, $event)"/>
+                        <span class="input-group-btn">
+                        <button class="btn btn-alt btn-sm" ng-click="send(text)">Send</button>
+                        </span>
+        </div>
+    </div>
+
+
 </div>
+
+<!--<div class="row">-->
+<!--<div class="col-md-2" ng-repeat="user in chatModel.withUsers()">-->
+
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-md-12">-->
+<!--<hr class="whiter">-->
+<!--</div>-->
+<!--</div>-->
+<!---->
+<!--<div class="row" style="">-->
+<!--<div class="col-md-12">-->
+<!--<div class="row" ng-repeat="message in chatModel.messages">-->
+<!--<div class="col-md-12">-->
+<!--{{message}}-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!---->
+<!---->
+<!--<div class="media">-->
+<!--<div class="media-body">-->
+<!--<textarea class="form-control" placeholder="Type something..."></textarea>-->
+<!--</div>-->
+<!--</div>

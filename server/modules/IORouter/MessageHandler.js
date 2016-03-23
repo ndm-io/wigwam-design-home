@@ -73,4 +73,8 @@ exports.attachHandlersToSocket = function (io, socket) {
         socket.leave(roomName);
     });
 
+    attach(socket, types.chatMessage, function (data) {
+        io.to(data.room).emit(types.chatMessage, data);
+    });
+
 };

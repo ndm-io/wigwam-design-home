@@ -1,6 +1,7 @@
 'use strict';
 
 var Base = require('../../common/models/WWBase'),
+    User = require('../../common/models/User'),
     Message = require('../../common/models/Message');
 
 function Chat (data) {
@@ -18,6 +19,7 @@ Chat.prototype.initArrayProperty = Base.initArrayProperty;
 Chat.prototype.initFromJson = function (json) {
     this.initPrimitives(json);
     this.initArrayProperty('messages', json.messages, Message);
+    this.initArrayProperty('occupants', json.occupants, User);
 };
 
 Chat.prototype.withUsers = function () {

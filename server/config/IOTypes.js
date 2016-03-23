@@ -7,5 +7,6 @@ module.exports = {
     instigateChat: 'socket:start:chat',
     socketId: 'socket:socketId',
     leaveRoom: 'socket:leaveRoom',
-    userLeftRoom: 'socket:userLeftRoom'
+    userLeftRoom: 'socket:userLeftRoom',
+    chatMessage: 'socket:chat:message',
 };

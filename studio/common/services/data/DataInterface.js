@@ -28,6 +28,10 @@ var DataInterface = function (SocketFactory, cache) {
                 return chat.name === roomName;
             });
             sf.emit(types.leaveRoom, roomName);
+        },
+        addMessage: function (model, message) {
+            sf.emit(types.chatMessage, {room:model.name, message:message});
+            //model.messages.push(message);
         }
     };
 };
