@@ -12,5 +12,10 @@
             <button type="btn btn-alt" ng-click="leaveRoom(chatModel)">Leave</button>
         </div>
     </div>
+    <div class="row" ng-repeat="message in chatModel.messages">
+        <div class="col-md-12">
+            {{message}}
+        </div>
+    </div>
 
 </div>

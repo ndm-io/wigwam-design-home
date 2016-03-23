@@ -27,7 +27,6 @@ exports.attachHandlersToSocket = function (io, socket) {
         User.findOne(data, function (err, user) {
             if (err || !user) socket.disconnect();
             socket.user = user;
-
             socket.emit(types.socketId, socket.id);
 
             user.socketId = socket.id;
@@ -59,7 +58,6 @@ exports.attachHandlersToSocket = function (io, socket) {
     });
 
     attach(socket, types.requestChat, function (data) {
-
         data.occupants.forEach(function (occupant) {
             if (!occupant) return;
             var skt = io.sockets.connected[occupant.socketId];
@@ -68,7 +66,6 @@ exports.attachHandlersToSocket = function (io, socket) {
                     .emit(types.requestChat, data);
             }
         });
-
     });
 
     attach(socket, types.leaveRoom, function (roomName) {
