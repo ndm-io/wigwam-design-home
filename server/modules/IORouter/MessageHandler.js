@@ -77,4 +77,12 @@ exports.attachHandlersToSocket = function (io, socket) {
         io.to(data.room).emit(types.chatMessage, data);
     });
 
+    attach(socket, types.userIsTyping, function (data) {
+       io.to(data.room).emit(types.userIsTyping, data);
+    });
+
+    attach(socket, types.userStoppedTyping, function (data) {
+        io.to(data.room).emit(types.userStoppedTyping, data);
+    });
+
 };

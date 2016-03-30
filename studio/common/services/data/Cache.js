@@ -28,6 +28,7 @@ module.exports = function () {
         var message = new Message();
         message.initFromJson(data);
         chat.messages.push(message);
+
     };
 
     var ret = {
@@ -35,7 +36,8 @@ module.exports = function () {
         designers: [],
         chats: [],
         removeUserFromRoom: removeUserFromRoom,
-        addMessageDataToRoom: addMessageDataToRoom
+        addMessageDataToRoom: addMessageDataToRoom,
+        isTyping: false
     };
 
     return ret;

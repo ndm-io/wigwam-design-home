@@ -9,4 +9,6 @@ module.exports = {
     leaveRoom: 'socket:leaveRoom',
     userLeftRoom: 'socket:userLeftRoom',
     chatMessage: 'socket:chat:message',
+    userIsTyping: 'socket:chat:isTyping',
+    userStoppedTyping: 'socket:chat:stoppedTyping'
 };

@@ -19,21 +19,46 @@
 
     <div class="quick-chat-message-container">
         <div class="row" ng-repeat="message in chatModel.messages">
-            <div class="col-md-12">
-                <div class="quick-chat-message {{fromMe(message)}}">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <md ng-model="message.md"></md>
+            <div class="col-md-12 {{fromMe(message)}}">
+                <div ng-switch="fromMe(message)">
+
+                    <div ng-switch-when="your-message">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img ng-src="{{message.createdByGravatar}}"
+                                     class="img-circle img-thumbnail m-r-10 m-b-10">
+                            </div>
+                            <div class="col-md-10">
+                                <md ng-model="message.md"></md>
+                            </div>
                         </div>
                     </div>
-                    <div class="row" ng-if="chatModel.isMostRecentMessage(message)">
-                        <div class="col-md-12">
-                            <small>{{message.ago()}}</small>
-                            <img ng-src="{{message.createdByGravatar}}"
-                                 class="img-circle img-thumbnail m-r-10 m-b-10">
+
+                    <div ng-switch-when="my-message">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <md ng-model="message.md"></md>
+                            </div>
+                            <div class="col-md-2">
+                                <img ng-src="{{message.createdByGravatar}}"
+                                     class="img-circle img-thumbnail m-r-10 m-b-10">
+                            </div>
                         </div>
+                    </div>
+
+                </div>
+
+                <div class="row" ng-if="chatModel.isMostRecentMessage(message)">
+                    <div class="col-md-12">
+                        <small>{{message.ago()}}</small>
                     </div>
                 </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" ng-show="isTyping()">
+                <chat-is-typing></chat-is-typing>
             </div>
         </div>
     </div>
@@ -43,7 +68,9 @@
             <textarea class="form-control input-sm"
                       rows="1" msd-elastic
                       ng-model="textarea"
+                      ng-keyup="isTyping(chatModel.name)"
                       placeholder="Write your message here..."></textarea>
+
                         <span class="input-group-btn">
                         <button class="btn btn-alt btn-sm" ng-click="send()">Send</button>
                         </span>

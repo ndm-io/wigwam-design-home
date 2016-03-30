@@ -31,8 +31,18 @@ var DataInterface = function (SocketFactory, cache) {
         },
         addMessage: function (model, message) {
             sf.emit(types.chatMessage, {room:model.name, message:message});
-            //model.messages.push(message);
+        },
+        isTyping: function (data) {
+            if (data) {
+                sf.emit(types.userIsTyping, data);
+            } else {
+                return cache.isTyping;
+            }
+        },
+        stopTyping: function (user) {
+            sf.emit(types.userStoppedTyping, user);
         }
+
     };
 };
 

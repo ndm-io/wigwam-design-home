@@ -11,6 +11,7 @@ var NewMessage = function (text, user) {
 
 function ChatController($scope, DataFactory, SessionService) {
 
+
     $scope.leaveRoom = function (model) {
         DataFactory.leaveRoom(model.name);
     };
@@ -34,8 +35,24 @@ function ChatController($scope, DataFactory, SessionService) {
 
     $scope.send = function () {
         var message = NewMessage($scope.textarea, SessionService.user);
-        console.log(message);
         $scope.addToMessages(message);
+    };
+
+    var hasSentUpdate = false;
+
+    $scope.isTyping = function (room) {
+        if (room) {
+            var data = {room:room, user:SessionService.user};
+            if (!$scope.textarea || $scope.textarea.length === 0) {
+                DataFactory.stopTyping(data);
+                hasSentUpdate = false;
+            } else {
+                if (!hasSentUpdate) DataFactory.isTyping(data);
+            }
+        } else {
+            $scope.animateContainer();
+            return DataFactory.isTyping();
+        }
     };
 
 }

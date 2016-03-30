@@ -6,7 +6,7 @@ var _ = require('lodash'),
     Chat = require('../../../common/models/Chat'),
     Handler = require('./Handler');
 
-var IncomingSocketHandler = function (SocketFactory, cache) {
+var IncomingSocketHandler = function (SocketFactory, cache, SessionService) {
     var handler = Handler(SocketFactory, cache);
 
     handler.handleUpdate(types.designersAvailable, {prop: 'designers', model: User, clobber: true});
@@ -17,7 +17,17 @@ var IncomingSocketHandler = function (SocketFactory, cache) {
     });
 
     handler.handle(types.chatMessage, function (data) {
+        cache.isTyping = false;
         cache.addMessageDataToRoom(data.message, data.room);
+
+    });
+
+    handler.handle(types.userIsTyping, function (data) {
+        if (SessionService.user._id != data.user._id) cache.isTyping = true;
+    });
+
+    handler.handle(types.userStoppedTyping, function (data) {
+        cache.isTyping = false;
     });
 };
 

@@ -95,5 +95,8 @@ var build = ['scripts',
     'watchHome'
 ];
 
+var quick = ['studioBrowserify', 'watchStudio'];
+
 gulp.task('default', defaults);
 gulp.task('build', build);
+gulp.task('quick', quick);
