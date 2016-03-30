@@ -179,6 +179,10 @@ blockquote.serif-quote {
 	letter-spacing: 3px;
 }
 
+.testimonial {
+	color:black;
+}
+
 .font-serif {
 	font-family: "Libre Baskerville", "Times New Roman", sans-serif;
 	letter-spacing: 1px;
@@ -765,6 +769,7 @@ Counters
 .counter-number {
 	font-size: 20px;
 }
+
 
 /* ------------------------------------------------------------------
 Team
