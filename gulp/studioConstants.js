@@ -3,6 +3,10 @@ var paths = {
         src: 'studio/css/**/*.css',
         dest: 'server/public/css'
     },
+    less: {
+        src: './studio/app.less',
+        dest: 'server/public/css'
+    },
     img: {
         src: 'studio/img/**/*',
         dest: 'server/public/img'

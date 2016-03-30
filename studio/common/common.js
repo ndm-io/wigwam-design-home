@@ -13,6 +13,7 @@ require('restangular');
 require('leaflet');
 require('ui-leaflet');
 require('angular-simple-logger');
+require('angular-elastic');
 
 marked = require('marked/lib/marked.js');
 require('angular-md/dist/angular-md');
@@ -29,6 +30,7 @@ module.exports = angular.module('common',
         'ngSanitize',
         'restangular',
         'yaru22.md',
+        'monospaced.elastic',
         require('./constants').name,
         require('./directives').name,
         require('./resources').name,

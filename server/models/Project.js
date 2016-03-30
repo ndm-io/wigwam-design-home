@@ -135,6 +135,7 @@ var messageSchema = new mongoose.Schema({
     createdDate: {type: Date, default: Date.now},
     createdBy: {type: String},
     createdById: {type: String},
+    createdByGravatar: {type: String},
     base64Encoded: {type: String},
     heading: {type: String, default: ''},
     readBy: {type: mongoose.Schema.Types.Mixed, default: {}}

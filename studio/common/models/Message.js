@@ -1,18 +1,30 @@
-var Base = require('./WWBase');
-var _ = require('lodash');
-var TextRank = require('./TextRank.js');
-var nlp = require("./nlp_compromise.min.js");
+'use strict';
+
+var Base = require('./WWBase'),
+    _ = require('lodash'),
+    TextRank = require('./TextRank.js'),
+    nlp = require("./nlp_compromise.min.js"),
+    moment = require('moment');
 
 function Message() {
     this.guid = Base.guid();
     this.projectGuid = '';
     this.createdDate = new Date();
     this.createdBy = '';
+    this.createdByGravatar = '';
     this.createdById = '';
     this.base64Encoded = '';
     this._summary = undefined;
     this.heading = '';
     this.readBy = {};
+
+    this.__defineGetter__("md", function () {
+        return this.html();
+    });
+
+    this.__defineSetter__("md", function (markdown) {
+        this.html(markdown);
+    });
 }
 
 Message.prototype.className = function () {
@@ -58,11 +70,16 @@ Message.prototype.isEditableBy = function (user) {
     return (this.createdById == '' || this.createdById == user._id || user.isPrivileged) ? true : false;
 };
 
-Message.prototype.setCreatedByUser = function (user) {
+Message.prototype.setCreatedByUser = function (user, gravatarSize) {
     this.createdBy = user.profile.firstname;
     this.createdById = user._id;
     this.readBy = {};
+    this.createdByGravatar = user.gravatar(gravatarSize || 20);
     this.markReadBy(user._id);
+};
+
+Message.prototype.isFrom = function (user) {
+    return this.createdById === user._id;
 };
 
 Message.prototype.resetSummary = function () {
@@ -144,6 +161,10 @@ Message.prototype.containsSearchText = function (searchText) {
 Message.prototype.appendHtml = function (html) {
     this.html(this.html() + html);
     return this;
+};
+
+Message.prototype.ago = function () {
+    return moment(this.createdDate).fromNow();
 };
 
 module.exports = Message;

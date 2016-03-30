@@ -1,6 +1,7 @@
 'use strict';
 
-var _ = require('lodash');
+var _ = require('lodash'),
+    Message = require('../../models/Message');
 
 module.exports = function () {
 
@@ -22,8 +23,10 @@ module.exports = function () {
         return chat;
     };
 
-    var addMessageToRoom = function (message, room) {
+    var addMessageDataToRoom = function (data, room) {
         var chat = chatWithRoom(room);
+        var message = new Message();
+        message.initFromJson(data);
         chat.messages.push(message);
     };
 
@@ -32,7 +35,7 @@ module.exports = function () {
         designers: [],
         chats: [],
         removeUserFromRoom: removeUserFromRoom,
-        addMessageToRoom: addMessageToRoom
+        addMessageDataToRoom: addMessageDataToRoom
     };
 
     return ret;

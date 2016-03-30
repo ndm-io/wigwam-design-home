@@ -4,7 +4,6 @@ var _ = require('lodash'),
     types = require('../../../../server/config/IOTypes'),
     User = require('../../../common/models/User'),
     Chat = require('../../../common/models/Chat'),
-    Message = require('../../../common/models/Message'),
     Handler = require('./Handler');
 
 var IncomingSocketHandler = function (SocketFactory, cache) {
@@ -18,12 +17,7 @@ var IncomingSocketHandler = function (SocketFactory, cache) {
     });
 
     handler.handle(types.chatMessage, function (data) {
-        var room = data.room, json = data.message;
-
-        var message = new Message();
-        message.initFromJson(json);
-
-        cache.addMessageToRoom(message, room);
+        cache.addMessageDataToRoom(data.message, data.room);
     });
 };
 

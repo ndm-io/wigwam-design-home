@@ -10,12 +10,13 @@ var NewMessage = function (text, user) {
 };
 
 function ChatController($scope, DataFactory, SessionService) {
+
     $scope.leaveRoom = function (model) {
         DataFactory.leaveRoom(model.name);
     };
 
     $scope.clearText = function () {
-        $scope.text = '';
+        $scope.textarea = '';
     };
 
     $scope.$watch('chatModel.messages', function (nv) {
@@ -27,13 +28,14 @@ function ChatController($scope, DataFactory, SessionService) {
         $scope.clearText();
     };
 
-    $scope.send = function (text, event) {
-        if (!event || event.charCode === 13) {
+    $scope.fromMe = function (message) {
+        return (message.isFrom(SessionService.user)) ? "my-message" : "your-message";
+    };
 
-            var message = NewMessage(text, SessionService.user);
-            $scope.addToMessages(message);
-
-        }
+    $scope.send = function () {
+        var message = NewMessage($scope.textarea, SessionService.user);
+        console.log(message);
+        $scope.addToMessages(message);
     };
 
 }

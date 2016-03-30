@@ -23,6 +23,7 @@ gulp.task('assets', homeTaskAssets);
  */
 
 var studioTaskCss = require('./gulp/studio/taskCss'),
+    studioLess = require('./gulp/studio/taskLess'),
     studioCommonImgTask = require('./gulp/studio/commonImgTask'),
     studioVendorCss = require('./gulp/studio/taskVendorCss'),
     studioVendorJs = require('./gulp/studio/taskVendorJs'),
@@ -31,6 +32,7 @@ var studioTaskCss = require('./gulp/studio/taskCss'),
     studioJson = require('./gulp/studio/taskJson');
 
 gulp.task('studioCss', studioTaskCss);
+gulp.task('studioLess', studioLess);
 gulp.task('studioCommonImg', studioCommonImgTask);
 gulp.task('studioVendorCss', studioVendorCss);
 gulp.task('studioVendorJs', studioVendorJs);
@@ -52,6 +54,7 @@ gulp.task('watchHome', function () {
 
 gulp.task('watchStudio', function () {
     gulp.watch(studioPaths.css.src, ['studioCss']);
+    gulp.watch(studioPaths.less.src, ['studioLess']);
     gulp.watch(studioPaths.img.src, ['studioCommonImg']);
     gulp.watch(studioPaths.browserify.watch, ['studioBrowserify']);
 });
@@ -66,6 +69,7 @@ var defaults = ['scripts',
     'assets',
     'img',
     'studioCss',
+    'studioLess',
     'studioVendorCss',
     'studioCommonImg',
     'studioVendorJs',
@@ -80,6 +84,7 @@ var build = ['scripts',
     'assets',
     'img',
     'studioCss',
+    'studioLess',
     'studioVendorCss',
     'studioCommonImg',
     'studioVendorJs',
