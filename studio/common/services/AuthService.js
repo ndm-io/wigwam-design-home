@@ -8,23 +8,19 @@ var AuthService = function (CommsFactory, SessionService, ROUTES, USER_ROLES) {
     authService.profile = function () {
 
         if (SessionService.user) {
-            console.log('returning fom cache: ', SessionService.user);
             return Promise.resolve(SessionService.user);
         }
         return CommsFactory.http
             .get(ROUTES.profile)
             .then(function (res) {
-                console.log('creating: ', res.data);
                 return SessionService.create(res.data);
             });
     };
 
     authService.sendToken = function (credentials) {
-        console.log('attempting to cause a tokento be sent');
         return CommsFactory.http
             .post(ROUTES.sendToken, credentials)
             .then(function (response) {
-                console.log('send token resposne', response);
                 return response;
             });
     };

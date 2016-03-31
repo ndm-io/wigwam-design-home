@@ -1,7 +1,8 @@
 'use strict';
 
 var _ = require('lodash'),
-    Message = require('../../models/Message');
+    Message = require('../../models/Message'),
+    User = require('../../models/User');
 
 module.exports = function () {
 
@@ -14,6 +15,23 @@ module.exports = function () {
     var removeUserFromChat = function (user, chat) {
         _.remove(chat.occupants, function (occ) {
             return occ.email === user.email;
+        });
+    };
+
+    var removeUserFromChats = function (user) {
+        _.each(ret.chats, function (chat) {
+            removeUserFromChat(user, chat);
+        });
+    };
+
+    var addUserToChats = function (data) {
+        var user = new User(data.user);
+        var rooms = _.map(data.chats, function (chat) {
+            return chat.name;
+        });
+
+        _.each(ret.chats, function (chat) {
+            if (_.contains(rooms, chat.name)) chat.addOccupant(user);
         });
     };
 
@@ -35,9 +53,11 @@ module.exports = function () {
         projects: undefined,
         designers: [],
         chats: [],
+        removeUserFromChats: removeUserFromChats,
+        addUserToChats: addUserToChats,
         removeUserFromRoom: removeUserFromRoom,
         addMessageDataToRoom: addMessageDataToRoom,
-        isTyping: false
+        isTyping: {}
     };
 
     return ret;

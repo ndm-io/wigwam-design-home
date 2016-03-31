@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
     crypto = require('crypto'),
     GeoJSON = require('mongoose-geojson-schema'),
+    status = require('../config/statuses'),
     Promise = require('promise');
 // _ = require('lodash');
 
@@ -89,7 +90,7 @@ userSchema.statics.designers = function designers() {
     return new Promise(function (resolve, reject) {
         model
             .where('role').gte(2)
-            .where('chatStatus', 'online')
+            .where('chatStatus', status.online)
             .select('email profile chatStatus twitter facebook role socketId')
             .exec(function (err, docs) {
                 if (err) {

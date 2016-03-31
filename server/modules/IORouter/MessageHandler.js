@@ -2,6 +2,7 @@
 
 var User = require('../../models/User'),
     types = require('../../config/IOTypes'),
+    status = require('../../config/statuses'),
     roles = require('../../config/constants').ROLES;
 
 var attach = function (socket, event, fn) {
@@ -40,21 +41,25 @@ exports.attachHandlersToSocket = function (io, socket) {
 
     socket.on('disconnect', function () {
         if (!socket.user) return;
-        socket.user.chatStatus = 'offline';
+        socket.user.chatStatus = status.offline;
         socket.user.save();
-
         if (socket.user.role >= roles.editor) {
             designers(io);
         }
+        io.emit(types.chatStatus, {user: socket.user.card(), status:status.offline});
     });
 
-    attach(socket, types.chatStatus, function (status) {
-        socket.user.chatStatus = status;
+    attach(socket, types.chatStatus, function (data) {
+        socket.user.chatStatus = data.status;
         socket.user.save();
-
         if (socket.user.role >= roles.editor) {
             designers(io);
         }
+        io.emit(types.chatStatus, data);
+    });
+
+    attach(socket, types.userJoinChats, function (data) {
+        io.emit(types.userJoinChats, data);
     });
 
     attach(socket, types.requestChat, function (data) {
@@ -69,7 +74,7 @@ exports.attachHandlersToSocket = function (io, socket) {
     });
 
     attach(socket, types.leaveRoom, function (roomName) {
-        io.to(roomName).emit(types.userLeftRoom, {room: roomName, user:socket.user.card()});
+        io.to(roomName).emit(types.userLeftRoom, {room: roomName, user: socket.user.card()});
         socket.leave(roomName);
     });
 
@@ -78,7 +83,7 @@ exports.attachHandlersToSocket = function (io, socket) {
     });
 
     attach(socket, types.userIsTyping, function (data) {
-       io.to(data.room).emit(types.userIsTyping, data);
+        io.to(data.room).emit(types.userIsTyping, data);
     });
 
     attach(socket, types.userStoppedTyping, function (data) {

@@ -1,9 +1,10 @@
 'use strict';
 
 var icheck = require('icheck'),
+    status = require('../../../server/config/statuses'),
     $ = require('jquery');
 
-function icheckInput(DataFactory) {
+function icheckInput(DataFactory, SessionService) {
 
     var link = function (scope, el, attrs) {
 
@@ -14,7 +15,7 @@ function icheckInput(DataFactory) {
                 increaseArea: '20%'
             })
             .on('ifChecked', function () {
-                DataFactory.chatStatus(attrs.value);
+                DataFactory.chatStatus(SessionService.user, status[attrs.value]);
             });
 
     };
@@ -26,5 +27,5 @@ function icheckInput(DataFactory) {
     };
 }
 
-icheckInput.$inject = ['DataFactory'];
+icheckInput.$inject = ['DataFactory', 'SessionService'];
 module.exports = icheckInput;

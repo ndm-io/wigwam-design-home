@@ -26,6 +26,10 @@ Chat.prototype.withUsers = function () {
     return this.occupants;
 };
 
+Chat.prototype.addOccupant = function (user) {
+    this.occupants.push(user);
+};
+
 Chat.prototype.isMostRecentMessage = function (message) {
     var idx = this.messages.indexOf(message);
     return (idx === this.messages.length - 1);

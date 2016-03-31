@@ -1,6 +1,7 @@
 'use strict';
 
-var _ = require('lodash');
+var _ = require('lodash'),
+    status = require('../../../../server/config/statuses');
 
 var Handler = function (SocketFactory, cache) {
 
@@ -35,9 +36,23 @@ var Handler = function (SocketFactory, cache) {
         SocketFactory.on(event, fn);
     };
 
+    var handleStatus = function (data) {
+        switch (data.status) {
+            case status.offline: {
+                cache.removeUserFromChats(data.user);
+                break;
+            }
+            case status.busy: {
+                cache.removeUserFromChats(data.user);
+                break;
+            }
+        }
+    };
+
     return {
         handleUpdate: handleUpdate,
-        handle: handle
+        handle: handle,
+        handleStatus: handleStatus
     };
 };
 

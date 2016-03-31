@@ -7,6 +7,19 @@
         <a data-toggle="dropdown" class="tile-menu" title="Leave Chat" ng-click="leaveRoom(chatModel)"></a>
     </div>
 
+    <div class="quick-chat-options-container">
+
+
+
+        <div animated-switch
+             class="quick-chat-option"
+             notify="toggleSendOnReturn"></div>
+
+
+    </div>
+
+    <hr class="whiter">
+
     <div class="quick-chat-user-container">
         <div class="quick-chat-user-gravatar" ng-repeat="user in chatModel.withUsers()">
             <img ng-src="{{user.gravatar(20)}}"
@@ -57,7 +70,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12" ng-show="isTyping()">
+            <div class="col-md-12" ng-show="isTyping(chatModel.name)">
                 <chat-is-typing></chat-is-typing>
             </div>
         </div>
@@ -68,7 +81,7 @@
             <textarea class="form-control input-sm"
                       rows="1" msd-elastic
                       ng-model="textarea"
-                      ng-keyup="isTyping(chatModel.name)"
+                      ng-keyup="typing(chatModel.name)"
                       placeholder="Write your message here..."></textarea>
 
                         <span class="input-group-btn">

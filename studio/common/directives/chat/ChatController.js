@@ -12,6 +12,11 @@ var NewMessage = function (text, user) {
 function ChatController($scope, DataFactory, SessionService) {
 
 
+    var sendOnReturn = true;
+    $scope.toggleSendOnReturn = function (value) {
+        sendOnReturn = value;
+    };
+
     $scope.leaveRoom = function (model) {
         DataFactory.leaveRoom(model.name);
     };
@@ -41,18 +46,24 @@ function ChatController($scope, DataFactory, SessionService) {
     var hasSentUpdate = false;
 
     $scope.isTyping = function (room) {
-        if (room) {
-            var data = {room:room, user:SessionService.user};
-            if (!$scope.textarea || $scope.textarea.length === 0) {
-                DataFactory.stopTyping(data);
-                hasSentUpdate = false;
-            } else {
-                if (!hasSentUpdate) DataFactory.isTyping(data);
-            }
+        return DataFactory.isTyping(room);
+    };
+
+    $scope.typing = function (room) {
+
+        var data = {room: room, user: SessionService.user};
+        if (!$scope.textarea || $scope.textarea.length === 0) {
+            DataFactory.stopTyping(data);
+            hasSentUpdate = false;
         } else {
-            $scope.animateContainer();
-            return DataFactory.isTyping();
+            if (!hasSentUpdate) {
+                DataFactory.roomIsTyping(data);
+                hasSentUpdate = true;
+            }
         }
+
+        $scope.animateContainer();
+
     };
 
 }
