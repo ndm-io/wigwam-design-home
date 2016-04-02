@@ -1,4 +1,12 @@
 /* Font Icons */
+
+@font-face {
+    font-family: 'ios7-icon';
+    url('fonts/icons/icon.woff') format('woff'), /* Pretty Modern Browsers */
+    url('fonts/icons/icon.ttf')  format('truetype'), /* Safari, Android, iOS */
+    url('fonts/icons/icon.svg#ios7-icon') format('svg'); /* Legacy iOS */
+}
+
 .icon {
     display: inline-block;
     font-family: 'ios7-icon';

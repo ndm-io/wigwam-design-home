@@ -10,9 +10,6 @@ var IncomingSocketHandler = function (SocketFactory, cache, SessionService) {
     var handler = Handler(SocketFactory, cache);
 
     handler.handleUpdate(types.designersAvailable, {prop: 'designers', model: User, clobber: true});
-    handler.handleUpdate(types.requestChat, {prop: 'chats', model: Chat, clobber: false});
-
-
 
     handler.handle(types.chatStatus, function (data) {
         handler.handleStatus(data, SessionService.user);
@@ -22,6 +19,10 @@ var IncomingSocketHandler = function (SocketFactory, cache, SessionService) {
         cache.addUserToChats(data);
     });
 
+    handler.handle(types.userJoinedChat, function (data) {
+        cache.addUserToChat(data);
+    });
+
     handler.handle(types.userLeftRoom, function (data) {
         cache.removeUserFromRoom(data.user, data.room);
     });
@@ -29,7 +30,6 @@ var IncomingSocketHandler = function (SocketFactory, cache, SessionService) {
     handler.handle(types.chatMessage, function (data) {
         cache.isTyping[data.room] = false;
         cache.addMessageDataToRoom(data.message, data.room);
-
     });
 
     handler.handle(types.userIsTyping, function (data) {
@@ -38,6 +38,10 @@ var IncomingSocketHandler = function (SocketFactory, cache, SessionService) {
 
     handler.handle(types.userStoppedTyping, function (data) {
         cache.isTyping[data.room] = false;
+    });
+
+    handler.handle(types.usersOnline, function (data) {
+        cache.addOnlineUsers(data);
     });
 };
 

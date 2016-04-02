@@ -2,16 +2,26 @@
 
 var Base = require('../../common/models/WWBase'),
     User = require('../../common/models/User'),
-    Message = require('../../common/models/Message');
+    Message = require('../../common/models/Message'),
+    _ = require('lodash');
 
 function Chat (data) {
-    if (!data) data = {};
 
-    this.name = data.name || 'Chat:' + new Date().toString();
-    this.occupants = data.occupants || [];
-    this.instigator = data.instigator || {};
-    this.messages = data.messages || [];
+    console.log('add chat', data);
+    if (data) {
+        this.initFromJson(data);
+        if (!data.name) this.name = this.defaultName();
+    } else {
+        this.name = this.defaultName();
+        this.occupants = [];
+        this.instigator = [];
+        this.messages = [];
+    }
 }
+
+Chat.prototype.defaultName = function () {
+    return 'Chat:' + new Date().toString();
+};
 
 Chat.prototype.initPrimitives = Base.initPrimitives;
 Chat.prototype.initArrayProperty = Base.initArrayProperty;
@@ -22,12 +32,23 @@ Chat.prototype.initFromJson = function (json) {
     this.initArrayProperty('occupants', json.occupants, User);
 };
 
+Chat.prototype.requests = function () {
+    var chat = this;
+    return _.map(this.occupants, function (occupant) {
+        return {user: occupant, chat: chat};
+    });
+};
+
 Chat.prototype.withUsers = function () {
     return this.occupants;
 };
 
 Chat.prototype.addOccupant = function (user) {
-    this.occupants.push(user);
+    var existing = _.find(this.occupants, function (occupant) {
+        return occupant._id === user._id;
+    });
+
+    if (!existing) this.occupants.push(user);
 };
 
 Chat.prototype.isMostRecentMessage = function (message) {

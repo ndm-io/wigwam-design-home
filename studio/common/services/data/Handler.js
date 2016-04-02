@@ -26,9 +26,7 @@ var Handler = function (SocketFactory, cache) {
             if (clobber) {
                 cache[cacheProp].length = 0;
             }
-
             cache[cacheProp] = _.union(cache[cacheProp], objects);
-
         });
     };
 
@@ -38,6 +36,10 @@ var Handler = function (SocketFactory, cache) {
 
     var handleStatus = function (data) {
         switch (data.status) {
+            case status.online: {
+
+                break;
+            }
             case status.offline: {
                 cache.removeUserFromChats(data.user);
                 break;

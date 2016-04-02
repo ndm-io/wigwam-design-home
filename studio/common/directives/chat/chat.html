@@ -3,22 +3,18 @@
         Chat
     </h2>
 
-    <div class="tile-config">
-        <a data-toggle="dropdown" class="tile-menu" title="Leave Chat" ng-click="leaveRoom(chatModel)"></a>
+    <div class="tile-config dropdown">
+        <a data-toggle="dropdown" href="" class="tile-menu"></a>
+        <ul class="dropdown-menu pull-right text-right">
+            <li><a href ng-click="leaveRoom(chatModel)">Leave Chat</a></li>
+
+            <li ng-if="designers().length > 0" role="separator" class="divider"></li>
+            <li ng-repeat="designer in designers()">
+                <a href ng-click="invite(designer, chatModel)">Invite {{designer.formattedName()}}</a>
+            </li>
+
+        </ul>
     </div>
-
-    <div class="quick-chat-options-container">
-
-
-
-        <div animated-switch
-             class="quick-chat-option"
-             notify="toggleSendOnReturn"></div>
-
-
-    </div>
-
-    <hr class="whiter">
 
     <div class="quick-chat-user-container">
         <div class="quick-chat-user-gravatar" ng-repeat="user in chatModel.withUsers()">
@@ -81,7 +77,8 @@
             <textarea class="form-control input-sm"
                       rows="1" msd-elastic
                       ng-model="textarea"
-                      ng-keyup="typing(chatModel.name)"
+                      ng-keyup="typing(chatModel.name, $event)"
+                      ng-keydown="keydownCheck($event)"
                       placeholder="Write your message here..."></textarea>
 
                         <span class="input-group-btn">

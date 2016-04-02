@@ -1,7 +1,9 @@
 window.jQuery = window.$ = require('jquery');
 window._ = require('lodash');
 
+require('bootstrap');
 require('angular-bootstrap');
+require('angular-ui-switch');
 require('angular-ui-router');
 require('angular-animate');
 require('angular-cookies');
@@ -21,6 +23,7 @@ require('angular-md/dist/angular-md');
 module.exports = angular.module('common',
     [
         'ui.bootstrap',
+        'uiSwitch',
         'ui.router',
         'nemLogging',
         'ui-leaflet',

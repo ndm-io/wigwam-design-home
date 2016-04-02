@@ -7,9 +7,7 @@ module.exports = angular.module('common.directives', [
         require('./clickable-map').name,
         require('./location-selector').name,
         require('./personal-details').name,
-        require('./chat').name,
-        require('./animated-switch').name
+        require('./chat').name
     ])
     .directive('formAutofillFix', require('./formAutofillFix.js'))
-    .directive('ukChart', require('./ukChart.js'))
-    .directive('icheckInput', require('./icheckInput.js'));
+    .directive('ukChart', require('./ukChart.js'));

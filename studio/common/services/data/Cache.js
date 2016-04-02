@@ -2,7 +2,8 @@
 
 var _ = require('lodash'),
     Message = require('../../models/Message'),
-    User = require('../../models/User');
+    User = require('../../models/User'),
+    Chat = require('../../models/Chat');
 
 module.exports = function () {
 
@@ -22,6 +23,9 @@ module.exports = function () {
         _.each(ret.chats, function (chat) {
             removeUserFromChat(user, chat);
         });
+        _.remove(ret.onlineUsers, function (onlineUser) {
+            return onlineUser.email === user.email;
+        });
     };
 
     var addUserToChats = function (data) {
@@ -33,6 +37,18 @@ module.exports = function () {
         _.each(ret.chats, function (chat) {
             if (_.contains(rooms, chat.name)) chat.addOccupant(user);
         });
+
+        ret.onlineUsers.push(user);
+    };
+
+    var addUserToChat = function (data) {
+        var chat = chatWithRoom(data.chat.name);
+        if (!chat) {
+            chat = new Chat(data.chat);
+            ret.chats.push(chat);
+        }
+        var user = new User(data.user);
+        chat.addOccupant(user);
     };
 
     var removeUserFromRoom = function (user, room) {
@@ -49,14 +65,23 @@ module.exports = function () {
 
     };
 
+    var addOnlineUsers = function (data) {
+        ret.onlineUsers = _.map(data, function (json) {
+            return new User(json);
+        });
+    };
+
     var ret = {
-        projects: undefined,
+        projects: [],
         designers: [],
         chats: [],
+        onlineUsers: [],
         removeUserFromChats: removeUserFromChats,
         addUserToChats: addUserToChats,
+        addUserToChat: addUserToChat,
         removeUserFromRoom: removeUserFromRoom,
         addMessageDataToRoom: addMessageDataToRoom,
+        addOnlineUsers: addOnlineUsers,
         isTyping: {}
     };
 

@@ -1,0 +1,35 @@
+<h4 class="page-title b-0">Users</h4>
+
+<div class="block-area">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-2" ng-repeat="user in users">
+                    <div class="tile">
+                        <h2 class="tile-title">
+                            {{user.formattedName()}}
+                        </h2>
+                        <div class="p-10">
+                            <img class="profile-pic" ng-src="{{user.gravatar()}}" alt="">
+                        </div>
+                        <div class="panel-footer">
+                            <i class="fa fa-{{user.roleIcon()}}"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row" ng-repeat="chat in chats">
+                <div class="col-md-12">
+                    <chat chat-model="chat"></chat>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

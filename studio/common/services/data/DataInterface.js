@@ -10,7 +10,7 @@ var DataInterface = function (SocketFactory, cache) {
 
     return {
         projects: function () {
-            return Promise.resolve([]);
+            return c.projects;
         },
         designers: function () {
             return c.designers;
@@ -23,7 +23,16 @@ var DataInterface = function (SocketFactory, cache) {
             if (status === statuses.online) sf.emit(types.userJoinChats, {user: user, chats: c.chats});
         },
         instigateChat: function (chat) {
-            sf.emit(types.requestChat, chat);
+            sf.emit(types.inviteUserToChat, chat.requests());
+        },
+        inviteUserToChat: function (user, chat) {
+            sf.emit(types.inviteUserToChat, {user: user, chat: chat});
+        },
+        requestOnlineUsers: function () {
+           sf.emit(types.usersOnline, {});
+        },
+        usersOnline: function () {
+            return cache.onlineUsers;
         },
         leaveRoom: function (roomName) {
             _.remove(c.chats, function (chat) {

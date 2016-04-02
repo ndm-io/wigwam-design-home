@@ -7,10 +7,13 @@ module.exports = {
     typing: 'socket:update:typing',
     requestChat: 'socket:request:chat',
     instigateChat: 'socket:start:chat',
+    inviteUserToChat: 'socket:invite:user',
+    userJoinedChat: 'socket:chat:userJoined',
     socketId: 'socket:socketId',
     leaveRoom: 'socket:leaveRoom',
     userLeftRoom: 'socket:userLeftRoom',
     chatMessage: 'socket:chat:message',
     userIsTyping: 'socket:chat:isTyping',
-    userStoppedTyping: 'socket:chat:stoppedTyping'
+    userStoppedTyping: 'socket:chat:stoppedTyping',
+    usersOnline: 'socket:users:online'
 };

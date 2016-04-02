@@ -1,6 +1,7 @@
 'use strict';
 
-var Message = require('../../models/Message');
+var Message = require('../../models/Message'),
+    sendKey = require('./chat-send-key');
 
 var NewMessage = function (text, user) {
     var message = new Message();
@@ -11,8 +12,9 @@ var NewMessage = function (text, user) {
 
 function ChatController($scope, DataFactory, SessionService) {
 
+    var sendOnReturn = true,
+        hasSentUpdate = false;
 
-    var sendOnReturn = true;
     $scope.toggleSendOnReturn = function (value) {
         sendOnReturn = value;
     };
@@ -25,7 +27,7 @@ function ChatController($scope, DataFactory, SessionService) {
         $scope.textarea = '';
     };
 
-    $scope.$watch('chatModel.messages', function (nv) {
+    $scope.$watch('chatModel.messages', function () {
         $scope.animateContainer();
     }, true);
 
@@ -39,17 +41,16 @@ function ChatController($scope, DataFactory, SessionService) {
     };
 
     $scope.send = function () {
+        hasSentUpdate = false;
         var message = NewMessage($scope.textarea, SessionService.user);
         $scope.addToMessages(message);
     };
-
-    var hasSentUpdate = false;
 
     $scope.isTyping = function (room) {
         return DataFactory.isTyping(room);
     };
 
-    $scope.typing = function (room) {
+    $scope.typing = function (room, event) {
 
         var data = {room: room, user: SessionService.user};
         if (!$scope.textarea || $scope.textarea.length === 0) {
@@ -62,10 +63,23 @@ function ChatController($scope, DataFactory, SessionService) {
             }
         }
 
+        if (sendKey(event)) $scope.send();
+
         $scope.animateContainer();
 
     };
 
+    $scope.keydownCheck = function (event) {
+        if (sendKey(event)) return event.preventDefault();
+    };
+
+    $scope.designers = function () {
+        return DataFactory.designers();
+    };
+
+    $scope.invite = function (designer, chat) {
+        DataFactory.inviteUserToChat(designer, chat);
+    };
 }
 
 ChatController.$inject = ['$scope', 'DataFactory', 'SessionService'];

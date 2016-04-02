@@ -50,12 +50,19 @@ function homeRoutes($stateProvider, USER_ROLES) {
         template: '<div calendar-view></div>'
     };
 
+    var users = {
+        name: 'home.users',
+        parent: home,
+        template: '<div users-view></div>'
+    };
+
     $stateProvider.state(home);
     $stateProvider.state(dashboard);
     $stateProvider.state(messages);
     $stateProvider.state(message);
     $stateProvider.state(profile);
     $stateProvider.state(calendar);
+    $stateProvider.state(users);
 
 
 }
