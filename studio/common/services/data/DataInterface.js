@@ -1,8 +1,6 @@
 'use strict';
 
-var Promise = require('promise'),
-    _ = require('lodash'),
-    types = require('../../../../server/config/IOTypes'),
+var types = require('../../../../server/config/IOTypes'),
     statuses = require('../../../../server/config/statuses');
 
 var DataInterface = function (SocketFactory, cache) {
@@ -34,10 +32,8 @@ var DataInterface = function (SocketFactory, cache) {
         usersOnline: function () {
             return cache.onlineUsers;
         },
-        leaveRoom: function (roomName) {
-            _.remove(c.chats, function (chat) {
-                return chat.name === roomName;
-            });
+        leaveRoom: function (user, roomName) {
+            c.removeUserFromRoom(user, roomName);
             sf.emit(types.leaveRoom, roomName);
         },
         addMessage: function (model, message) {

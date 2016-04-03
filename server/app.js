@@ -94,16 +94,17 @@ app.use(expressValidator());
 app.use(methodOverride());
 app.use(cookieParser());
 
-app.use(session({
+var sessionMiddleware = session({
     resave: true,
     saveUninitialized: true,
     secret: secrets.sessionSecret,
     store: new MongoStore({url: secrets.db, auto_reconnect: true})
-}));
+});
+
+app.use(sessionMiddleware);
 
 
 app.use(function (req, res, next) {
-    // CSRF protection.
     if (_.contains(csrfExclude, req.path)) return next();
     csrf(req, res, next);
 
@@ -113,8 +114,6 @@ app.use(passwordless.sessionSupport());
 app.use(passwordless.acceptToken({successRedirect: '/studio/#/'}));
 
 app.use(userController.userMiddleware);
-
-
 app.use(function (req, res, next) {
     // Remember original destination before login.
     var path = req.path.split('/')[1];
@@ -133,7 +132,7 @@ app.use(express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
 
 routes.initRoutes(app, passwordless);
 
-IORouter.initIO(http);
+IORouter.initIO(http, sessionMiddleware);
 
 /**
  * Error handling routes

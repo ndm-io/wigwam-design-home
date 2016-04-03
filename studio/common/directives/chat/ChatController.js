@@ -1,14 +1,8 @@
 'use strict';
 
 var Message = require('../../models/Message'),
+    MessageFactory = require('../../models/factories/MessageFactory'),
     sendKey = require('./chat-send-key');
-
-var NewMessage = function (text, user) {
-    var message = new Message();
-    message.html(text);
-    message.setCreatedByUser(user);
-    return message;
-};
 
 function ChatController($scope, DataFactory, SessionService) {
 
@@ -20,7 +14,7 @@ function ChatController($scope, DataFactory, SessionService) {
     };
 
     $scope.leaveRoom = function (model) {
-        DataFactory.leaveRoom(model.name);
+        DataFactory.leaveRoom(SessionService.user, model.name);
     };
 
     $scope.clearText = function () {
@@ -42,7 +36,7 @@ function ChatController($scope, DataFactory, SessionService) {
 
     $scope.send = function () {
         hasSentUpdate = false;
-        var message = NewMessage($scope.textarea, SessionService.user);
+        var message = MessageFactory.messageWithTextAndUser($scope.textarea, SessionService.user);
         $scope.addToMessages(message);
     };
 

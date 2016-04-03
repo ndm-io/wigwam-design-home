@@ -3,11 +3,10 @@
 var Base = require('../../common/models/WWBase'),
     User = require('../../common/models/User'),
     Message = require('../../common/models/Message'),
+    MF = require('../../common/models/factories/MessageFactory'),
     _ = require('lodash');
 
 function Chat (data) {
-
-    console.log('add chat', data);
     if (data) {
         this.initFromJson(data);
         if (!data.name) this.name = this.defaultName();
@@ -43,12 +42,22 @@ Chat.prototype.withUsers = function () {
     return this.occupants;
 };
 
-Chat.prototype.addOccupant = function (user) {
-    var existing = _.find(this.occupants, function (occupant) {
-        return occupant._id === user._id;
-    });
+Chat.prototype.occupantCompareFn = function (user) {
+    return function (occupant) {
+        return occupant.email === user.email;
+    };
+};
 
-    if (!existing) this.occupants.push(user);
+Chat.prototype.hasOccupant = function (user) {
+    return _.find(this.occupants, this.occupantCompareFn(user));
+};
+
+Chat.prototype.addOccupant = function (user) {
+    if (!this.hasOccupant(user)) this.occupants.push(user);
+};
+
+Chat.prototype.removeOccupant = function (user) {
+    _.remove(this.occupants, this.occupantCompareFn(user));
 };
 
 Chat.prototype.isMostRecentMessage = function (message) {

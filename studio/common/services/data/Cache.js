@@ -13,15 +13,9 @@ module.exports = function () {
         });
     };
 
-    var removeUserFromChat = function (user, chat) {
-        _.remove(chat.occupants, function (occ) {
-            return occ.email === user.email;
-        });
-    };
-
     var removeUserFromChats = function (user) {
         _.each(ret.chats, function (chat) {
-            removeUserFromChat(user, chat);
+            chat.removeOccupant(user);
         });
         _.remove(ret.onlineUsers, function (onlineUser) {
             return onlineUser.email === user.email;
@@ -53,7 +47,7 @@ module.exports = function () {
 
     var removeUserFromRoom = function (user, room) {
         var chat = chatWithRoom(room);
-        if (chat) removeUserFromChat(user, chat);
+        if (chat) chat.removeOccupant(user);
         return chat;
     };
 
@@ -62,7 +56,6 @@ module.exports = function () {
         var message = new Message();
         message.initFromJson(data);
         chat.messages.push(message);
-
     };
 
     var addOnlineUsers = function (data) {
@@ -77,9 +70,9 @@ module.exports = function () {
         chats: [],
         onlineUsers: [],
         removeUserFromChats: removeUserFromChats,
+        removeUserFromRoom: removeUserFromRoom,
         addUserToChats: addUserToChats,
         addUserToChat: addUserToChat,
-        removeUserFromRoom: removeUserFromRoom,
         addMessageDataToRoom: addMessageDataToRoom,
         addOnlineUsers: addOnlineUsers,
         isTyping: {}
