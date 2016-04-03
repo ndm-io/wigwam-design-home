@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 var PersonalDetailsCtrl = function ($scope, SessionService, CommsFactory) {
 
     var vm = $scope;
@@ -12,6 +14,7 @@ var PersonalDetailsCtrl = function ($scope, SessionService, CommsFactory) {
     vm.submitForm = function () {
         CommsFactory.updateProfile(vm.user.profile);
     };
+
 
 };
 

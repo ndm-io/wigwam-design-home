@@ -3,15 +3,8 @@
 var types = require('../../../config/IOTypes'),
     status = require('../../../config/statuses'),
     roles = require('../../../config/constants').ROLES,
-    Common = require('../Common');
-
-var disconnectActions = function (io, socket) {
-    return function () {
-        socket.user.goOffline();
-        io.emit(types.chatStatus, {user: socket.user.card(), status: status.offline});
-        sendUpdatesFn(io)(socket.user);
-    }
-};
+    Common = require('../Common'),
+    DisconnectActions = require('./DisconnectActions');
 
 var goOnline = function (socket) {
     return function (user) {
@@ -24,7 +17,7 @@ var goOnline = function (socket) {
 var updateSocket = function (io, socket) {
     return function (user) {
         socket.user = user;
-        socket.disconnectActions = disconnectActions(io, socket);
+        socket.disconnectActions = DisconnectActions(io, socket, sendUpdatesFn);
         socket.emit(types.socketId, socket.id);
         return user;
     };
