@@ -3,7 +3,7 @@
 function Disconnect (io, socket) {
     return function () {
         if (!socket.user) return;
-        socket.disconnectActions(io, socket);
+        if (socket.disconnectActions) socket.disconnectActions(io, socket);
     };
 }
 

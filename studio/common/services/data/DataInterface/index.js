@@ -27,7 +27,7 @@ var DataInterface = function (SocketFactory, cache) {
             sf.emit(types.inviteUserToChat, {user: user, chat: chat});
         },
         requestOnlineUsers: function () {
-           sf.emit(types.usersOnline, {});
+            sf.emit(types.usersOnline, {});
         },
         usersOnline: function () {
             return cache.onlineUsers;
