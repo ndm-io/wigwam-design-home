@@ -1,7 +1,7 @@
 'use strict';
 
-var types = require('../../../../server/config/IOTypes'),
-    statuses = require('../../../../server/config/statuses');
+var types = require('../../../../../server/config/IOTypes'),
+    statuses = require('../../../../../server/config/statuses');
 
 var DataInterface = function (SocketFactory, cache) {
     var sf = SocketFactory, c = cache;
