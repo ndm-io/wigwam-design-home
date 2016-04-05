@@ -2,8 +2,9 @@ var mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
     crypto = require('crypto'),
     GeoJSON = require('mongoose-geojson-schema'),
-    Promise = require('promise');
-// _ = require('lodash');
+    status = require('../config/statuses'),
+    Promise = require('promise'),
+    _ = require('lodash');
 
 var userSchema = new mongoose.Schema({
     email: {type: String, unique: true, lowercase: true},
@@ -58,9 +59,6 @@ userSchema.methods.model = function () {
         phone: this.phone,
         address: this.address,
         profile: this.profile,
-        facebook: this.facebook,
-        twitter: this.twitter,
-        instagram: this.instagram,
         settings: this.settings,
         role: this.role,
         ioToken: this.ioToken,
@@ -75,13 +73,54 @@ userSchema.methods.card = function () {
         email: this.email,
         phone: this.phone,
         profile: this.profile,
-        facebook: this.facebook,
-        twitter: this.twitter,
-        instagram: this.instagram,
         role: this.role,
         socketId: this.socketId,
         chatStatus: this.chatStatus
     };
+};
+
+userSchema.methods.goOffline = function () {
+    return this.status(status.offline);
+};
+
+userSchema.methods.goOnline = function (socketId) {
+    this.socketId = socketId;
+    return this.status(status.offline);
+};
+
+userSchema.methods.status = function (status) {
+    if (status) {
+        this.chatStatus = status;
+        var user = this;
+
+        return new Promise(function (resolve, reject) {
+            user.save(function (err) {
+                if (err) {
+                    reject(Error('Unable to save user status'));
+                } else {
+                    resolve(user);
+                }
+            })
+        });
+
+    } else {
+        return this.chatStatus;
+    }
+};
+
+userSchema.statics.user = function user(data) {
+    var model = this;
+    return new Promise(function (resolve, reject) {
+        model.findOne(data, function (err, user) {
+
+            if (err || !user) {
+                reject(Error('Unable to find user'));
+            } else {
+                resolve(user);
+            }
+
+        })
+    });
 };
 
 userSchema.statics.designers = function designers() {
@@ -89,11 +128,27 @@ userSchema.statics.designers = function designers() {
     return new Promise(function (resolve, reject) {
         model
             .where('role').gte(2)
-            .where('chatStatus', 'online')
-            .select('email profile chatStatus twitter facebook role socketId')
+            .where('chatStatus', status.online)
+            .select('_id email profile chatStatus role socketId')
             .exec(function (err, docs) {
                 if (err) {
                     reject(new Error('Unable to query designers'));
+                } else {
+                    resolve(docs);
+                }
+            });
+    });
+};
+
+userSchema.statics.onlineUsers = function onlineUsers() {
+    var model = this;
+    return new Promise(function (resolve, reject) {
+        model
+            .where('chatStatus', status.online)
+            .select('_id email profile chatStatus role socketId')
+            .exec(function (err, docs) {
+                if (err) {
+                    reject(new Error('Unable to query online users'));
                 } else {
                     resolve(docs);
                 }
@@ -106,16 +161,16 @@ userSchema.statics.designers = function designers() {
  * Used in Navbar and Account Management page.
  */
 
-userSchema.methods.gravatar = function (size) {
-    if (!size) size = 200;
-
-    if (!this.email) {
-        return 'https://gravatar.com/avatar/?s=' + size + '&d=retro';
-    }
-
-    var md5 = crypto.createHash('md5').update(this.email).digest('hex');
-    return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
-};
+//userSchema.methods.gravatar = function (size) {
+//    if (!size) size = 200;
+//
+//    if (!this.email) {
+//        return 'https://gravatar.com/avatar/?s=' + size + '&d=retro';
+//    }
+//
+//    var md5 = crypto.createHash('md5').update(this.email).digest('hex');
+//    return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
+//};
 
 module.exports = mongoose.model('User', userSchema);
 

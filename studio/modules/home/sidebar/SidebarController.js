@@ -26,12 +26,12 @@ var SidebarCtrl = function ($scope, $rootScope, SessionService, DataFactory) {
     };
 
     vm.requestChat = function (designer) {
-        var data = {
+        var chat = new Chat({
             occupants: [designer, SessionService.user],
             instigator: SessionService.user
-        };
+        });
 
-        DataFactory.instigateChat(new Chat(data));
+        DataFactory.instigateChat(chat);
     };
 
     // Route Changes

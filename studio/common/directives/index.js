@@ -10,5 +10,4 @@ module.exports = angular.module('common.directives', [
         require('./chat').name
     ])
     .directive('formAutofillFix', require('./formAutofillFix.js'))
-    .directive('ukChart', require('./ukChart.js'))
-    .directive('icheckInput', require('./icheckInput.js'));
+    .directive('ukChart', require('./ukChart.js'));

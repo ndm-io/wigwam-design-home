@@ -1,26 +1,8 @@
 <h2 class="tile-title">
-    Chat Status
+    {{title}}
 </h2>
-<div class="s-widget-body">
-    <div class="side-border">
-        <div class="radio">
-            <label>
-                <input icheck-input type="radio" name="radio" ng-model="status" value="online" >
-                <small>Online</small>
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input icheck-input type="radio" name="radio" ng-model="status" value="busy" >
-                <small>Busy</small>
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                <input icheck-input type="radio" name="radio" ng-model="status" value="offline" >
-                <small>Offline</small>
-            </label>
-        </div>
+<div class="s-widget-body p-t-10">
+    <div class="side-border text-center">
+        <switch ng-model="enabled"></switch>
     </div>
-</div>
 </div>

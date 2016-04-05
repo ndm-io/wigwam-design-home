@@ -2,14 +2,15 @@
 
     <ul class="tab pull-left tab-vertical nav nav-tabs" style="height: auto;">
         <li class="{{activeClass('name')}}">
-            <a ng-click="click('name')">Name</a>
+            <a href ng-click('name')">Name</a>
         </li>
         <li class="{{activeClass('location')}}">
-            <a ng-click="click('location')">Location</a>
+            <a href ng-click="click('location')">Location</a>
         </li>
         <li class="{{activeClass('contact')}}">
-            <a ng-click="click('contact')">Contact Details</a>
+            <a href ng-click="click('contact')">Contact Details</a>
         </li>
+
     </ul>
 
     <div class="tab-content media-body">
@@ -71,8 +72,6 @@
             </div>
 
         </div>
-
-
         <div class="tab-pane {{activeClass('contact')}}">
 
             <div class="col-md-12">
@@ -173,5 +172,6 @@
 
             </form>
         </div>
+
     </div>
 </div>

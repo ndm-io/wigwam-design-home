@@ -1,11 +1,15 @@
-var Base = require('./WWBase');
-var crypto = require('crypto');
-var Address = require('./Address');
+var Base = require('./WWBase'),
+    userRoleIcons = require('./UserRoleIcons'),
+    crypto = require('crypto'),
+    Address = require('./Address');
 
 function User(json) {
     if (json) {
         this.initFromJson(json);
+    } else {
+        this.role = 0;
     }
+    this._gravatar = {};
 }
 
 User.prototype.initPrimitives = Base.initPrimitives;
@@ -17,11 +21,21 @@ User.prototype.initFromJson = function (json) {
 };
 
 User.prototype.gravatar = function (size) {
+
     size = size || 200;
+    var key = size.toString();
+
+    if (this._gravatar[key]) return this._gravatar[key];
     var email = this.email || 'info@example.com';
 
     var md5 = crypto.createHash('md5').update(email).digest('hex');
-    return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
+    this._gravatar[key] = 'https://gravatar.com/avatar/' + md5 + '?s=' + key + '&d=retro';
+
+    return this._gravatar[key];
+};
+
+User.prototype.roleIcon = function () {
+    return userRoleIcons[this.role.toString()];
 };
 
 User.prototype.hasVerifiedAddress = function () {
