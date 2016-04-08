@@ -26,7 +26,8 @@ public
 node_modules
 bower_components
 
-server/config/secrets.js
+server/config/SECRETS_LIST
+
 server/product_images
 server/uploads
 

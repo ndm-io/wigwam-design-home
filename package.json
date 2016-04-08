@@ -32,8 +32,6 @@
     "angular": "./bower_components/angular/angular.js"
   },
   "devDependencies": {
-    "angular": "^1.5.0",
-    "angular-ui-bootstrap": "^1.1.2",
     "bower": "^1.7.7",
     "browserify": "^11.2.0",
     "browserify-istanbul": "^0.2.1",
