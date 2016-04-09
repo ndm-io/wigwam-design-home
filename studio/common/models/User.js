@@ -1,4 +1,5 @@
 var Base = require('./WWBase'),
+    FeatureFactory = require('./factories/FeatureFactory'),
     userRoleIcons = require('./UserRoleIcons'),
     crypto = require('crypto'),
     Address = require('./Address');
@@ -18,6 +19,7 @@ User.prototype.initFromJson = function (json) {
     this.initPrimitives(json);
     this.address = new Address(json.address);
     this.profile = json.profile;
+    this.location = FeatureFactory(json.location);
 };
 
 User.prototype.gravatar = function (size) {

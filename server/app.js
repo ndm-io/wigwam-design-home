@@ -107,7 +107,6 @@ app.use(sessionMiddleware);
 app.use(function (req, res, next) {
     if (_.contains(csrfExclude, req.path)) return next();
     csrf(req, res, next);
-
 });
 
 app.use(passwordless.sessionSupport());

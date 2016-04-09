@@ -30,10 +30,12 @@ var DataInterface = function (SocketFactory, cache) {
             sf.emit(types.usersOnline, {});
         },
         usersOnline: function () {
+            console.log(cache.onlineUsers);
             return cache.onlineUsers;
         },
         leaveRoom: function (user, roomName) {
             c.removeUserFromRoom(user, roomName);
+            c.removeChatWithRoomName(roomName);
             sf.emit(types.leaveRoom, roomName);
         },
         addMessage: function (model, message) {

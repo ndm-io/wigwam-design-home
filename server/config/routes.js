@@ -32,8 +32,8 @@ exports.initRoutes = function (app, passwordless) {
      */
 
 
-    app.get(urls.profile.url, urls.profile.fn); // Check user is logged in. If so sends user model
-    app.post(urls.sendToken.url, urls.sendToken.fn(passwordless), urls.sendToken.complete); // Sends a token
+    app.get(urls.profile.url, urls.profile.fn);
+    app.post(urls.sendToken.url, urls.sendToken.fn(passwordless), urls.sendToken.complete);
 
     app.post(urls.logout.url, urls.logout.fn(passwordless)); // Destroys session
 

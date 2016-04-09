@@ -51,6 +51,12 @@ module.exports = function () {
         return chat;
     };
 
+    var removeChatWithRoomName = function (roomName) {
+        _.remove(ret.chats, function (chat) {
+            return roomName === chat.name;
+        });
+    };
+
     var addMessageDataToRoom = function (data, room) {
         var chat = chatWithRoom(room);
         var message = new Message();
@@ -71,6 +77,7 @@ module.exports = function () {
         onlineUsers: [],
         removeUserFromChats: removeUserFromChats,
         removeUserFromRoom: removeUserFromRoom,
+        removeChatWithRoomName: removeChatWithRoomName,
         addUserToChats: addUserToChats,
         addUserToChat: addUserToChat,
         addMessageDataToRoom: addMessageDataToRoom,

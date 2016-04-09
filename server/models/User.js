@@ -4,7 +4,8 @@ var mongoose = require('mongoose'),
     GeoJSON = require('mongoose-geojson-schema'),
     status = require('../config/statuses'),
     Promise = require('promise'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    anonFeature = require('../modules/anon-feature');
 
 var userSchema = new mongoose.Schema({
     email: {type: String, unique: true, lowercase: true},
@@ -16,7 +17,6 @@ var userSchema = new mongoose.Schema({
         postcode: {type: String, default: ''},
         loc: GeoJSON.Feature
     },
-    loc: GeoJSON.Feature,
     tokens: Array,
     settings: {
         messagePageSize: {type: Number, default: 5},
@@ -45,6 +45,11 @@ var userSchema = new mongoose.Schema({
     chatStatus: {type: String, default: 'offline'}
 });
 
+userSchema.set({
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true }
+});
+
 /**
  * Check user has privilege for route
  */
@@ -63,7 +68,8 @@ userSchema.methods.model = function () {
         role: this.role,
         ioToken: this.ioToken,
         socketId: this.socketId,
-        chatStatus: this.chatStatus
+        chatStatus: this.chatStatus,
+        location: this.location
     };
 };
 
@@ -75,7 +81,8 @@ userSchema.methods.card = function () {
         profile: this.profile,
         role: this.role,
         socketId: this.socketId,
-        chatStatus: this.chatStatus
+        chatStatus: this.chatStatus,
+        location: this.location
     };
 };
 
@@ -129,7 +136,7 @@ userSchema.statics.designers = function designers() {
         model
             .where('role').gte(2)
             .where('chatStatus', status.online)
-            .select('_id email profile chatStatus role socketId')
+            .select('_id email profile chatStatus role socketId location')
             .exec(function (err, docs) {
                 if (err) {
                     reject(new Error('Unable to query designers'));
@@ -145,7 +152,7 @@ userSchema.statics.onlineUsers = function onlineUsers() {
     return new Promise(function (resolve, reject) {
         model
             .where('chatStatus', status.online)
-            .select('_id email profile chatStatus role socketId')
+            .select('_id email profile chatStatus role socketId location')
             .exec(function (err, docs) {
                 if (err) {
                     reject(new Error('Unable to query online users'));
@@ -155,6 +162,14 @@ userSchema.statics.onlineUsers = function onlineUsers() {
             });
     });
 };
+
+userSchema
+    .virtual('location')
+    .get(function () {
+        return anonFeature(this.address.loc);
+    });
+
+
 
 /**
  * Get URL to a user's gravatar.
