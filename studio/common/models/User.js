@@ -19,7 +19,7 @@ User.prototype.initFromJson = function (json) {
     this.initPrimitives(json);
     this.address = new Address(json.address);
     this.profile = json.profile;
-    this.location = FeatureFactory(json.location);
+    this.location = FeatureFactory.featureFromJson(json.location);
 };
 
 User.prototype.gravatar = function (size) {

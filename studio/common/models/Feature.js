@@ -13,6 +13,9 @@ function Feature(type, coordinates, properties) {
 }
 
 Feature.prototype.initFromJson = function (geojson) {
+
+    if (!geojson) return;
+
     this.type = geojson.type;
     this.geometry = geojson.geometry;
     this.properties = geojson.properties;

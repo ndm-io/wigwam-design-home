@@ -1,7 +1,8 @@
 'use strict';
 
 var User = require('../../models/User');
-var validateEmail = require('../email-validator');
+var validateEmail = require('../email-validator'),
+    anonFeature = require('../../modules/anon-feature');
 
 var updateUserObj = function (obj, key, req, res) {
     User.findById(req.user.id, function (err, user) {
@@ -9,6 +10,9 @@ var updateUserObj = function (obj, key, req, res) {
             res.send({error: err});
         } else {
             user[key] = obj;
+            if (key === 'address') {
+                user.location = anonFeature(obj.loc);
+            }
             user.save(function (err) {
                 if (err) return;
                 res.send({status: 'success'});
@@ -28,7 +32,6 @@ exports.updateProfile = function (req, res) {
 };
 
 exports.userMiddleware = function (req, res, next) {
-
 
     if (!req.pUser) {
         next();

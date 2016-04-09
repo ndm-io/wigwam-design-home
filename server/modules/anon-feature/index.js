@@ -1,17 +1,18 @@
 'use strict';
 
 function Feature(lat, lng) {
-    this.type = 'Feature';
-    this.geometry = {
-        coordinates: [
-            lng,
-            lat
-        ],
-        type: 'Point'
-    };
-
-    this.properties = {
-        title: 'Anonymized Location'
+    return {
+        "type":"Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates":[
+                lng || 0.1,
+                lat || 0.1
+            ]
+        },
+        "properties":{
+            "title":"General Location"
+        }
     };
 }
 
@@ -33,5 +34,5 @@ module.exports = function (feature, radius) {
     var newY = y0 + y1,
         newX = x0 + x1;
 
-    return new Feature(parseFloat(newY.toFixed(6)), parseFloat(newX.toFixed(6)));
+    return Feature(parseFloat(newY.toFixed(6)), parseFloat(newX.toFixed(6)));
 };
