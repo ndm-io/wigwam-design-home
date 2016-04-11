@@ -28,8 +28,8 @@ var CommsFactory = function ($rootScope, $http, ROUTES) {
                     return response.data;
                 });
         },
-        updateAddress: function (address) {
-            return http.post(ROUTES.updateAddress, {address: address}, {})
+        updateAddress: function (address, location) {
+            return http.post(ROUTES.updateAddress, {address: address, location:location}, {})
                 .then(function (response) {
                     return response.data;
                 });

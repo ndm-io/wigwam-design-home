@@ -1,6 +1,6 @@
 'use strict';
 
-function Feature(lat, lng) {
+function Featurify(lat, lng) {
     return {
         "type":"Feature",
         "geometry": {
@@ -16,9 +16,8 @@ function Feature(lat, lng) {
     };
 }
 
-module.exports = function (feature, radius) {
-
-    radius = radius || 1000;
+var generalizedFeature = function (feature, radius) {
+    radius = radius || 2000;
 
     var r = radius / 111300,
         y0 = feature.geometry.coordinates[1],
@@ -34,5 +33,11 @@ module.exports = function (feature, radius) {
     var newY = y0 + y1,
         newX = x0 + x1;
 
-    return Feature(parseFloat(newY.toFixed(6)), parseFloat(newX.toFixed(6)));
+    return Featurify(parseFloat(newY.toFixed(6)), parseFloat(newX.toFixed(6)));
+};
+
+
+
+module.exports = function (feature, radius) {
+    return generalizedFeature(feature, radius);
 };

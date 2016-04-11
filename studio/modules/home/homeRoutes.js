@@ -56,6 +56,12 @@ function homeRoutes($stateProvider, USER_ROLES) {
         template: '<div users-view></div>'
     };
 
+    var projects = {
+        name: 'home.projects',
+        parent: home,
+        template: '<div projects-view></div>'
+    };
+
     $stateProvider.state(home);
     $stateProvider.state(dashboard);
     $stateProvider.state(messages);
@@ -63,6 +69,7 @@ function homeRoutes($stateProvider, USER_ROLES) {
     $stateProvider.state(profile);
     $stateProvider.state(calendar);
     $stateProvider.state(users);
+    $stateProvider.state(projects);
 
 
 }

@@ -1,21 +1,22 @@
 'use strict';
 
-var Address = require('../../models/Address');
 var GeoLocator = require('../../models/GeoLocator');
 
 var LocationSelectorCtrl = function ($scope, GeocodeFactory, $timeout) {
 
     var _mapModel = $scope.locationSelectorCtrl.mapModel;
 
+    $scope.updateFromModel = function(model) {
+        $scope.loc = model.address.formattedGPSLocation();
+        $scope.address = model.address.address();
+        updateMarkerLocation(model.address);
+    };
+
     var handleResult = function (en, e, args, json) {
         $timeout(function () {
-            var address = new Address();
-            address.initFromGeocoder(json);
-            _mapModel.address = address;
-            $scope.loc = address.formattedGPSLocation();
-            $scope.address = address.address();
-            updateMarkerLocation(address);
-            $scope.locationSelectorCtrl.eventHandler(en, e, args, address);
+            _mapModel.updateFromGeocodeResult(json);
+            $scope.updateFromModel(_mapModel);
+            $scope.locationSelectorCtrl.eventHandler(en, e, args, _mapModel.address, _mapModel.location);
         });
     };
 
@@ -93,7 +94,7 @@ var LocationSelectorCtrl = function ($scope, GeocodeFactory, $timeout) {
     };
 
     $scope.submit = function () {
-        $scope.locationSelectorCtrl.eventHandler(undefined, undefined, undefined, _mapModel.address);
+        $scope.locationSelectorCtrl.eventHandler(undefined, undefined, undefined, _mapModel.address, _mapModel.location);
         $scope.address = _mapModel.address.address();
     };
 

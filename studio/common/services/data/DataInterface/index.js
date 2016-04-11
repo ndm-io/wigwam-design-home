@@ -30,7 +30,6 @@ var DataInterface = function (SocketFactory, cache) {
             sf.emit(types.usersOnline, {});
         },
         usersOnline: function () {
-            console.log(cache.onlineUsers);
             return cache.onlineUsers;
         },
         leaveRoom: function (user, roomName) {

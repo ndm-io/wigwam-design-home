@@ -1,5 +1,8 @@
 'use strict';
 
+var AddressFactory = require('./factories/AddressFactory'),
+    LocationFactory = require('./factories/LocationFactory');
+
 var MapModel = function (user, leafletMarkerEvents) {
 
     var center = function () {
@@ -13,8 +16,8 @@ var MapModel = function (user, leafletMarkerEvents) {
         };
     };
 
-    var mq = 'http://otile4.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png';
-    var cycle = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png';
+    //var mq = 'http://otile4.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png';
+    //var cycle = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png';
     var osm = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
     var model = {
@@ -28,6 +31,7 @@ var MapModel = function (user, leafletMarkerEvents) {
         loc: ':',
         height: '250px',
         address: user.address,
+        location: user.location,
         defaults: {
             tileLayer: osm,
             path: {
@@ -35,6 +39,11 @@ var MapModel = function (user, leafletMarkerEvents) {
                 color: '#800000',
                 opacity: 1
             }
+        },
+        updateFromGeocodeResult: function (result) {
+            this.address = AddressFactory.addressFromGeocodeResult(result);
+            this.location = LocationFactory.randomizedLocationFromGeocodeResult(result);
+            this.updateMarker(this.address);
         },
         updateMarker: function (address) {
             if (!address) return;

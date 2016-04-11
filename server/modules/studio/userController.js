@@ -2,28 +2,50 @@
 
 var User = require('../../models/User');
 var validateEmail = require('../email-validator'),
-    anonFeature = require('../../modules/anon-feature');
+    Promise = require('promise');
 
 var updateUserObj = function (obj, key, req, res) {
     User.findById(req.user.id, function (err, user) {
         if (err) {
-            res.send({error: err});
+            if (res) res.send({error: err});
         } else {
             user[key] = obj;
-            if (key === 'address') {
-                user.location = anonFeature(obj.loc);
+            if (res) {
+                user.save(function (err) {
+                    if (err) return;
+                    res.send({status: 'success'});
+                });
             }
-            user.save(function (err) {
-                if (err) return;
-                res.send({status: 'success'});
-            });
         }
     });
 };
 
+var user = function (userId) {
+    return new Promise(function(resolve, reject) {
+        User.findById(userId, function (err, user) {
+            if (err) reject(new Error('Unable to find a user with this ID'));
+            resolve(user);
+        });
+    });
+};
+
 exports.updateAddress = function (req, res) {
-    var address = req.body.address;
-    updateUserObj(address, 'address', req, res);
+
+    user(req.user.id)
+        .then(function (user) {
+            user.address = req.body.address;
+            user.location = req.body.location;
+            return user;
+        })
+        .then(function (user) {
+            user.save(function (err) {
+                res.send({status:'success'});
+            });
+        })
+        .catch(function (err) {
+            console.log(err);
+            res.send({status:'fail', err:err});
+        });
 };
 
 exports.updateProfile = function (req, res) {

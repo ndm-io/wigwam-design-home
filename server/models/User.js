@@ -7,43 +7,124 @@ var mongoose = require('mongoose'),
     _ = require('lodash');
 
 var userSchema = new mongoose.Schema({
-    email: {type: String, unique: true, lowercase: true},
-    password: String,
-    address: {
-        address1: {type: String, default: ''},
-        address2: {type: String, default: ''},
-        address3: {type: String, default: ''},
-        postcode: {type: String, default: ''},
-        loc: GeoJSON.Feature
-    },
-    location: GeoJSON.Feature,
-    tokens: Array,
-    settings: {
-        messagePageSize: {type: Number, default: 5},
-        startState: {type: String, default: 'home.dashboard'}
-    },
-    profile: {
-        firstname: {type: String, default: ''},
-        surname: {type: String, default: ''},
-        phone: {type: String, default: ''},
-        company: {type: String, default: ''},
-        gender: {type: String, default: ''},
-        location: {type: String, default: ''},
-        website: {type: String, default: ''},
-        picture: {type: String, default: ''},
-        facebook: {type: String, default: ''},
-        twitter: {type: String, default: ''},
-        google: {type: String, default: ''},
-        instagram: {type: String, default: ''},
-        preferredContact: {type: String, default: 'phone'}
-    },
-    authorizedRoutes: [String],
-    isPrivileged: {type: Boolean, default: false},
-    role: {type: Number, default: 1},
-    ioToken: {type: String},
-    socketId: {type: String},
-    chatStatus: {type: String, default: 'offline'}
-});
+        email: {type: String, unique: true, lowercase: true},
+        password: String,
+        address: {
+            address1: {type: String, default: ''},
+            address2: {type: String, default: ''},
+            address3: {type: String, default: ''},
+            postcode: {type: String, default: ''},
+            loc: GeoJSON.Feature
+        },
+        location: {
+            feature: GeoJSON.Feature,
+            county: {type: String}
+        },
+        tokens: Array,
+        settings: {
+            messagePageSize: {
+                type: Number,
+                default: 5
+            }
+            ,
+            startState: {
+                type: String,
+                default: 'home.dashboard'
+            }
+        }
+        ,
+        profile: {
+            firstname: {
+                type: String,
+                default: ''
+            }
+            ,
+            surname: {
+                type: String,
+                default: ''
+            }
+            ,
+            phone: {
+                type: String,
+                default: ''
+            }
+            ,
+            company: {
+                type: String,
+                default: ''
+            }
+            ,
+            gender: {
+                type: String,
+                default: ''
+            }
+            ,
+            location: {
+                type: String,
+                default: ''
+            }
+            ,
+            website: {
+                type: String,
+                default: ''
+            }
+            ,
+            picture: {
+                type: String,
+                default: ''
+            }
+            ,
+            facebook: {
+                type: String,
+                default: ''
+            }
+            ,
+            twitter: {
+                type: String,
+                default: ''
+            }
+            ,
+            google: {
+                type: String,
+                default: ''
+            }
+            ,
+            instagram: {
+                type: String,
+                default: ''
+            }
+            ,
+            preferredContact: {
+                type: String,
+                default: 'phone'
+            }
+        }
+        ,
+        authorizedRoutes: [String],
+        isPrivileged: {
+            type: Boolean,
+            default: false
+        }
+        ,
+        role: {
+            type: Number,
+            default: 1
+        }
+        ,
+        ioToken: {
+            type: String
+        }
+        ,
+        socketId: {
+            type: String
+        }
+        ,
+        chatStatus: {
+            type: String,
+            default: 'offline'
+        }
+    })
+    ;
 
 /**
  * Check user has privilege for route
@@ -158,22 +239,6 @@ userSchema.statics.onlineUsers = function onlineUsers() {
     });
 };
 
-
-/**
- * Get URL to a user's gravatar.
- * Used in Navbar and Account Management page.
- */
-
-//userSchema.methods.gravatar = function (size) {
-//    if (!size) size = 200;
-//
-//    if (!this.email) {
-//        return 'https://gravatar.com/avatar/?s=' + size + '&d=retro';
-//    }
-//
-//    var md5 = crypto.createHash('md5').update(this.email).digest('hex');
-//    return 'https://gravatar.com/avatar/' + md5 + '?s=' + size + '&d=retro';
-//};
 
 module.exports = mongoose.model('User', userSchema);
 

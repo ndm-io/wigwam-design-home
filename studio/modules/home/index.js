@@ -3,6 +3,7 @@
 module.exports = angular.module('modules.home', [
         require('./header').name,
         require('./sidebar').name,
+        require('./projects').name,
         require('./users').name,
         require('./messages').name,
         require('./message').name,

@@ -5,13 +5,7 @@
     <div class="media-body">
         <div class="media" id="top-menu">
 
-            <div id="time" class="pull-right">
-                <span id="hours"></span>
-                :
-                <span id="min"></span>
-                :
-                <span id="sec"></span>
-            </div>
+            <div clock-widget></div>
 
 
         </div>
@@ -26,55 +20,182 @@
             </p>
         </div>
 
+
     </div>
     <ul class="list-unstyled side-menu">
     </ul>
 
 </aside>
-<section id="content" ng-controller="LoginCtrl">
 
+<section id="content" ng-controller="LoginCtrl">
     <div class="block-area">
         <div class="row">
             <div class="col-md-12">
-                <div class="tile">
-                    <h2 class="tile-title">LOGIN</h2>
-                    <div class="p-10">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
                         <div class="row">
-                            <div class="col-md-8">
-                               <div class="row">
-                                   <div class="col-md-12">
-                                       <input class="form-control input-lg m-b-10"
-                                              type="email"
-                                              ng-model="credentials.user"
-                                              placeholder="Email">
-                                   </div>
-                               </div>
-                                <div class="row">
-                                    <div class="col-md-12 text-center">
-                                        <button class="btn btn-lg btn-alt m-r-5" ng-click="submit(credentials)">Login</button>
-                                    </div>
+                            <div class="col-md-12">
+                                <img src="assets/images/svg/logo_wigwam_proper_white.svg" style="width:100%"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <input class="form-control input-lg m-b-10"
+                                           type="email"
+                                           ng-model="credentials.user"
+                                           placeholder="Email">
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-lg btn-alt m-r-5" ng-click="submit(credentials)">Login
+                                    </button>
+
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <p>
-                                    {{log.message}}
-                                </p>
-                                <p class="text-center">
-                            <span style="font-size: x-large">
-                                <span ng-switch="log.state">
-                                    <span ng-switch-when="success"><i class="fa fa-thumbs-o-up"></i> </span>
-                                    <span ng-switch-when="sending"><i class="fa fa-tasks"></i> </span>
-                                    <span ng-switch-when="error"><i class="fa fa-exclamation"></i></span>
-                                    <span ng-switch-when="invalid"><i class="fa fa-thumbs-o-down"></i></span>
-                                    <span ng-switch-default><i class="fa fa-ellipsis-h"></i></span>
-                                </span>
-                            </span>
-                                </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>{{log.message}}</p>
+                                    <p class="text-center">
+                                        <span style="font-size: x-large">
+                                            <span ng-switch="log.state">
+                                                <span ng-switch-when="success"><i class="fa fa-thumbs-o-up"></i> </span>
+                                                <span ng-switch-when="sending"><i class="fa fa-tasks"></i> </span>
+                                                <span ng-switch-when="error"><i class="fa fa-exclamation"></i></span>
+                                                <span ng-switch-when="invalid"><i
+                                                        class="fa fa-thumbs-o-down"></i></span>
+                                                <span ng-switch-default><i class="fa fa-ellipsis-h"></i></span>
+                                            </span>
+                                        </span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h3 class="block-title">NEW USERS</h3>
+                <p>
+                    Creating an account is as easy as logging in. Just enter your email address and your set.
+                    A one time key will be emailed to you, click it, and you get logged in. Any time you need
+                    to log in again, repeat.
+                </p>
+            </div>
+        </div>
     </div>
 </section>
+<!--<section id="content" ng-controller="LoginCtrl">-->
+
+<!--<div class="block-area">-->
+<!--<div class="row">-->
+<!--<div class="col-md-6">-->
+<!--<div class="tile">-->
+<!--<h2 class="tile-title">LOGIN</h2>-->
+<!--<div class="p-10">-->
+<!--<div class="row">-->
+<!--<div class="col-md-12">-->
+<!--<h3 class="block-title">ENTER EMAIL ADDRESS TO LOGIN OR CREATE AN ACCOUNT</h3>-->
+<!--<div class="row">-->
+<!--<div class="col-md-8">-->
+<!--<input class="form-control input-lg m-b-10"-->
+<!--type="email"-->
+<!--ng-model="credentials.user"-->
+<!--placeholder="Email">-->
+<!--</div>-->
+<!--<div class="col-md-4 text-center">-->
+<!--<button class="btn btn-lg btn-alt m-r-5" ng-click="submit(credentials)">Login-->
+<!--</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-6">-->
+<!--<div class="tile">-->
+<!--<h2 class="tile-title">INFO</h2>-->
+<!--<div class="p-10">-->
+<!--<div class="row">-->
+<!--<div class="col-md-12">-->
+<!--<p>-->
+<!--{{log.message}}-->
+<!--</p>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-md-6">-->
+<!--<div class="tile">-->
+<!--<h2 class="tile-title">INFO</h2>-->
+<!--<div class="p-10">-->
+<!--<div class="row">-->
+<!--<div class="col-md-12">-->
+<!--<h3 class="block-title">NO PASSWORDS</h3>-->
+<!--<p>-->
+<!--Passwords are broken, a quick search of the internet shows that.-->
+<!--</p>-->
+<!--<p>-->
+<!--Instead, we send a one time key, think of it as a password that is complex and only-->
+<!--works once, to your email address.-->
+<!--</p>-->
+<!--<p>-->
+<!--It means there is no password to remember, no password to be hacked and no password-->
+<!--to be changed if it got compromised for any reason.-->
+<!--</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-6">-->
+<!--<div class="tile">-->
+<!--<h2 class="tile-title">INFO</h2>-->
+<!--<div class="p-10">-->
+<!--<div class="row">-->
+<!--<div class="col-md-12">-->
+<!--<h3 class="block-title">NEW USERS</h3>-->
+<!--<p>-->
+<!--Not having to set up any kind of username and password makes it really easy to get-->
+<!--started. If fact all you need is a valid email address.-->
+<!--</p>-->
+<!--<ul class=lists-caret>-->
+<!--<li>-->
+<!--Enter your email address-->
+<!--</li>-->
+<!--<li>-->
+<!--Click the link we send you, or enter it into your browser-->
+<!--</li>-->
+<!--<li>-->
+<!--Your in-->
+<!--</li>-->
+<!--<li>-->
+<!--Repeat anytime you log out or need to use another device-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-md-12">-->
+<!--<img src="assets/images/svg/logo_wigwam_proper_white.svg"/>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->

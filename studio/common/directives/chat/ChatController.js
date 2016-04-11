@@ -22,6 +22,7 @@ function ChatController($scope, DataFactory, SessionService) {
     };
 
     $scope.$watch('chatModel.messages', function () {
+
         $scope.animateContainer();
     }, true);
 
