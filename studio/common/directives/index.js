@@ -8,7 +8,8 @@ module.exports = angular.module('common.directives', [
         require('./location-selector').name,
         require('./personal-details').name,
         require('./chat').name,
-        require('./clock-widget').name
+        require('./clock-widget').name,
+        require('./project-tile').name
     ])
     .directive('formAutofillFix', require('./formAutofillFix.js'))
     .directive('ukChart', require('./ukChart.js'));

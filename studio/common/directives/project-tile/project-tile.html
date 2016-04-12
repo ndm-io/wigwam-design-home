@@ -1,0 +1,32 @@
+<div class="tile">
+    <h2 class="tile-title">PROJECT: {{project.guid}}</h2>
+
+    <div class="tile-config dropdown">
+        <a data-toggle="dropdown" href="" class="tile-menu"></a>
+        <ul class="dropdown-menu pull-right text-right">
+            <li><a ui-sref="home.project.summary({project:project})">Edit</a></li>
+        </ul>
+    </div>
+
+    <div class="quick-chat-user-container">
+        <div class="quick-chat-user-gravatar" ng-repeat="user in project.clients">
+            <img ng-src="{{user.gravatar(20)}}"
+                 class="img-circle img-thumbnail m-r-10 m-b-10">
+        </div>
+    </div>
+
+    <hr class="whiter">
+
+    <div class="row">
+        <div class="col-md-12">
+            {{project.createdDate}}
+        </div>
+    </div>
+
+    <div class="panel-footer">
+        <div class="input-group">
+
+        </div>
+    </div>
+
+</div>

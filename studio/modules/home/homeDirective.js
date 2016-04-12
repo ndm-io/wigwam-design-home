@@ -2,7 +2,7 @@
 
 module.exports = function homeDirective() {
     return {
-        controller: 'HomeCtrl', // Called from HomeController.js
+        controller: 'HomeCtrl',
         controllerAs: 'ctrl',
         bindToController: true,
         restrict: 'EA',

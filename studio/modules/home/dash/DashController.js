@@ -3,7 +3,7 @@
 var DashCtrl = function ($scope, DataFactory) {
 
     $scope.chats = function () {
-        return DataFactory.chats();
+        return DataFactory.chat.chats();
     };
 
 };

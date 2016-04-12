@@ -6,15 +6,18 @@ var Message = require('../../models/Message'),
 
 function ChatController($scope, DataFactory, SessionService) {
 
+
+
     var sendOnReturn = true,
-        hasSentUpdate = false;
+        hasSentUpdate = false,
+        dataFactory = DataFactory.chat;
 
     $scope.toggleSendOnReturn = function (value) {
         sendOnReturn = value;
     };
 
     $scope.leaveRoom = function (model) {
-        DataFactory.leaveRoom(SessionService.user, model.name);
+        dataFactory.leaveRoom(SessionService.user, model.name);
     };
 
     $scope.clearText = function () {
@@ -27,7 +30,7 @@ function ChatController($scope, DataFactory, SessionService) {
     }, true);
 
     $scope.addToMessages = function (message) {
-        DataFactory.addMessage($scope.chatModel, message);
+        dataFactory.addMessage($scope.chatModel, message);
         $scope.clearText();
     };
 
@@ -42,18 +45,18 @@ function ChatController($scope, DataFactory, SessionService) {
     };
 
     $scope.isTyping = function (room) {
-        return DataFactory.isTyping(room);
+        return dataFactory.isTyping(room);
     };
 
     $scope.typing = function (room, event) {
 
         var data = {room: room, user: SessionService.user};
         if (!$scope.textarea || $scope.textarea.length === 0) {
-            DataFactory.stopTyping(data);
+            dataFactory.stopTyping(data);
             hasSentUpdate = false;
         } else {
             if (!hasSentUpdate) {
-                DataFactory.roomIsTyping(data);
+                dataFactory.roomIsTyping(data);
                 hasSentUpdate = true;
             }
         }
@@ -69,11 +72,11 @@ function ChatController($scope, DataFactory, SessionService) {
     };
 
     $scope.designers = function () {
-        return DataFactory.designers();
+        return dataFactory.designers();
     };
 
     $scope.invite = function (designer, chat) {
-        DataFactory.inviteUserToChat(designer, chat);
+        dataFactory.inviteUserToChat(designer, chat);
     };
 }
 

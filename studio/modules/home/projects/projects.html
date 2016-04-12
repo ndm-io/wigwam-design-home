@@ -1,4 +1,35 @@
 <h4 class="page-title b-0">Projects</h4>
 
+<!-- Shortcuts -->
+<div class="block-area shortcut-area">
+    <a class="shortcut tile" ui-sref="home.project.summary">
+        <img src="img/shortcuts/new_project.svg" alt="">
+        <small class="t-overflow">New</small>
+    </a>
+</div>
+
+
+<hr class="whiter"/>
+
 <div class="block-area">
+    <div ng-if="projects.length == 0">
+        <no-projects></no-projects>
+    </div>
+    <div ng-if="projects.length > 0">
+        <div class="row">
+            <div class="{{colClass}}">
+
+                <div class="row">
+                    <div class="col-md-3" ng-repeat="project in projects" >
+                        <project-tile project="project"></project-tile>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-3" ng-if="chats.length > 0" ng-repeat="chat in chats">
+                <chat chat-model="chat"></chat>
+            </div>
+        </div>
+
+    </div>
 </div>

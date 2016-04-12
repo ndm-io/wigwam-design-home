@@ -3,7 +3,8 @@
 var _ = require('lodash'),
     Message = require('../../models/Message'),
     User = require('../../models/User'),
-    Chat = require('../../models/Chat');
+    Chat = require('../../models/Chat'),
+    ProjectFactory = require('../../models/factories/ProjectFactory');
 
 module.exports = function () {
 
@@ -70,8 +71,18 @@ module.exports = function () {
         });
     };
 
+    var newProject = function (data) {
+        var project = ProjectFactory.projectWithJson(data);
+        ret._projects[project.guid] = project;
+    };
+
+    var projectWithGuid = function (guid) {
+        return ret._projects[guid];
+    };
+
     var ret = {
-        projects: [],
+        _projects:{},
+        projectWithGuid: projectWithGuid,
         designers: [],
         chats: [],
         onlineUsers: [],
@@ -82,8 +93,13 @@ module.exports = function () {
         addUserToChat: addUserToChat,
         addMessageDataToRoom: addMessageDataToRoom,
         addOnlineUsers: addOnlineUsers,
+        newProject: newProject,
         isTyping: {}
     };
+
+    ret.__defineGetter__('projects', function () {
+        return _.values(ret._projects);
+    });
 
     return ret;
 };

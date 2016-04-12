@@ -12,7 +12,7 @@ var ChatStatusWidgetCtrl = function ($scope, DataFactory, SessionService) {
 
     $scope.__defineSetter__('enabled', function (value) {
         var status = (value) ? STATUS.online : STATUS.offline;
-        DataFactory.chatStatus(SessionService.user, status);
+        DataFactory.chat.chatStatus(SessionService.user, status);
         enabled = value;
     });
 

@@ -2,6 +2,7 @@ var Base = require('./WWBase.js');
 var Message = require('./Message');
 var Feature = require('./Feature');
 var Client = require('./User');
+var Address = require('./Address');
 
 
 function Project() {
@@ -24,7 +25,7 @@ function Project() {
     this.initialConsultations = [];
     this.defaultInitialConsultationImageGuids = [];
     this.loc = new Feature();
-
+    this.address = new Address();
     this.sha256 = '';
     this._totals = undefined;
     this._icImages = undefined;
@@ -50,6 +51,7 @@ Project.prototype.initFromJson = function (json) {
     //this.initArrayProperty('tasks', json.tasks, Task);
     //this.initArrayProperty('events', json.events, Task);
     this.initArrayProperty('messages', json.messages, Message);
+    this.address = new Address(json.address);
     //this.initArrayProperty('products', json.products, Product);
    // this.initArrayProperty('invoices', json.invoices, Invoice);
     //this.initArrayProperty('quotes', json.quotes, Invoice);
@@ -140,7 +142,9 @@ Project.prototype.client = function () {
 };
 
 Project.prototype.setClientAsLocation = function () {
-    this.loc = this.client().loc;
+    var address = this.client().address;
+    this.loc = address.loc;
+    this.address = address;
 };
 
 Project.prototype.removeClient = function (client) {

@@ -22,7 +22,7 @@ var SidebarCtrl = function ($scope, $rootScope, SessionService, DataFactory) {
     };
 
     vm.designers = function () {
-        return DataFactory.designers();
+        return DataFactory.chat.designers();
     };
 
     vm.requestChat = function (designer) {
@@ -31,7 +31,7 @@ var SidebarCtrl = function ($scope, $rootScope, SessionService, DataFactory) {
             instigator: SessionService.user
         });
 
-        DataFactory.instigateChat(chat);
+        DataFactory.chat.instigateChat(chat);
     };
 
     // Route Changes

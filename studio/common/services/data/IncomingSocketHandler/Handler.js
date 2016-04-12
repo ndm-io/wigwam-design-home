@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash'),
-    status = require('../../../../server/config/statuses');
+    status = require('../../../../../server/config/statuses');
 
 var Handler = function (SocketFactory, cache) {
 

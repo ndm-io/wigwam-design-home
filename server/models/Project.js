@@ -142,27 +142,51 @@ var messageSchema = new mongoose.Schema({
 });
 
 var projectSchema = new mongoose.Schema({
-    guid: {type: String, default: ''},
-    sha256: {type: String, default: ''},
-    createdDate: {type: Date},
-    submissionDate: {type: Date},
-    acceptedDate: {type: Date},
-    urn: {type: String, default: ''},
-    loc: GeoJSON.Feature,
-    name: {type: String, default: ''},
-    description: {type: String, default: ''},
-    clients: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    moodboards: [moodboardSchema],
-    tasks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
-    events: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
-    messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],
-    products: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
-    invoices: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
-    quotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
-    images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
-    initialConsultations: [{type: mongoose.Schema.Types.ObjectId, ref: 'InitialConsultation'}],
-    defaultInitialConsultationImageGuids: [String]
-});
+        guid: {type: String, default: ''},
+        sha256: {type: String, default: ''},
+        createdDate: {type: Date},
+        submissionDate: {type: Date},
+        acceptedDate: {type: Date},
+        urn: {type: String, default: ''},
+        loc: GeoJSON.Feature,
+        address: {
+            address1: {
+                type: String,
+                default: ''
+            }
+            ,
+            address2: {
+                type: String,
+                default: ''
+            }
+            ,
+            address3: {
+                type: String,
+                default: ''
+            }
+            ,
+            postcode: {
+                type: String,
+                default: ''
+            }
+            ,
+            loc: GeoJSON.Feature
+        },
+        name: {type: String, default: ''},
+        description: {type: String, default: ''},
+        clients: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+        moodboards: [moodboardSchema],
+        tasks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
+        events: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
+        messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],
+        products: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
+        invoices: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
+        quotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
+        images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
+        initialConsultations: [{type: mongoose.Schema.Types.ObjectId, ref: 'InitialConsultation'}],
+        defaultInitialConsultationImageGuids: [String]
+    })
+    ;
 
 var initialConsultationSchema = new mongoose.Schema({
     guid: {type: String},
@@ -222,7 +246,7 @@ projectSchema.methods.deleteProducts = function deleteProducts(productsJson, don
         self.products.pull(pJ);
         callback();
     }, function (err) {
-        self.save(function(error){
+        self.save(function (error) {
             done(error);
         });
 
