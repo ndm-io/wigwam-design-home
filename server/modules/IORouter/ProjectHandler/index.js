@@ -19,8 +19,11 @@ function ProjectHandler (io, socket) {
     });
 
     attach(types.updateProjectAddress, function (data) {
-        console.log(data);
         io.to(data.projectGuid).emit(types.updateProjectAddress, data);
+    });
+
+    attach(types.removeProject, function (data) {
+        io.to(data.projectGuid).emit(types.removeProject, data);
     });
 
 }

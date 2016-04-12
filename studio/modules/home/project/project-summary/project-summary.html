@@ -2,9 +2,11 @@
 
     <div class="row">
         <div class="col-md-12">
-            <location-selector title="Default Project Location"
-                               map-model="mapModel"
-                               event-handler="handle"></location-selector>
+            <div ng-if="project">
+                <location-selector title="Default Project Location"
+                                   map-model="mapModel"
+                                   event-handler="handle"></location-selector>
+            </div>
         </div>
     </div>
 </div>

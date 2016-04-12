@@ -15,6 +15,9 @@ module.exports = function (sf, cache) {
         },
         updateProjectAddress: function (projectGuid, address) {
             sf.emit(types.updateProjectAddress, {projectGuid:projectGuid, address:address});
+        },
+        removeProjectWithGuid: function (projectGuid) {
+            sf.emit(types.removeProject, {projectGuid:projectGuid});
         }
     };
 };

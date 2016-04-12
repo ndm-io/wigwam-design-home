@@ -148,7 +148,6 @@ var projectSchema = new mongoose.Schema({
         submissionDate: {type: Date},
         acceptedDate: {type: Date},
         urn: {type: String, default: ''},
-        loc: GeoJSON.Feature,
         address: {
             address1: {
                 type: String,

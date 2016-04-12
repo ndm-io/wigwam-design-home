@@ -1,6 +1,5 @@
 var Base = require('./WWBase.js');
 var Message = require('./Message');
-var Feature = require('./Feature');
 var Client = require('./User');
 var Address = require('./Address');
 
@@ -8,11 +7,11 @@ var Address = require('./Address');
 function Project() {
     this.guid = Base.guid();
     this.urn = '';
+    this.name = '';
+    this.description = '';
     this.createdDate = new Date();
     this.submissionDate = undefined;
     this.acceptedDate = undefined;
-    this.name = '';
-    this.description = '';
     this.clients = [];
     this.tasks = [];
     this.events = [];
@@ -24,7 +23,6 @@ function Project() {
     this.images = [];
     this.initialConsultations = [];
     this.defaultInitialConsultationImageGuids = [];
-    this.loc = new Feature();
     this.address = new Address();
     this.sha256 = '';
     this._totals = undefined;
@@ -65,9 +63,22 @@ Project.prototype.initPrimitives = Base.initPrimitives;
 
 Project.prototype.initArrayProperty = Base.initArrayProperty;
 
-Project.prototype.generateSha256 = function () {
-    this.sha256 = Sha256.hash(JSON.stringify(this));
-    return this.sha256;
+//Project.prototype.generateSha256 = function () {
+//    this.sha256 = Sha256.hash(JSON.stringify(this));
+//    return this.sha256;
+//};
+
+Project.prototype.formattedName = function () {
+    if (this.name > 0) {
+        return this.name;
+    } else {
+        var nums = this.guid.split('-');
+        return [
+            'New Project ...',
+            nums[0],
+            '...'
+        ].join('');
+    }
 };
 
 Project.prototype.generateUrn = function () {
@@ -119,7 +130,11 @@ Project.prototype.detailsVerified = function () {
 };
 
 Project.prototype.locVerified = function () {
-    return (this.loc.geometry.coordinates.length > 0);
+    return (this.address.loc.geometry.coordinates.length > 0);
+};
+
+Project.prototype.hasVerifiedAddress = function () {
+    return this.locVerified();
 };
 
 Project.prototype.isConcept = function () {
@@ -142,9 +157,7 @@ Project.prototype.client = function () {
 };
 
 Project.prototype.setClientAsLocation = function () {
-    var address = this.client().address;
-    this.loc = address.loc;
-    this.address = address;
+    this.address = this.client().address;
 };
 
 Project.prototype.removeClient = function (client) {
@@ -168,7 +181,7 @@ Project.prototype.outstandingTaskCount = function () {
 };
 
 Project.prototype.hasOutstandingTasks = function () {
-    return (this.outstandingTaskCount() > 0) ? true : false;
+    return (this.outstandingTaskCount() > 0);
 };
 
 Project.prototype.addTask = function (task) {

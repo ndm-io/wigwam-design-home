@@ -80,9 +80,14 @@ module.exports = function () {
         return ret._projects[guid];
     };
 
+    var removeProjectWithGuid = function (guid) {
+        delete ret._projects[guid];
+    };
+
     var ret = {
         _projects:{},
         projectWithGuid: projectWithGuid,
+        removeProjectWithGuid: removeProjectWithGuid,
         designers: [],
         chats: [],
         onlineUsers: [],

@@ -17,5 +17,6 @@ module.exports = {
     userStoppedTyping: 'socket:chat:stoppedTyping',
     usersOnline: 'socket:users:online',
     newProject: 'socket:project:new',
-    updateProjectAddress: 'socket:project:update:address'
+    updateProjectAddress: 'socket:project:update:address',
+    removeProject: 'socket:project:remove'
 };
