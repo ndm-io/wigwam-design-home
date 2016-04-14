@@ -18,5 +18,6 @@ module.exports = {
     usersOnline: 'socket:users:online',
     newProject: 'socket:project:new',
     updateProjectAddress: 'socket:project:update:address',
-    removeProject: 'socket:project:remove'
+    removeProject: 'socket:project:remove',
+    updateProject: 'socket:project:update'
 };

@@ -45,6 +45,11 @@ var MapModel = function (user, leafletMarkerEvents) {
             this.location = LocationFactory.randomizedLocationFromGeocodeResult(result);
             this.updateMarker(this.address);
         },
+        updateFromAddress: function (address) {
+            this.address = address;
+            this.location = address.loc;
+            this.updateMarker(address);
+        },
         updateMarker: function (address) {
             if (!address) return;
             var marker = address.marker();

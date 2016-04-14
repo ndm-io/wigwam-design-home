@@ -16,6 +16,7 @@ var ProfileCtrl = function ($scope, SessionService, CommsFactory, leafletMarkerE
     vm.gravatar = vm.user.gravatar();
 
     vm.handle = function (eventName, e, args, address, location) {
+
         if (address) {
             CommsFactory.updateAddress(address, location)
                 .then(function (data) {

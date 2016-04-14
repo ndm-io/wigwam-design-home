@@ -15,8 +15,11 @@ function projectHandler (SocketFactory, user, cache) {
     });
 
     SocketFactory.on(types.removeProject, function (data) {
-        console.log('remove:', data);
         cache.removeProjectWithGuid(data.projectGuid);
+    });
+
+    SocketFactory.on(types.updateProject, function (data) {
+        cache.updateProjectWithData(data.projectGuid, data.data);
     });
 }
 

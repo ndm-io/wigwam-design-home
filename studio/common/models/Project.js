@@ -69,7 +69,7 @@ Project.prototype.initArrayProperty = Base.initArrayProperty;
 //};
 
 Project.prototype.formattedName = function () {
-    if (this.name > 0) {
+    if (this.name.length > 0) {
         return this.name;
     } else {
         var nums = this.guid.split('-');

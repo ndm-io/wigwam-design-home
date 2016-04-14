@@ -84,10 +84,21 @@ module.exports = function () {
         delete ret._projects[guid];
     };
 
+    var updateProjectWithData = function (projectGuid, data) {
+        var project = projectGuid(projectGuid);
+        var keys = Object.keys(data);
+
+        _.each(keys, function (key) {
+            project[key] = data[key];
+        });
+
+    };
+
     var ret = {
         _projects:{},
         projectWithGuid: projectWithGuid,
         removeProjectWithGuid: removeProjectWithGuid,
+        updateProjectWithData: updateProjectWithData,
         designers: [],
         chats: [],
         onlineUsers: [],

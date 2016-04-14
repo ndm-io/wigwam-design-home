@@ -14,9 +14,16 @@ function ProjectSummaryController($scope, leafletMarkerEvents, DataFactory) {
         }
     });
 
+    $scope.$watch('project.address', function (addr) {
+        $scope.mapModel.updateFromAddress(addr);
+    });
 
     $scope.handle = function (eventName, e, args, address) {
         dataFactory.updateProjectAddress(_projectGuid, address);
+    };
+
+    $scope.save = function () {
+        dataFactory.updateProjectWithKeys(_projectGuid, ['name', 'description']);
     };
 
 }

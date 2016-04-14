@@ -2,6 +2,65 @@
 
     <div class="row">
         <div class="col-md-12">
+            <div class="tile">
+                <h2 class="tile-title">BASIC INFORMATION</h2>
+                <div class="row">
+                    <div class="col-md-offset-1 col-md-10">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="inputName" class="col-md-2 control-label">Name</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control input-sm" id="inputName"
+                                           ng-model="project.name"
+                                           placeholder="A short name for this project">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputDescription" class="col-md-2 control-label">Description</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control input-sm" id="inputDescription"
+                                           ng-model="project.description"
+                                           placeholder="A brief description for this project">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputGuid" class="col-md-2 control-label">Unique Reference</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control input-sm" id="inputGuid"
+                                           ng-model="project.guid" disabled
+                                           placeholder="Unique reference">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputCreatedDate" class="col-md-2 control-label">Created Date</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control input-sm" id="inputCreatedDate"
+                                           value="{{project.createdDate | date}}" disabled
+                                           placeholder="Creation Date">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputAddress" class="col-md-2 control-label">Project Address</label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control input-sm" id="inputAddress"
+                                           value="{{project.address.address().join(', ')}}" disabled
+                                           placeholder="Address">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button type="submit" class="btn btn-info btn-sm m-t-10" ng-click="save()">SAVE CHANGES</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div ng-if="project">
                 <location-selector title="Default Project Location"
                                    map-model="mapModel"
