@@ -20,8 +20,8 @@ var updateSocket = function (io, socket) {
     };
 };
 
-var sendUpdates = function (io) {
-    return SendUpdates(io);
+var sendUpdates = function (io, socket) {
+    return SendUpdates(io, socket);
 };
 
 

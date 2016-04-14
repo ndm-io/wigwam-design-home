@@ -2,7 +2,7 @@
 
 var ProjectFactory = require('../../../common/models/factories/ProjectFactory');
 
-var ProjectsController = function ($scope, DataFactory, SessionService) {
+var ProjectsController = function ($scope, DataFactory) {
 
     $scope.__defineGetter__('chats', function () {
         return DataFactory.chat.chats();
@@ -17,5 +17,5 @@ var ProjectsController = function ($scope, DataFactory, SessionService) {
     });
 };
 
-ProjectsController.$inject = ['$scope', 'DataFactory', 'SessionService'];
+ProjectsController.$inject = ['$scope', 'DataFactory'];
 module.exports = ProjectsController;

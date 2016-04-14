@@ -10,7 +10,7 @@ function Authenticate (io, socket) {
         User.user(data)
             .then(AuthStages.goOnline(socket))
             .then(AuthStages.updateSocket(io, socket))
-            .then(AuthStages.sendUpdates(io))
+            .then(AuthStages.sendUpdates(io, socket))
             .catch(function (err) {
                 console.log('Authenticate error', err);
             });

@@ -113,8 +113,17 @@ module.exports = function () {
         isTyping: {}
     };
 
-    ret.__defineGetter__('projects', function () {
-        return _.values(ret._projects);
+    Object.defineProperty(ret, 'projects', {
+        get: function () {
+            return _.values(ret._projects);
+        },
+        set: function (projects) {
+            var _projects = {};
+            _.each(projects, function (project) {
+                _projects[project.guid] = ProjectFactory.projectWithJson(project);
+            });
+            ret._projects = _projects;
+        }
     });
 
     return ret;

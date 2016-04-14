@@ -1,12 +1,15 @@
 'use strict';
 
 var types = require('../../../../../server/config/IOTypes'),
-    Address = require('../../../../common/models/Address'),
-    Feature = require('../../../../common/models/Feature');
+    Address = require('../../../../common/models/Address');
 
 function projectHandler (SocketFactory, user, cache) {
     SocketFactory.on(types.newProject, function (data) {
         cache.newProject(data);
+    });
+
+    SocketFactory.on(types.projects, function (data) {
+        cache.projects = data;
     });
 
     SocketFactory.on(types.updateProjectAddress, function (data) {

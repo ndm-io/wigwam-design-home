@@ -1,6 +1,8 @@
 'use strict';
 
-var types = require('../../../config/IOTypes'),
+var ProjectModels = require('../../../models/Project'),
+    Project = ProjectModels.model('Project'),
+    types = require('../../../config/IOTypes'),
     _ = require('lodash'),
     roles = require('../../../config/constants').ROLES;
 
@@ -25,14 +27,23 @@ function ProjectHandler(io, socket) {
             });
 
 
-        io.to(data.guid).emit(types.newProject, data);
+        var project = new Project(data);
+
+        project.save(function (err) {
+            if (!err) io.to(data.guid).emit(types.newProject, data);
+        });
+
     });
+
 
     attach(types.updateProjectAddress, function (data) {
         io.to(data.projectGuid).emit(types.updateProjectAddress, data);
     });
 
     attach(types.removeProject, function (data) {
+
+        Project.find({guid:data.projectGuid}).remove().exec();
+
         io.to(data.projectGuid).emit(types.removeProject, data);
     });
 

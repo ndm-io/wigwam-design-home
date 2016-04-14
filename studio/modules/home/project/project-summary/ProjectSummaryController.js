@@ -15,7 +15,7 @@ function ProjectSummaryController($scope, leafletMarkerEvents, DataFactory) {
     });
 
     $scope.$watch('project.address', function (addr) {
-        $scope.mapModel.updateFromAddress(addr);
+        if ($scope.mapModel && addr) $scope.mapModel.updateFromAddress(addr);
     });
 
     $scope.handle = function (eventName, e, args, address) {

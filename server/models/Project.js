@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
 var GeoJSON = require('mongoose-geojson-schema');
 var ObjectId = mongoose.Types.ObjectId;
-
+var Promise = require('promise');
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
+var roles = require('../config/constants').ROLES;
 var url = require('url');
 var fs = require('fs-extra');
 var _ = require('lodash');
@@ -291,8 +292,58 @@ projectSchema.methods.markMessagesRead = function (msgs, userId, dateStr, done) 
     );
 };
 
+var props = [
+    'clients',
+    'address',
+    'tasks',
+    'events',
+    'messages',
+    'products',
+    'invoices',
+    'quotes',
+    'images',
+    'initialConsultations',
+    'defaultInitialConsultationImageGuids'].join(' ');
+
 projectSchema.statics.deepPopProps = function () {
-    return 'tasks events messages products.images invoices quotes images initialConsultations initialConsultations.colors initialConsultations.images defaultInitialConsultationImageGuids';
+    return props;
+};
+
+projectSchema.statics.projectWithGuid = function projectWithGuid(guid) {
+    return new Promise(function (resolve, reject) {
+        var Project = mongoose.model('Project');
+
+        Project.find({guid: guid})
+            .limit(1)
+            .deepPopulate(props)
+            .exec(function (err, project) {
+                if (err) reject(err);
+                resolve(project);
+            });
+
+    });
+};
+
+projectSchema.statics.projectsForUser = function projectsForUser(user) {
+    return new Promise(function (resolve, reject) {
+        var Project = mongoose.model('Project'),
+            query;
+
+
+        if (user.role >= roles.editor) {
+            query = {};
+        } else {
+           query = {clients: user.id};
+        }
+
+        Project.find(query)
+            .deepPopulate(props)
+            .exec(function (err, docs) {
+                if (err) reject(err);
+                resolve(docs);
+            });
+
+    });
 };
 
 messageSchema.methods.markReadBy = function markReadBy(userId, dateStr, cb) {
