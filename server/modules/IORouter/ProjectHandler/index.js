@@ -4,16 +4,16 @@ var ProjectModels = require('../../../models/Project'),
     Project = ProjectModels.model('Project'),
     types = require('../../../config/IOTypes'),
     _ = require('lodash'),
-    roles = require('../../../config/constants').ROLES;
+    roles = require('../../../config/constants').ROLES,
+    Attacher = require('../Common').attach;
+
+var ImagesHandler = require('./ImagesHandler');
 
 function ProjectHandler(io, socket) {
 
-    var attach = function (event, fn) {
-        socket.on(event, function (data) {
-            if (!socket.user) return;
-            fn(data);
-        });
-    };
+    var attach = Attacher(socket);
+
+    ImagesHandler(io, socket);
 
     attach(types.newProject, function (data) {
         socket.join(data.guid);
@@ -35,20 +35,44 @@ function ProjectHandler(io, socket) {
 
     });
 
-
     attach(types.updateProjectAddress, function (data) {
-        io.to(data.projectGuid).emit(types.updateProjectAddress, data);
+        Project.findOne({guid:data.projectGuid}, function (err, project) {
+            if (!project) return;
+            project.address = data.address;
+            project.save(function (err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    io.to(data.projectGuid).emit(types.updateProjectAddress, data);
+                }
+            });
+        });
     });
 
     attach(types.removeProject, function (data) {
-
         Project.find({guid:data.projectGuid}).remove().exec();
-
         io.to(data.projectGuid).emit(types.removeProject, data);
     });
 
     attach(types.updateProject, function (data) {
-        io.to(data.projectGuid).emit(types.updateProject, data);
+
+        Project.findOne({guid:data.projectGuid}, function (err, project) {
+            if (!project) return;
+            var keys = Object.keys(data.data);
+
+            _.each(keys, function (key) {
+                project[key] = data.data[key];
+            });
+
+            project.save(function (err) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    io.to(data.projectGuid).emit(types.updateProject, data);
+                }
+            });
+        });
+
     });
 
 }

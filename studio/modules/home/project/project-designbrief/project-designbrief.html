@@ -1,0 +1,54 @@
+<div class="block-area">
+    <div class="row">
+        <h3 class="block-title">DESIGN BRIEF</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <blockquote>
+                <p>
+                    A design brief is a written document for a design project developed in concert
+                    by a person representing the business need for design and the designer.
+                    The document is focused on the desired results of design – not aesthetics.
+                </p>
+                <small>
+                    Wikipedia
+                </small>
+                <i class="icon-quote-right"></i>
+            </blockquote>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr class="whiter"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p class="m-t-20 m-b-20">
+                Tap some boxes to compile your design brief. It doesn't have to be complete and it doesn't have to be 100%
+                accurate, its just a starting point. It just allows us to put together a simple summary of what the project
+                is expected to be about at the start. Don't worry, these things have a habit of changing rapidly!
+            </p>
+        </div>
+    </div>
+    <div ng-repeat="item in items">
+        <hr class="whiter"/>
+        <div class="row">
+            <h3 class="block-title m-t-20 m-b-20">{{item.label}} - {{item.description}}</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-2" ng-repeat="option in item.options">
+                <div class="thumbnail tile-light">
+                    <img src="img/gallery/1.jpg" alt="">
+                    <div class="p-15">
+                        <h4>{{option.label}}</h4>
+                        <p>{{option.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="block-area">
+    <p>&nbsp;</p>
+</div>

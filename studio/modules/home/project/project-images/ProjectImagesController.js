@@ -1,11 +1,10 @@
 'use strict';
 
-var MapModel = require('../../../../common/models/MapModel');
 
-function ProjectSummaryController ($scope, SessionService, leafletMarkerEvents) {
-    $scope.mapModel = MapModel(SessionService.user, leafletMarkerEvents);
+function ProjectImagesController ($scope) {
 
-};
 
-ProjectSummaryController.$inject = ['$scope', 'SessionService', 'leafletMarkerEvents'];
-module.exports = ProjectSummaryController;
+}
+
+ProjectImagesController.$inject = ['$scope'];
+module.exports = ProjectImagesController;

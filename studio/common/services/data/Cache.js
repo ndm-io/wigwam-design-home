@@ -85,7 +85,7 @@ module.exports = function () {
     };
 
     var updateProjectWithData = function (projectGuid, data) {
-        var project = projectGuid(projectGuid);
+        var project = projectWithGuid(projectGuid);
         var keys = Object.keys(data);
 
         _.each(keys, function (key) {

@@ -1,6 +1,7 @@
 'use strict';
 
-var Chat = require('../../../common/models/Chat');
+var $ = require('jquery'),
+    Chat = require('../../../common/models/Chat');
 
 var SidebarCtrl = function ($scope, $rootScope, SessionService, DataFactory) {
 
@@ -34,10 +35,11 @@ var SidebarCtrl = function ($scope, $rootScope, SessionService, DataFactory) {
         DataFactory.chat.instigateChat(chat);
     };
 
-    // Route Changes
+    vm.projectsCount = function () {
+        return DataFactory.project.projects().length;
+    };
 
-    //$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){
-    //    console.log(toState);
+    //$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
     //});
 };
 

@@ -70,6 +70,11 @@ var states = {
     projectImages: {
         name: 'home.project.images',
         template: '<div project-images-view></div>'
+    },
+
+    projectDesignbrief: {
+        name:'home.project.designbrief',
+        template: '<div project-designbrief-view></div>'
     }
 };
 

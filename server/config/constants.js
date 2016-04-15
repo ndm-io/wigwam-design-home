@@ -23,6 +23,9 @@ var constants = {
             handle:'@SJIDesign',
             url:'http://www.twitter.com/sjidesign'
         }
+    },
+    mapBox: {
+        apiKey: "pk.eyJ1IjoibmRtLWlvIiwiYSI6ImNpbjBpenk0NjAwbnp3NW0xemNsNWlrbnUifQ.Z5YrsWhgpPsvlD-bECOLrQ"
     }
 };
 
@@ -39,5 +42,5 @@ module.exports.STUDIODIR = function () {
 module.exports.identities = constants.identities;
 
 module.exports.ROLES = constants.roles;
-
+module.exports.mapBox = constants.mapBox;
 module.exports.API_PREFIX = constants.apiPrefix;

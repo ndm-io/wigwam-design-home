@@ -318,6 +318,7 @@ projectSchema.statics.projectWithGuid = function projectWithGuid(guid) {
             .deepPopulate(props)
             .exec(function (err, project) {
                 if (err) reject(err);
+                if (!project) reject(new Error('Project not found with that guid'));
                 resolve(project);
             });
 

@@ -1,7 +1,8 @@
 'use strict';
 
 var AddressFactory = require('./factories/AddressFactory'),
-    LocationFactory = require('./factories/LocationFactory');
+    LocationFactory = require('./factories/LocationFactory'),
+    accessToken = require('../../../server/config/constants').mapBox.apiKey;
 
 var MapModel = function (user, leafletMarkerEvents) {
 
@@ -18,7 +19,11 @@ var MapModel = function (user, leafletMarkerEvents) {
 
     //var mq = 'http://otile4.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png';
     //var cycle = 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png';
-    var osm = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    //var osm = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+    //var stamenWaterColor = "http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg";
+    //var toner = "http://tile.stamen.com/toner/{z}/{x}/{y}.png";
+    var mapBox = "https://api.mapbox.com/v4/mapbox.dark/{z}/{x}/{y}.png";
+    var layer = mapBox + '?access_token=' + accessToken;
 
     var model = {
         center: center(),
@@ -33,7 +38,7 @@ var MapModel = function (user, leafletMarkerEvents) {
         address: user.address,
         location: user.location,
         defaults: {
-            tileLayer: osm,
+            tileLayer: layer,
             path: {
                 weight: 10,
                 color: '#800000',

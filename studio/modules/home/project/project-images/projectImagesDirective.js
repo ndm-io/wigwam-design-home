@@ -1,14 +1,14 @@
 'use strict';
 
-function projectSummaryDirective() {
+function projectImagesDirective() {
     return {
-        controller: 'ProjectSummaryCtrl',
-        controllerAs: 'projectSummaryCtrl',
+        controller: 'ProjectImagesCtrl',
+        controllerAs: 'projectImagesCtrl',
         bindToController: true,
         restrict: 'EA',
         scope: true,
-        template: require('./project-summary.html')
+        template: require('./project-images.html')
     };
 }
 
-module.exports = projectSummaryDirective;
+module.exports = projectImagesDirective;

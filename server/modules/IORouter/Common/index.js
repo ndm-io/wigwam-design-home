@@ -39,3 +39,12 @@ exports.projects = function (socket) {
             });
     }
 };
+
+exports.attach = function (socket) {
+    return function (event, fn) {
+        socket.on(event, function (data) {
+            if (!socket.user) return;
+            fn(data);
+        });
+    };
+};
