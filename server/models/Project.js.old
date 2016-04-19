@@ -106,12 +106,12 @@ var imageSchema = new mongoose.Schema({
     palette: [colorItemSchema]
 });
 
-var taskNoteSchema = new mongoose.Schema({
-    guid: {type: String},
-    markdown: {type: String},
-    createdDate: {type: Date, default: Date.now},
-    createdBy: {type: String}
-});
+//var taskNoteSchema = new mongoose.Schema({
+//    guid: {type: String},
+//    markdown: {type: String},
+//    createdDate: {type: Date, default: Date.now},
+//    createdBy: {type: String}
+//});
 
 var taskSchema = new mongoose.Schema({
     guid: {type: String, default: ''},
@@ -142,51 +142,58 @@ var messageSchema = new mongoose.Schema({
     readBy: {type: mongoose.Schema.Types.Mixed, default: {}}
 });
 
+var designbriefSchema = new mongoose.Schema({
+    guid: {type: String},
+    createdDate: {type: Date}
+});
+
 var projectSchema = new mongoose.Schema({
-        guid: {type: String, default: ''},
-        sha256: {type: String, default: ''},
-        createdDate: {type: Date},
-        submissionDate: {type: Date},
-        acceptedDate: {type: Date},
-        urn: {type: String, default: ''},
-        address: {
-            address1: {
-                type: String,
-                default: ''
-            }
-            ,
-            address2: {
-                type: String,
-                default: ''
-            }
-            ,
-            address3: {
-                type: String,
-                default: ''
-            }
-            ,
-            postcode: {
-                type: String,
-                default: ''
-            }
-            ,
-            loc: GeoJSON.Feature
-        },
-        name: {type: String, default: ''},
-        description: {type: String, default: ''},
-        clients: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-        moodboards: [moodboardSchema],
-        tasks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
-        events: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
-        messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],
-        products: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
-        invoices: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
-        quotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
-        images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
-        initialConsultations: [{type: mongoose.Schema.Types.ObjectId, ref: 'InitialConsultation'}],
-        defaultInitialConsultationImageGuids: [String]
-    })
-    ;
+    guid: {type: String, default: ''},
+    sha256: {type: String, default: ''},
+    createdDate: {type: Date},
+    submissionDate: {type: Date},
+    acceptedDate: {type: Date},
+    urn: {type: String, default: ''},
+    address: {
+        address1: {
+            type: String,
+            default: ''
+        }
+        ,
+        address2: {
+            type: String,
+            default: ''
+        }
+        ,
+        address3: {
+            type: String,
+            default: ''
+        }
+        ,
+        postcode: {
+            type: String,
+            default: ''
+        }
+        ,
+        loc: GeoJSON.Feature
+    },
+    name: {type: String, default: ''},
+    description: {type: String, default: ''},
+    clients: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    moodboards: [moodboardSchema],
+    tasks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
+    events: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
+    messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],
+    briefs:[designbriefSchema],
+    products: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
+    invoices: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
+    quotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
+    images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
+    initialConsultations: [{type: mongoose.Schema.Types.ObjectId, ref: 'InitialConsultation'}],
+    defaultInitialConsultationImageGuids: [String]
+});
+
+
 
 var initialConsultationSchema = new mongoose.Schema({
     guid: {type: String},
@@ -198,6 +205,16 @@ var initialConsultationSchema = new mongoose.Schema({
     images: [imageSchema],
     colors: [colorItemSchema]
 });
+
+projectSchema.methods.saveProject = function saveProject() {
+    var self = this;
+    return new Promise(function(resolve, reject) {
+        self.save(function (err) {
+            if (err) reject(err);
+            resolve(self);
+        });
+    });
+};
 
 projectSchema.methods.hasClient = function hasClient(clientId, callback) {
     var objId = new ObjectId(clientId);
@@ -298,6 +315,7 @@ var props = [
     'tasks',
     'events',
     'messages',
+    'briefs',
     'products',
     'invoices',
     'quotes',
@@ -316,10 +334,10 @@ projectSchema.statics.projectWithGuid = function projectWithGuid(guid) {
         Project.find({guid: guid})
             .limit(1)
             .deepPopulate(props)
-            .exec(function (err, project) {
+            .exec(function (err, projects) {
                 if (err) reject(err);
-                if (!project) reject(new Error('Project not found with that guid'));
-                resolve(project);
+                if (projects.length < 1) reject(new Error('Project not found with that guid'));
+                resolve(projects[0]);
             });
 
     });
@@ -334,7 +352,7 @@ projectSchema.statics.projectsForUser = function projectsForUser(user) {
         if (user.role >= roles.editor) {
             query = {};
         } else {
-           query = {clients: user.id};
+            query = {clients: user.id};
         }
 
         Project.find(query)
@@ -346,6 +364,8 @@ projectSchema.statics.projectsForUser = function projectsForUser(user) {
 
     });
 };
+
+
 
 messageSchema.methods.markReadBy = function markReadBy(userId, dateStr, cb) {
 
@@ -592,6 +612,7 @@ module.exports = mongoose.model('Invoice', invoiceSchema);
 module.exports = mongoose.model('Receipt', receiptSchema);
 module.exports = mongoose.model('Task', taskSchema);
 module.exports = mongoose.model('Message', messageSchema);
+module.exports = mongoose.model('Designbrief', designbriefSchema);
 module.exports = mongoose.model('Product', productSchema);
 module.exports = mongoose.model('Image', imageSchema);
 module.exports = mongoose.model('InitialConsultation', initialConsultationSchema);

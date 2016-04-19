@@ -33,7 +33,7 @@ colorSchema.statics.itemFromRgb = function itemFromRgb (rgb) {
 		b:rgb[2]
 	};
 	return new this(newItem);
-}
+};
 
 colorSchema.statics.itemsFromRgbArray = function itemsFromRgbArray (rgbArray) {
 	var items = [];
@@ -43,6 +43,6 @@ colorSchema.statics.itemsFromRgbArray = function itemsFromRgbArray (rgbArray) {
 		items.push(item);
 	});
 	return items;
-}
+};
 
 module.exports = mongoose.model('ColorItem', colorSchema);
