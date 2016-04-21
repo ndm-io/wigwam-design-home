@@ -2,6 +2,8 @@ var Base = require('./WWBase.js');
 var Message = require('./Message');
 var Client = require('./User');
 var Address = require('./Address');
+var Designbrief = require('./Designbrief');
+var _ = require('lodash');
 
 
 function Project() {
@@ -16,19 +18,28 @@ function Project() {
     this.tasks = [];
     this.events = [];
     this.messages = [];
-    this.moodboards = [];
+    this.briefs = [];
     this.products = [];
     this.invoices = [];
     this.quotes = [];
     this.images = [];
-    this.initialConsultations = [];
-    this.defaultInitialConsultationImageGuids = [];
     this.address = new Address();
     this.sha256 = '';
     this._totals = undefined;
     this._icImages = undefined;
     this._imageTags = undefined;
     this._colors = undefined;
+
+    var project = this;
+
+    Object.defineProperty(project, 'brief', {
+        get:function () {
+            if (project.briefs.length > 0) return project.briefs[project.briefs.length -1];
+        },
+        set: function (brief) {
+            project.briefs.push(brief);
+        }
+    });
 
 }
 
@@ -49,13 +60,14 @@ Project.prototype.initFromJson = function (json) {
     //this.initArrayProperty('tasks', json.tasks, Task);
     //this.initArrayProperty('events', json.events, Task);
     this.initArrayProperty('messages', json.messages, Message);
+    this.initArrayProperty('briefs', json.briefs, Designbrief);
+
     this.address = new Address(json.address);
     //this.initArrayProperty('products', json.products, Product);
    // this.initArrayProperty('invoices', json.invoices, Invoice);
     //this.initArrayProperty('quotes', json.quotes, Invoice);
     //this.initArrayProperty('images', json.images, WWImage);
-    //this.initArrayProperty('initialConsultations', json.initialConsultations, InitialConsultation);
-    //this.initArrayProperty('defaultInitialConsultationImageGuids', json.defaultInitialConsultationImageGuids);
+
     this.resetTotals();
 };
 
@@ -137,6 +149,7 @@ Project.prototype.hasVerifiedAddress = function () {
     return this.locVerified();
 };
 
+
 Project.prototype.isConcept = function () {
     return !this.submissionVerified();
 };
@@ -164,6 +177,10 @@ Project.prototype.removeClient = function (client) {
     _.remove(this.clients, function (item) {
         return item === client;
     });
+};
+
+Project.prototype.summaryComplete = function () {
+    return (this.detailsVerified() && this.hasVerifiedAddress());
 };
 
 Project.prototype.taskCount = function () {
@@ -247,6 +264,12 @@ Project.prototype.generateGreyRgbs = function (num) {
     var greyColor = new ColorItem();
     greyColor.setRgbFromString('rgb(10,10,10)');
     return greyColor.monochromaticColors(num || 6);
+};
+
+Project.prototype.briefWithGuid = function (guid) {
+    return _.find(this.briefs, function (brief) {
+        return brief.guid === guid;
+    });
 };
 
 Project.prototype.addImage = function (image) {

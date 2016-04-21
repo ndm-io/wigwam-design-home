@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 var designbriefSchema = new mongoose.Schema({
     guid: {type: String},
     createdDate: {type: Date},
+    completedDate: {type: Date},
     brief: {type: mongoose.Schema.Types.Mixed, default: {}}
 });
 

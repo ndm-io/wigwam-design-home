@@ -26,6 +26,10 @@ function ProjectSummaryController($scope, leafletMarkerEvents, DataFactory) {
         dataFactory.updateProjectWithKeys(_projectGuid, ['name', 'description']);
     };
 
+    $scope.hasCompletedBrief = function () {
+        return dataFactory.brief.projectHasCompletedBrief(_projectGuid);
+    };
+
 }
 
 ProjectSummaryController.$inject = ['$scope', 'leafletMarkerEvents', 'DataFactory'];

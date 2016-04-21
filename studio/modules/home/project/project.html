@@ -3,20 +3,51 @@
 <!-- Shortcuts -->
 <div class="block-area shortcut-area">
     <a class="shortcut tile" ui-sref="home.project.summary">
-        <img src="img/shortcuts/projects.svg" alt="">
+        <div ng-if="!project.summaryComplete()">
+            <img src="img/shortcuts/summary_empty.svg" alt="">
+        </div>
+        <div ng-if="project.summaryComplete()">
+            <img src="img/shortcuts/summary_full.svg" alt="">
+        </div>
         <small class="t-overflow">Summary</small>
     </a>
     <a class="shortcut tile" ui-sref="home.project.designbrief">
-        <img src="img/shortcuts/design_brief.svg" alt="">
+        <div ng-if="project.brief.locked">
+            <img src="img/shortcuts/design_brief_checked.svg" alt="">
+        </div>
+        <div ng-if="!project.brief.locked">
+            <img src="img/shortcuts/design_brief.svg" alt="">
+        </div>
+
         <small class="t-overflow">Brief</small>
     </a>
     <a class="shortcut tile" ui-sref="home.project.images">
-        <img src="img/shortcuts/presentation.svg" alt="">
+        <div ng-if="project.images.length > 0">
+            <img src="img/shortcuts/presentation_images.svg" alt="">
+        </div>
+        <div ng-if="project.images.length === 0">
+            <img src="img/shortcuts/presentation_empty.svg" alt="">
+        </div>
+
         <small class="t-overflow">Images</small>
     </a>
 </div>
 
 <hr class="whiter"/>
 
-<div ui-view></div>
+<div class="row">
+    <div class="{{mainColWidth()}}">
+        <div ui-view></div>
+    </div>
+    <div class="col-md-3"  ng-if="chats.length > 0">
+        <div class="block-area">
+            <div class="row">
+                <div class="col-md-12" ng-repeat="chat in chats">
+                    <chat chat-model="chat"></chat>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 

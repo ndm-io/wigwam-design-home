@@ -20,5 +20,8 @@ module.exports = {
     updateProjectAddress: 'socket:project:update:address',
     removeProject: 'socket:project:remove',
     updateProject: 'socket:project:update',
-    projects: 'socket:projects'
+    projects: 'socket:projects',
+    newDesignbrief: 'socket:project:brief:new',
+    updateDesignbrief: 'socket:project:brief:update',
+    lockBrief: 'socket:project:brief:lock'
 };

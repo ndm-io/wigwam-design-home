@@ -9,9 +9,21 @@ var ProjectController = function ($scope, SessionService, $stateParams, DataFact
     var _projectGuid = helper.projectGuidFromParams($stateParams);
     var factory = DataFactory.project;
 
-    $scope.__defineGetter__('project', function () {
-        return factory.projectWithGuid(_projectGuid);
+    Object.defineProperty($scope, 'project', {
+        get: function () {
+            return factory.projectWithGuid(_projectGuid);
+        }
     });
+
+    Object.defineProperty($scope, 'chats', {
+        get: function () {
+            return DataFactory.chat.chats();
+        }
+    });
+
+    $scope.mainColWidth = function () {
+        return ($scope.chats.length > 0) ? 'col-md-9' : 'col-md-12';
+    };
 
 };
 

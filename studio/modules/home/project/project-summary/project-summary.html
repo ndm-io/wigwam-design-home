@@ -49,7 +49,9 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" class="btn btn-info btn-sm m-t-10" ng-click="save()">SAVE CHANGES</button>
+                                    <button type="submit" class="btn btn-info btn-sm m-t-10" ng-click="save()">
+                                        SAVE CHANGES
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -67,6 +69,32 @@
                                    map-model="mapModel"
                                    event-handler="handle"></location-selector>
             </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="hasCompletedBrief()">
+        <div class="col-md-12">
+            <div class="tile">
+                <h2 class="tile-title">Project Brief</h2>
+                <div class="row option-row option-row-selected"
+                     ng-repeat="row in project.brief.content">
+                    <div class="col-md-1">
+                        {{row.heading}}
+                    </div>
+                    <div class="col-md-2">
+                        {{row.subheading}}
+                    </div>
+                    <div class="col-md-9">
+                        <md ng-model="row.content"></md>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>&nbsp;</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
