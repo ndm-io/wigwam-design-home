@@ -2,35 +2,29 @@
 
 <!-- Shortcuts -->
 <div class="block-area shortcut-area">
-    <a class="shortcut tile" ui-sref="home.project.summary">
-        <div ng-if="!project.summaryComplete()">
-            <img src="img/shortcuts/summary_empty.svg" alt="">
-        </div>
-        <div ng-if="project.summaryComplete()">
-            <img src="img/shortcuts/summary_full.svg" alt="">
-        </div>
-        <small class="t-overflow">Summary</small>
-    </a>
-    <a class="shortcut tile" ui-sref="home.project.designbrief">
-        <div ng-if="project.brief.locked">
-            <img src="img/shortcuts/design_brief_checked.svg" alt="">
-        </div>
-        <div ng-if="!project.brief.locked">
-            <img src="img/shortcuts/design_brief.svg" alt="">
-        </div>
 
-        <small class="t-overflow">Brief</small>
-    </a>
-    <a class="shortcut tile" ui-sref="home.project.images">
-        <div ng-if="project.images.length > 0">
-            <img src="img/shortcuts/presentation_images.svg" alt="">
-        </div>
-        <div ng-if="project.images.length === 0">
-            <img src="img/shortcuts/presentation_empty.svg" alt="">
-        </div>
+    <shortcut-tile sref="home.project.summary"
+                   on-src="img/shortcuts/summary_full.svg"
+                   off-src="img/shortcuts/summary_empty.svg"
+                   toggle-on="project.summaryComplete()"
+                   title="Summary">
+    </shortcut-tile>
 
-        <small class="t-overflow">Images</small>
-    </a>
+    <shortcut-tile sref="home.project.designbrief"
+                   on-src="img/shortcuts/design_brief_checked.svg"
+                   off-src="img/shortcuts/design_brief.svg"
+                   toggle-on="project.brief.locked"
+                   title="Brief">
+
+    </shortcut-tile>
+
+    <shortcut-tile sref="home.project.images"
+                   on-src="img/shortcuts/presentation_images.svg"
+                   off-src="img/shortcuts/presentation_empty.svg"
+                   toggle-on="project.images.length > 0"
+                   title="Images">
+    </shortcut-tile>
+
 </div>
 
 <hr class="whiter"/>
@@ -39,7 +33,7 @@
     <div class="{{mainColWidth()}}">
         <div ui-view></div>
     </div>
-    <div class="col-md-3"  ng-if="chats.length > 0">
+    <div class="col-md-3" ng-if="chats.length > 0">
         <div class="block-area">
             <div class="row">
                 <div class="col-md-12" ng-repeat="chat in chats">

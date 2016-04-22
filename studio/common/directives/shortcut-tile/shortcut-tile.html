@@ -1,0 +1,9 @@
+<a class="shortcut tile" href ng-click="go()">
+    <div ng-if="!toggleOn">
+        <img ng-src="{{offSrc}}" alt="">
+    </div>
+    <div ng-if="toggleOn">
+        <img ng-src="{{onSrc}}" alt="">
+    </div>
+    <small class="t-overflow">{{title}}</small>
+</a>

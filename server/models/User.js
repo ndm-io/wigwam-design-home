@@ -109,8 +109,11 @@ var userSchema = new mongoose.Schema({
         role: {
             type: Number,
             default: 1
-        }
-        ,
+        },
+        designation: {
+            type: String,
+            default: 'Client'
+        },
         ioToken: {
             type: String
         }
@@ -125,6 +128,8 @@ var userSchema = new mongoose.Schema({
         }
     })
     ;
+
+var selectKeys = '_id email profile chatStatus role socketId location designation';
 
 /**
  * Check user has privilege for route
@@ -145,7 +150,8 @@ userSchema.methods.model = function () {
         ioToken: this.ioToken,
         socketId: this.socketId,
         chatStatus: this.chatStatus,
-        location: this.location
+        location: this.location,
+        designation: this.designation
     };
 };
 
@@ -158,7 +164,8 @@ userSchema.methods.card = function () {
         role: this.role,
         socketId: this.socketId,
         chatStatus: this.chatStatus,
-        location: this.location
+        location: this.location,
+        designation: this.designation
     };
 };
 
@@ -212,7 +219,7 @@ userSchema.statics.designers = function designers() {
         model
             .where('role').gte(2)
             .where('chatStatus', status.online)
-            .select('_id email profile chatStatus role socketId location')
+            .select(selectKeys)
             .exec(function (err, docs) {
                 if (err) {
                     reject(new Error('Unable to query designers'));
@@ -228,7 +235,7 @@ userSchema.statics.onlineUsers = function onlineUsers() {
     return new Promise(function (resolve, reject) {
         model
             .where('chatStatus', status.online)
-            .select('_id email profile chatStatus role socketId location')
+            .select(selectKeys)
             .exec(function (err, docs) {
                 if (err) {
                     reject(new Error('Unable to query online users'));
