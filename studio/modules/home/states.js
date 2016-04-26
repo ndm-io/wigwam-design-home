@@ -51,6 +51,11 @@ var states = {
         template: '<div users-view></div>'
     },
 
+    terms: {
+        name:'home.terms',
+        template:'<div terms-view></div>'
+    },
+
     projects: {
         name: 'home.projects',
         template: '<div projects-view></div>'
@@ -75,6 +80,11 @@ var states = {
     projectDesignbrief: {
         name:'home.project.designbrief',
         template: '<div project-designbrief-view></div>'
+    },
+
+    projectAttach: {
+        name: 'home.project.attach',
+        template:'<div project-attach-view></div>'
     }
 };
 

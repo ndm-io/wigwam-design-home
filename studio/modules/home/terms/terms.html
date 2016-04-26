@@ -1,0 +1,48 @@
+<h4 class="page-title">TERMS AND CONDITIONS</h4>
+
+<div class="block-area">
+    <div class="row">
+        <div class="col-md-12">
+            <span class="pull-left">
+                T&C Version: {{version.serial}}
+            </span>
+            <span class="pull-right">
+                T&C Date: {{version.timestamp | date}}
+            </span>
+        </div>
+    </div>
+</div>
+
+<hr class="whiter"/>
+
+<div class="block-area">
+    <table class="table tile">
+        <thead>
+        <tr>
+            <th>
+                Section
+            </th>
+            <th>
+                Heading
+            </th>
+            <th>
+                Description
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="term in terms">
+            <td>
+                <span ng-if="!hasShownHeading(term.heading)">{{term.sector}}</span>
+            </td>
+            <td>
+                <span ng-if="!hasShownHeading(term.heading)">{{term.heading}}</span>
+            </td>
+            <td>
+                <md ng-model="term.content"></md>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+

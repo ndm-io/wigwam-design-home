@@ -23,5 +23,7 @@ module.exports = {
     projects: 'socket:projects',
     newDesignbrief: 'socket:project:brief:new',
     updateDesignbrief: 'socket:project:brief:update',
-    lockBrief: 'socket:project:brief:lock'
+    lockBrief: 'socket:project:brief:lock',
+    terms:'socket:terms',
+    termsStream:'socket:stream:terms'
 };

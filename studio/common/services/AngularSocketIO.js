@@ -7,6 +7,8 @@
 
 var io = require('socket.io-client');
 var types = require('../../../server/config/IOTypes');
+var ss = require('socket.io-stream');
+//var Buffer = require('buffer').Buffer;
 
 var SocketFactory = function ($rootScope, $timeout, SessionService) {
 
@@ -32,7 +34,7 @@ var SocketFactory = function ($rootScope, $timeout, SessionService) {
 
         SessionService.onReady()
             .then(function (user) {
-                socket.emit(types.authenticate, {email: user.email, ioToken: user.ioToken} );
+                socket.emit(types.authenticate, {email: user.email, ioToken: user.ioToken});
             });
 
         socket.on(types.socketId, function (data) {
@@ -51,6 +53,7 @@ var SocketFactory = function ($rootScope, $timeout, SessionService) {
         };
 
         var wrappedSocket = {
+            socket: socket,
             on: addListener,
             addListener: addListener,
             once: addOnceListener,

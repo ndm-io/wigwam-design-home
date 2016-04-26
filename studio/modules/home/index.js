@@ -6,6 +6,7 @@ module.exports = angular.module('modules.home', [
         require('./projects').name,
         require('./project').name,
         require('./users').name,
+        require('./terms').name,
         require('./messages').name,
         require('./message').name,
         require('./profile').name,

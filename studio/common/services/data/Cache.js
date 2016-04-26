@@ -102,6 +102,7 @@ module.exports = function () {
         designers: [],
         chats: [],
         onlineUsers: [],
+        terms:[],
         removeUserFromChats: removeUserFromChats,
         removeUserFromRoom: removeUserFromRoom,
         removeChatWithRoomName: removeChatWithRoomName,

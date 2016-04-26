@@ -1,17 +1,18 @@
 'use strict';
 
 var ChatInterface = require('./ChatInterface'),
-    ProjectInterface = require('./ProjectInterface');
+    ProjectInterface = require('./ProjectInterface'),
+    TermsInterface = require('./TermsInterface');
 
 var DataInterface = function (SocketFactory, cache) {
-    var sf = SocketFactory, c = cache;
-
-    var chat = ChatInterface(sf, c),
-        project = ProjectInterface(sf, c);
+    var chat = ChatInterface(SocketFactory, cache),
+        project = ProjectInterface(SocketFactory, cache),
+        terms = TermsInterface(SocketFactory, cache);
 
     return {
         chat: chat,
-        project: project
+        project: project,
+        terms: terms
     };
 
 };

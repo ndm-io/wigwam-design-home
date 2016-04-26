@@ -6,12 +6,14 @@ var types = require('../../../config/IOTypes'),
 
 function ChatHandler (io, socket) {
 
-    var attach = function (event, fn) {
-        socket.on(event, function (data) {
-            if (!socket.user) return;
-            fn(data);
-        });
-    };
+    //var attach = function (event, fn) {
+    //    socket.on(event, function (data) {
+    //        if (!socket.user) return;
+    //        fn(data);
+    //    });
+    //};
+
+    var attach = Common.attach(socket);
 
     attach(types.chatStatus, function (data) {
 

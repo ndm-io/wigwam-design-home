@@ -3,7 +3,8 @@
 var User = require('../../../models/User'),
     Project = require('../../../models/Project').model('Project'),
     types = require('../../../config/IOTypes'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    emitter = require('./emit');
 
 
 exports.designers = function (io) {
@@ -25,18 +26,20 @@ exports.onlineUsers = function (socket) {
 
 exports.projects = function (socket) {
     if (socket && socket.user) {
+
         Project.projectsForUser(socket.user)
             .then(function (projects) {
 
                 _.each(projects, function (project) {
                     socket.join(project.guid);
+                    emitter.emit(socket, types.newProject, project);
                 });
 
-                socket.emit(types.projects, projects);
             })
             .catch(function (err) {
                 console.log('Error getting projects for user: ', err);
             });
+
     }
 };
 
