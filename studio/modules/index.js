@@ -3,6 +3,7 @@
 module.exports = angular.module('modules',
     [
         require('./home').name,
+        require('./print').name,
         require('./pages').name,
         require('./login').name,
         require('./logout').name

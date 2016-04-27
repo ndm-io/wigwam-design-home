@@ -11,7 +11,7 @@ head
     link(href='css/vendor.css', rel='stylesheet')
     link(href='css/admin.style.min.css', rel='stylesheet')
     link(href='css/app.css', rel='stylesheet')
-    body#skin-blur-lights(ng-class='bodyClasses', ng-controller='MainCtrl')
+    body(ng-class='bodyClasses', ng-controller='MainCtrl', id='{{bodyId}}')
         .page
             section#main.main
                 #ui-view(ui-view, autoscroll='false')

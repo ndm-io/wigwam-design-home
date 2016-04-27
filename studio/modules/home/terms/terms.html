@@ -1,21 +1,18 @@
 <h4 class="page-title">TERMS AND CONDITIONS</h4>
 
+<div class="block-area shortcut-area">
+    <a class="shortcut tile" ui-sref="print.terms({data: terms})">
+        <img src="img/shortcuts/print.svg" alt="">
+        <small class="t-overflow">Print</small>
+    </a>
+</div>
+
 <div class="block-area">
     <div class="row">
         <div class="col-md-12">
-            <span class="pull-left">
-                T&C Version: {{version.serial}}
-            </span>
-            <span class="pull-right">
-                T&C Date: {{version.timestamp | date}}
-            </span>
+
         </div>
     </div>
-</div>
-
-<hr class="whiter"/>
-
-<div class="block-area">
     <table class="table tile">
         <thead>
         <tr>
@@ -33,10 +30,10 @@
         <tbody>
         <tr ng-repeat="term in terms">
             <td>
-                <span ng-if="!hasShownHeading(term.heading)">{{term.sector}}</span>
+                {{term.sector}}
             </td>
             <td>
-                <span ng-if="!hasShownHeading(term.heading)">{{term.heading}}</span>
+                {{term.heading}}
             </td>
             <td>
                 <md ng-model="term.content"></md>

@@ -1,6 +1,5 @@
 'use strict';
 
-
 var s = require('./states.js'),
     _ = require('lodash');
 

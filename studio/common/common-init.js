@@ -10,6 +10,7 @@ function commonInit($rootScope, $state, AuthService, AUTH_EVENTS) {
     // Set bodyClasses, pageTitle, and pageDescription on state change (ui-router)
     $rootScope.$on('$stateChangeSuccess', function (event, toState) {
         if (angular.isDefined(toState.data.pageTitle)) {
+            $rootScope.bodyId = toState.data.bodyId || 'skin-blur-lights';
             $rootScope.pageTitle = toState.data.pageTitle;
             $rootScope.pageDescription = toState.data.pageDescription;
             $rootScope.bodyClasses = toState.data.moduleClasses + ' ' + toState.data.pageClasses;

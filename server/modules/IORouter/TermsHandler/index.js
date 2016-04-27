@@ -9,7 +9,7 @@ function TermsHandler (io, socket) {
 
     attach(types.terms, function () {
 
-        var filename = path.join(__dirname, 'data.csv');
+        var filename = path.join(__dirname, 'data2.csv');
 
         fs.readFile(filename, function (err, data) {
             socket.emit(types.terms, data);

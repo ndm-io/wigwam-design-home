@@ -7,7 +7,6 @@ function TermsController($scope, DataFactory) {
 
     Object.defineProperty($scope, 'terms', {
         get: function () {
-            console.log(DataFactory.terms.terms());
             return DataFactory.terms.terms();
         }
     });
@@ -16,6 +15,7 @@ function TermsController($scope, DataFactory) {
     $scope.hasShownHeading = function (heading) {
         if (!_headings[heading]) return true;
         _headings[heading] = true;
+        return false;
     };
 }
 

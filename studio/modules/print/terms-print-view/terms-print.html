@@ -1,0 +1,65 @@
+<div class="row">
+    <p>&nbsp;</p>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    Section
+                </th>
+                <th>
+                    Heading
+                </th>
+                <th>
+                    Description
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="term in terms">
+                <td>
+                    {{term.sector}}
+                </td>
+                <td>
+                    {{term.heading}}
+                </td>
+                <td>
+                    <md ng-model="term.content"></md>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row m-t-120">
+    <div class="col-md-3 col-md-offset-1">
+        <div class="signature-box">
+
+        </div>
+        <p>
+            Signed
+        </p>
+    </div>
+    <div class="col-md-3 col-md-offset-1">
+        <div class="signature-box">
+
+        </div>
+        <p>
+            Dated
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-7 col-md-offset-1">
+        <p>
+            I HAVE READ AND UNDERSTAND THIS AGREEMENT,
+            AND I ACCEPT AND AGREE TO ALL OF ITS TERMS AND CONDITIONS.
+            I ENTER INTO THIS AGREEMENT VOLUNTARILY, WITH FULL KNOWLEDGE OF ITS EFFECT.
+        </p>
+    </div>
+</div>
