@@ -1,30 +1,67 @@
+<!--<div class="tile">-->
+    <!--<h2 class="tile-title">ATTACHMENTS</h2>-->
+    <!--<div class="row">-->
+        <!--<div class="col-md-6">-->
+            <!--<h3 class="block-title">Files</h3>-->
+            <!--<div class="row">-->
+                <!--<div class="col-md-8">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-10 col-md-offset-1">-->
+                            <!--<div class="preview">-->
+                                <!--<canvas class="preview-canvas"></canvas>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-10 col-md-offset-1">-->
+                            <!--<progress-bar-horizontal value="progress"></progress-bar-horizontal>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-md-4">-->
+                    <!--<input-file-change on-file-change="fileChange"></input-file-change>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-6">-->
+            <!--<h3 class="block-title">Links</h3>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
 <div class="tile">
-    <h2 class="tile-title">ATTACHMENTS</h2>
+    <h2 class="tile-title">UPLOADS</h2>
     <div class="row">
-        <div class="col-md-6">
-            <h3 class="block-title">Files</h3>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-10 col-md-offset-1">
-                            <div class="preview">
-                                <canvas class="preview-canvas"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10 col-md-offset-1">
-                            <progress-bar-horizontal value="progress"></progress-bar-horizontal>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <input-file-change on-file-change="fileChange"></input-file-change>
-                </div>
-            </div>
+        <div class="col-md-10 col-md-offset-1">
+            <h3 class="block-title">Select Files</h3>
+            <input-file-change on-file-change="fileChange"></input-file-change>
         </div>
-        <div class="col-md-6">
-            <h3 class="block-title">Links</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <tr ng-repeat="file in files">
+                    <td class="preview-table-row">
+                        <div class="preview">
+                            <canvas id="{{file.guid}}"
+                                    width="100"
+                                    height="100"
+                                    class="preview-canvas"></canvas>
+                        </div>
+
+                    </td>
+                    <td>
+                        <input class="form-control m-5 m-t-5" type="text" value="{{file.name}}" disabled/>
+                        <input class="form-control m-5" type="text" placeholder="Optionally enter a note for this image"/>
+                    </td>
+                    <td>
+                        {{file.size}}
+                    </td>
+                    <td>
+                        {{file.type}}
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

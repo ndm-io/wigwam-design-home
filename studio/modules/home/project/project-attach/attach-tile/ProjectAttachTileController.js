@@ -1,36 +1,59 @@
 'use strict';
 
-function ProjectAttachTileController ($scope) {
+var File = require('../../../../../common/models/WWFile'),
+    drawImage = require('./DrawImage'),
+    encoder = require('./Encoder'),
+    _ = require('lodash'),
+    $ = require('jquery');
 
-    var fileReader = new FileReader();
 
-    function drawImageScaled(img, ctx) {
-        var canvas = ctx.canvas;
-        var hRatio = canvas.width  / img.width;
-        var vRatio =  canvas.height / img.height;
-        var ratio  = Math.min ( hRatio, vRatio );
-        var centerShift_x = ( canvas.width - img.width*ratio ) / 2;
-        var centerShift_y = ( canvas.height - img.height*ratio ) / 2;
-        ctx.clearRect(0,0,canvas.width, canvas.height);
-        ctx.drawImage(img, 0,0, img.width, img.height,
-            centerShift_x,centerShift_y,img.width*ratio, img.height*ratio);
-    }
+function ProjectAttachTileController ($scope, $timeout) {
 
-    fileReader.onload = function (event) {
+    $scope.files = undefined;
+    $scope.progress = 0;
+
+
+    function handleImage(bytes, file) {
         var img = new Image;
         img.onload = function() {
-            drawImageScaled(img, $scope.ctx);
+            drawImage(img, file);
         };
-        img.src = event.target.result;
-    };
+        img.src = encoder.base64UrlWithUint8Array(bytes, file.type);
+    }
+
+    function handleBytes(bytes, file) {
+        handleImage(bytes, file);
+    }
+
 
     $scope.fileChange = function (files) {
-        fileReader.readAsDataURL(files[0]);
-    };
 
-    $scope.progress = 0;
+        $scope.files = _.map(files, function (file) {
+            return new File(file);
+        });
+
+
+        console.log($scope.files);
+
+        //$timeout(function () {
+        //    $scope.files = files;
+        //
+        //    _.each(files, function (file) {
+        //        var fileReader = new FileReader();
+        //
+        //        fileReader.onload = function (event) {
+        //            var bytes = new Uint8Array(event.target.result);
+        //            handleBytes(bytes, file);
+        //        };
+        //
+        //        fileReader.readAsArrayBuffer(file);
+        //    });
+        //
+        //},0);
+
+    };
 
 }
 
-ProjectAttachTileController.$inject = ['$scope'];
+ProjectAttachTileController.$inject = ['$scope', '$timeout'];
 module.exports = ProjectAttachTileController;
