@@ -2,8 +2,7 @@
 
 ##### Usage
 
-Change <code>secrets.host()</code> to represent the desired hostname
-for sending passwordless login urls
+Add environment variables for secrets.js
 
 <code>npm install</code><br>
 <code>bower install</code><br>
