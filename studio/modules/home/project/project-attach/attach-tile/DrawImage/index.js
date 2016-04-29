@@ -1,9 +1,9 @@
 
 
 module.exports = function drawImage(img, file) {
-    //var canvas = ctx.canvas;
-    var selector = 'canvas-' + canvasName;
-    var canvas = document.getElementById(selector);
+
+    var canvas = document.getElementById(file.guid);
+
 
     var ctx = canvas.getContext('2d');
     var hRatio = canvas.width  / img.width;
