@@ -16,6 +16,9 @@ require('leaflet');
 require('ui-leaflet');
 require('angular-simple-logger');
 require('angular-elastic');
+require('pdfjs-dist');
+
+PDFJS.workerSrc = 'js/bundle.pdf.worker.js';
 
 marked = require('marked/lib/marked.js');
 require('angular-md/dist/angular-md');

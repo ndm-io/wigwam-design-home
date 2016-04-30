@@ -29,7 +29,8 @@ var studioTaskCss = require('./gulp/studio/taskCss'),
     studioVendorJs = require('./gulp/studio/taskVendorJs'),
     studioBrowserify = require('./gulp/studio/taskBrowserify'),
     studioFonts = require('./gulp/studio/taskFonts'),
-    studioJson = require('./gulp/studio/taskJson');
+    studioJson = require('./gulp/studio/taskJson'),
+    studioPdf = require('./gulp/studio/taskPdf');
 
 gulp.task('studioCss', studioTaskCss);
 gulp.task('studioLess', studioLess);
@@ -39,6 +40,7 @@ gulp.task('studioVendorJs', studioVendorJs);
 gulp.task('studioBrowserify', studioBrowserify);
 gulp.task('studioFonts', studioFonts);
 gulp.task('studioJson', studioJson);
+gulp.task('studioPdf', studioPdf);
 
 
 
@@ -75,6 +77,7 @@ var defaults = ['scripts',
     'studioCommonImg',
     'studioVendorJs',
     'studioBrowserify',
+    'studioPdf',
     'watchStudio',
     'watchHome'
 ];
@@ -92,6 +95,7 @@ var build = ['scripts',
     'studioBrowserify',
     'studioFonts',
     'studioJson',
+    'studioPdf',
     'watchStudio',
     'watchHome'
 ];

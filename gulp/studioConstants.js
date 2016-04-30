@@ -39,6 +39,10 @@ var paths = {
         ],
         dest: 'server/public/js'
     },
+    pdfjs:{
+        src:'./node_modules/pdfjs-dist/build/pdf.worker.js',
+        dest: 'server/public/js'
+    },
     templateJS :{
         src:'studio/common/templateJs/**/*.js',
         dest:'server/public/js'

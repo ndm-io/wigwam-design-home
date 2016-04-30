@@ -1,33 +1,48 @@
 var Base = require('./WWBase'),
     Encoder = require('./Encoder');
 
-function WWFile (nativeFileObject) {
-    nativeFileObject.guid = nativeFileObject.guid || Base.guid();
+function WWFile(obj, onload) {
+    if (obj instanceof File) {
+        this.fromFile(obj, onload);
+    } else {
+
+    }
+}
+
+WWFile.prototype.fromFile = function (file, onload) {
+
+    var self = this;
+
+    self.guid = file.guid || Base.guid();
+    self.type = file.type;
+
 
     var fileReader = new FileReader();
     fileReader.onload = function (event) {
-        nativeFileObject.bytes = new Uint8Array(event.target.result);
-        if (nativeFileObject.onload) nativeFileObject.onload();
+        self.arrayBuffer = event.target.result;
+
+        Encoder.base64UrlWithUint8Array(self.bytes(), self.type)
+            .then(function (base64) {
+                self._dataUri = base64;
+                if (onload) onload(event.target.result);
+            });
+
     };
-    fileReader.readAsArrayBuffer(nativeFileObject);
 
+    fileReader.readAsArrayBuffer(file);
+};
 
-    var _dataUri = undefined;
-    Object.defineProperty(nativeFileObject, 'dataUri', {
-        get: function () {
-            if (!_dataUri) {
-                if (nativeFileObject.bytes) {
-                    _dataUri = Encoder.base64UrlWithUint8Array(nativeFileObject.bytes, nativeFileObject.type);
-                } else {
-                    return '';
-                }
-            }
-            return _dataUri;
+WWFile.prototype.bytes = function () {
+    if (!this._bytes) {
+        if (this.arrayBuffer) {
+            this._bytes = new Uint8Array(this.arrayBuffer);
         }
-    });
+    }
+    return this._bytes;
+};
 
-
-    return nativeFileObject;
-}
+WWFile.prototype.dataUri = function () {
+    return this._dataUri;
+};
 
 module.exports = WWFile;

@@ -1,6 +1,6 @@
 'use strict';
 
-var File = require('../../../../../common/models/WWFile'),
+var WWFile = require('../../../../../common/models/WWFile'),
     _ = require('lodash');
 
 
@@ -11,14 +11,18 @@ function ProjectAttachTileController($scope, $timeout) {
 
     $scope.fileChange = function (files) {
         $timeout(function () {
+
             $scope.files = _.map(files, function (file) {
-                var f = new File(file);
-                f.onload = function () {
+                return new WWFile(file, function () {
                     $scope.$apply();
-                };
-                return f;
+                });
             });
+
         }, 0);
+    };
+
+    $scope.send = function () {
+        console.log($scope.files);
     };
 }
 
