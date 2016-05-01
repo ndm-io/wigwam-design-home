@@ -45,16 +45,17 @@ var projectSchema = new mongoose.Schema({
     tasks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
     events: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
     messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],
-    briefs:[designbriefSchema],
+    briefs: [designbriefSchema],
     products: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
     invoices: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
     quotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
-    images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}]
+    images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
+    attachments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Attachment'}]
 });
 
 projectSchema.methods.saveProject = function saveProject() {
     var self = this;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         self.save(function (err) {
             if (err) reject(err);
             resolve(self);

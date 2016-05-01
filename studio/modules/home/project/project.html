@@ -21,16 +21,18 @@
     <shortcut-tile sref="home.project.attach"
                    on-src="img/shortcuts/attach_full.svg"
                    off-src="img/shortcuts/attach_empty.svg"
-                   toggle-on="!project.brief.locked"
+                   toggle-on="project.hasAttachments()"
                    title="Attach">
 
     </shortcut-tile>
 
-    <shortcut-tile sref="home.project.images"
+    <shortcut-tile ng-if="project.hasAttachments()"
+                   sref="home.project.attachments"
                    on-src="img/shortcuts/presentation_images.svg"
                    off-src="img/shortcuts/presentation_empty.svg"
-                   toggle-on="project.images.length > 0"
-                   title="Images">
+                   toggle-on="project.hasAttachments()"
+                   title="Attachments">
+
     </shortcut-tile>
 
 </div>

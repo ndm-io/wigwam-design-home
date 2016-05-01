@@ -1,0 +1,16 @@
+<div class="block-area">
+    <div class="row">
+        <h2>Attachments</h2>
+    </div>
+    <div class="row" ng-repeat="file in project.attachments">
+        <div class="col-md-12">
+            <div ng-if="file.needsDownload">
+                <p>Yet to be downloaded</p>
+            </div>
+            <div ng-if="!file.needsDownload">
+                <img ng-src="{{file.dataUri()}}"/>
+            </div>
+
+        </div>
+    </div>
+</div>

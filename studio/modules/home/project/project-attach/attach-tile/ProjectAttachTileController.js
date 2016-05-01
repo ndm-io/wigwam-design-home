@@ -4,7 +4,7 @@ var WWFile = require('../../../../../common/models/WWFile'),
     _ = require('lodash');
 
 
-function ProjectAttachTileController($scope, $timeout) {
+function ProjectAttachTileController($scope, $timeout, DataFactory) {
 
     $scope.files = undefined;
     $scope.progress = 0;
@@ -22,9 +22,9 @@ function ProjectAttachTileController($scope, $timeout) {
     };
 
     $scope.send = function () {
-        console.log($scope.files);
+        DataFactory.project.attachment.attachmentsForProjectGuid($scope.files, $scope.project.guid);
     };
 }
 
-ProjectAttachTileController.$inject = ['$scope', '$timeout'];
+ProjectAttachTileController.$inject = ['$scope', '$timeout', 'DataFactory'];
 module.exports = ProjectAttachTileController;

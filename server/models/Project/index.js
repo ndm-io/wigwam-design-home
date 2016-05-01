@@ -3,6 +3,7 @@
 var mongoose = require('mongoose');
 
 module.exports = mongoose.model('Project', require('./ProjectSchema'));
+module.exports = mongoose.model('Attachment', require('./AttachmentSchema'));
 module.exports = mongoose.model('Designbrief', require('./DesignbriefSchema'));
 module.exports = mongoose.model('Message', require('./MessageSchema'));
 module.exports = mongoose.model('Task', require('./TaskSchema'));

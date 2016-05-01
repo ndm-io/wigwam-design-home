@@ -25,5 +25,6 @@ module.exports = {
     updateDesignbrief: 'socket:project:brief:update',
     lockBrief: 'socket:project:brief:lock',
     terms:'socket:terms',
-    termsStream:'socket:stream:terms'
+    termsStream:'socket:stream:terms',
+    attachmentsForProjectGuid: 'socket:project:attachments:new'
 };

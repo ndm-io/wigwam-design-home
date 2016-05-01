@@ -1,6 +1,7 @@
 var defaultBase64 = require('./defaultBase64'),
     base64WithUint8Array = require('./Base64WithUint8Array'),
-    pdfFromUint8Array = require('./PDFFromUint8Array');
+    pdfFromUint8Array = require('./PDFFromUint8Array'),
+    Promise = require('promise');
 
 var returnImageType = function (bytes, type) {
     return base64WithUint8Array(bytes)
@@ -20,15 +21,11 @@ var base64WithUint8ArrayAndType = function (bytes, type) {
 
     switch (type) {
         case 'image/png':
-        {
-            ret = returnImageType(bytes, type);
-            break;
-        }
+
         case 'image/jpg':
-        {
-            ret = returnImageType(bytes, type);
-            break;
-        }
+
+        case 'image/gif':
+
         case 'image/svg+xml':
         {
             ret = returnImageType(bytes, type);
@@ -46,10 +43,8 @@ var base64WithUint8ArrayAndType = function (bytes, type) {
         }
         default:
         {
-            ret = {
-                type: 'image/svg+xml',
-                base64: defaultBase64
-            };
+            var data = 'data:image/svg+xml;base64,' + defaultBase64;
+            ret = Promise.resolve(data);
             break;
         }
     }

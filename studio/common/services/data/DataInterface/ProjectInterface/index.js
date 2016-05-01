@@ -1,7 +1,8 @@
 'use strict';
 
 var types = require('../../../../../../server/config/IOTypes'),
-    DesignbriefInterface = require('./DesignbriefInterface');
+    DesignbriefInterface = require('./DesignbriefInterface'),
+    AttachmentInterface = require('./AttachmentInterface');
 
 var dataForKeys = function (keys, project) {
     var data = {};
@@ -14,6 +15,7 @@ var dataForKeys = function (keys, project) {
 module.exports = function (sf, cache) {
 
     var designbriefInterface = DesignbriefInterface(sf, cache);
+    var attachmentInterface = AttachmentInterface(sf, cache);
 
     return {
         projects: function () {
@@ -40,6 +42,7 @@ module.exports = function (sf, cache) {
 
             sf.emit(types.updateProject, data);
         },
-        brief: designbriefInterface
+        brief: designbriefInterface,
+        attachment: attachmentInterface
     };
 };

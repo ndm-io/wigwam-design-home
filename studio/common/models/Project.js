@@ -3,6 +3,7 @@ var Message = require('./Message');
 var Client = require('./User');
 var Address = require('./Address');
 var Designbrief = require('./Designbrief');
+var WWFile = require('./WWFile');
 var _ = require('lodash');
 
 
@@ -23,6 +24,7 @@ function Project() {
     this.invoices = [];
     this.quotes = [];
     this.images = [];
+    this.attachments = [];
     this.address = new Address();
     this.sha256 = '';
     this._totals = undefined;
@@ -61,6 +63,7 @@ Project.prototype.initFromJson = function (json) {
     //this.initArrayProperty('events', json.events, Task);
     this.initArrayProperty('messages', json.messages, Message);
     this.initArrayProperty('briefs', json.briefs, Designbrief);
+    this.initArrayProperty('attachments', json.attachments, WWFile);
 
     this.address = new Address(json.address);
     //this.initArrayProperty('products', json.products, Product);
@@ -271,6 +274,10 @@ Project.prototype.briefWithGuid = function (guid) {
         return brief.guid === guid;
     });
 };
+
+Project.prototype.hasAttachments = function () {
+    return (this.attachments.length > 0);
+}
 
 Project.prototype.addImage = function (image) {
     this.images.push(image);

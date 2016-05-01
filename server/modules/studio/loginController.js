@@ -8,7 +8,7 @@ exports.sendToken = function (passwordless) {
                     callback(null, email);
                 })
                 .catch(function (err) {
-                    console.log(err);
+                    console.log('An error with the validation', err);
                     callback(null, null);
                 });
 

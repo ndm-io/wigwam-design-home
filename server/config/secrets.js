@@ -19,6 +19,10 @@ module.exports = {
         password: process.env.MANDRILL_PASSWORD
     },
 
+    sparkpost: {
+        apiKey: process.env.SPARKPOST_API_KEY
+    },
+
     twilio: {
         sid: process.env.TWILIO_ACCOUNT_SID,
         token: process.env.TWILIO_AUTH_TOKEN

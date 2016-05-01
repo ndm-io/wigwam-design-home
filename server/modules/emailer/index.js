@@ -1,26 +1,27 @@
 var nodemailer = require('nodemailer');
-var smtpTransport = require('nodemailer-smtp-transport');
-var secrets = require('../../config/secrets');
 
-var transport = nodemailer.createTransport(smtpTransport({
-    host: 'smtp.mandrillapp.com',
-    port: 587,
-    auth: {
-        user: secrets.mandrill.user,
-        pass: secrets.mandrill.password
-    }
-}));
+var SparkPost = require('sparkpost');
+var client = new SparkPost();
 
 exports.sendMail = function (opts) {
     return new Promise(function (resolve, reject) {
 
-        transport.sendMail(opts, function (err) {
-            if (!err) {
-                resolve();
+        client.transmissions.send({
+            transmissionBody: {
+                content: opts,
+                recipients: [
+                    {address: opts.to}
+                ]
+            }
+        }, function (err, res) {
+            if (err) {
+                console.log(err);
+                reject(new Error('Unable to send mail via spark post'));
             } else {
-                reject(Error('Problem sending mail'));
+                resolve();
             }
         });
+
 
     });
 };
