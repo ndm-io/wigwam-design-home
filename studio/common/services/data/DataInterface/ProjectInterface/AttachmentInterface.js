@@ -1,15 +1,29 @@
 'use strict';
 
 var types = require('../../../../../../server/config/IOTypes'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    Promise = require('promise'),
+    WWFile = require('../../../../../common/models/WWFile');
 
-function AttachmentInterface (sf, cache) {
+function AttachmentInterface(sf, cache) {
+
     return {
         attachmentsForProjectGuid: function (files, projectGuid) {
-            var objs = _.map(files, function (file) {
-                return file.model();
+
+            return new Promise(function (resolve, reject) {
+
+                var objs = _.map(files, function (file) {
+                    return file.model(projectGuid);
+                });
+
+                sf.emit(types.attachmentsForProjectGuid, {projectGuid: projectGuid, files: objs});
+
+                cache.projectWithGuid(projectGuid)
+                    .addAttachments(files);
+
+                resolve(objs);
             });
-            sf.emit(types.attachmentsForProjectGuid, {projectGuid: projectGuid, files: objs});
+
         }
     };
 }

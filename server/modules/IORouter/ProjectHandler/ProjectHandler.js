@@ -24,9 +24,7 @@ function ProjectHandler(io, socket) {
                 skt.join(data.guid);
             });
 
-
         var project = new Project(data);
-
         project.save(function (err) {
             if (!err) io.to(data.guid).emit(types.newProject, data);
         });

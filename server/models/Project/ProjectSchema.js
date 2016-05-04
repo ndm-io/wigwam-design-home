@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
     Promise = require('promise'),
     deepPopulate = require('mongoose-deep-populate')(mongoose),
     roles = require('../../config/constants').ROLES,
-    _ = require('lodash');
+    _ = require('lodash'),
+    props = require('./ProjectSchemaProps');
 
 var projectSchema = new mongoose.Schema({
     guid: {type: String, default: ''},
@@ -74,7 +75,13 @@ projectSchema.methods.hasClient = function hasClient(clientId, callback) {
             });
 };
 
-projectSchema.plugin(deepPopulate, {});
+projectSchema.plugin(deepPopulate, {
+    populate: {
+        'attachments': {
+            select: props.attachment
+        }
+    }
+});
 
 projectSchema.methods.addProduct = function addProduct(productJson, userId, done) {
     var project = this;
@@ -170,20 +177,8 @@ projectSchema.methods.briefWithGuid = function (briefGuid) {
     });
 };
 
-var props = [
-    'clients',
-    'address',
-    'tasks',
-    'events',
-    'messages',
-    'briefs',
-    'products',
-    'invoices',
-    'quotes',
-    'images'].join(' ');
-
 projectSchema.statics.deepPopProps = function () {
-    return props;
+    return props.project;
 };
 
 projectSchema.statics.projectWithGuid = function projectWithGuid(guid) {
@@ -192,7 +187,7 @@ projectSchema.statics.projectWithGuid = function projectWithGuid(guid) {
 
         Project.find({guid: guid})
             .limit(1)
-            .deepPopulate(props)
+            .deepPopulate(props.project)
             .exec(function (err, projects) {
                 if (err) reject(err);
                 if (projects.length < 1) reject(new Error('Project not found with that guid'));
@@ -215,7 +210,7 @@ projectSchema.statics.projectsForUser = function projectsForUser(user) {
         }
 
         Project.find(query)
-            .deepPopulate(props)
+            .deepPopulate(props.project)
             .exec(function (err, docs) {
                 if (err) reject(err);
                 resolve(docs);
@@ -225,4 +220,5 @@ projectSchema.statics.projectsForUser = function projectsForUser(user) {
 };
 
 module.exports = projectSchema;
+
 

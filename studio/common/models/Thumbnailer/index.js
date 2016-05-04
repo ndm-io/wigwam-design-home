@@ -54,7 +54,7 @@ var base64WithUint8ArrayAndType = function (bytes, type) {
 };
 
 var base64UrlWithUint8Array = function (bytes, type) {
-
+    if (!bytes || bytes.length === 0) type = 'unknown';
     return base64WithUint8ArrayAndType(bytes, type);
 
 };

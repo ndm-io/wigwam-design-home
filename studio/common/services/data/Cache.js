@@ -94,11 +94,23 @@ module.exports = function () {
 
     };
 
+    var updateAttachmentsForProjectGuid = function (projectGuid, files) {
+        var project = projectWithGuid(projectGuid);
+        project.updateAttachments(files);
+    };
+
+    var needsAttachmentUpdateForProjectGuid = function (projectGuid) {
+        var project = projectWithGuid(projectGuid);
+        return project.needsAttachmentUpdate();
+    };
+
     var ret = {
         _projects:{},
         projectWithGuid: projectWithGuid,
         removeProjectWithGuid: removeProjectWithGuid,
         updateProjectWithData: updateProjectWithData,
+        updateAttachmentsForProjectGuid: updateAttachmentsForProjectGuid,
+        needsAttachmentUpdateForProjectGuid:needsAttachmentUpdateForProjectGuid,
         designers: [],
         chats: [],
         onlineUsers: [],

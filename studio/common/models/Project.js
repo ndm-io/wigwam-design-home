@@ -57,6 +57,7 @@ Project.prototype.initAsConcept = function (user) {
 
 Project.prototype.initFromJson = function (json) {
     if (!json) return;
+
     this.initPrimitives(json);
     this.initArrayProperty('clients', json.clients, Client);
     //this.initArrayProperty('tasks', json.tasks, Task);
@@ -277,80 +278,88 @@ Project.prototype.briefWithGuid = function (guid) {
 
 Project.prototype.hasAttachments = function () {
     return (this.attachments.length > 0);
-}
-
-Project.prototype.addImage = function (image) {
-    this.images.push(image);
 };
 
-Project.prototype.deleteImage = function (image) {
-    _.remove(this.images, function (item) {
-        return item === image;
+Project.prototype.addAttachments = function (files) {
+    var self = this;
+    _.each(files, function (file) {
+        self.attachments.push(file);
     });
 };
 
-Project.prototype.imageWithGuid = function (imageGuid) {
-    return _.find(this.images, function (image) {
-        return image.guid == imageGuid;
-    });
-};
 
-Project.prototype.addImageToDefaults = function (image) {
-    this.defaultInitialConsultationImageGuids.push(image.guid);
-    if (!this._icImages) this._icImages = [];
-    this._icImages.push(image);
-};
+//Project.prototype.addImage = function (image) {
+//    this.images.push(image);
+//};
+//
+//Project.prototype.deleteImage = function (image) {
+//    _.remove(this.images, function (item) {
+//        return item === image;
+//    });
+//};
+//
+//Project.prototype.imageWithGuid = function (imageGuid) {
+//    return _.find(this.images, function (image) {
+//        return image.guid == imageGuid;
+//    });
+//};
+//
+//Project.prototype.addImageToDefaults = function (image) {
+//    this.defaultInitialConsultationImageGuids.push(image.guid);
+//    if (!this._icImages) this._icImages = [];
+//    this._icImages.push(image);
+//};
+//
+//Project.prototype.removeDefaultImage = function (image) {
+//    _.remove(this.defaultInitialConsultationImageGuids, function (imageGuid) {
+//        return imageGuid == image.guid;
+//    });
+//    _.remove(this._icImages, function (icImage) {
+//        return image.guid == icImage.guid;
+//    });
+//};
+//
+//Project.prototype.icImages = function () {
+//    if (!this._icImages && this.defaultInitialConsultationImageGuids.length > 0) {
+//        this._icImages = [];
+//        var self = this;
+//        _.each(this.defaultInitialConsultationImageGuids, function (imageGuid) {
+//            var img = self.imageWithGuid(imageGuid);
+//            if (img) self._icImages.push(img);
+//        });
+//    }
+//    return this._icImages;
+//};
 
-Project.prototype.removeDefaultImage = function (image) {
-    _.remove(this.defaultInitialConsultationImageGuids, function (imageGuid) {
-        return imageGuid == image.guid;
-    });
-    _.remove(this._icImages, function (icImage) {
-        return image.guid == icImage.guid;
-    });
-};
-
-Project.prototype.icImages = function () {
-    if (!this._icImages && this.defaultInitialConsultationImageGuids.length > 0) {
-        this._icImages = [];
-        var self = this;
-        _.each(this.defaultInitialConsultationImageGuids, function (imageGuid) {
-            var img = self.imageWithGuid(imageGuid);
-            if (img) self._icImages.push(img);
-        });
-    }
-    return this._icImages;
-};
-
-Project.prototype.imageTags = function () {
-    if (!this._imageTags) {
-        var tags = [];
-        _.each(this.images, function (image) {
-            var n = image.tags;
-            tags = _.union(tags, n);
-        });
-        this._imageTags = _.uniq(tags, function (tag) {
-            return tag.tag;
-        });
-    }
-    return this._imageTags;
-};
-
-Project.prototype.imageGuids = function () {
-    return this.images.map(function (image) {
-        return image.guid;
-    });
-};
-
-Project.prototype.addInitialConsultation = function (con) {
-    this.initialConsultations.push(con);
-};
-
-Project.prototype.initialConsultationWithGuid = function (guid) {
-    return _.find(this.initialConsultations, function (ic) {
-        return ic.guid == guid;
-    });
-};
+//Project.prototype.imageTags = function () {
+//    if (!this._imageTags) {
+//        var tags = [];
+//        _.each(this.images, function (image) {
+//            var n = image.tags;
+//            tags = _.union(tags, n);
+//        });
+//        this._imageTags = _.uniq(tags, function (tag) {
+//            return tag.tag;
+//        });
+//    }
+//    return this._imageTags;
+//};
+//
+//Project.prototype.imageGuids = function () {
+//    return this.images.map(function (image) {
+//        return image.guid;
+//    });
+//};
+//
+//Project.prototype.addInitialConsultation = function (con) {
+//    this.initialConsultations.push(con);
+//};
+//
+//Project.prototype.initialConsultationWithGuid = function (guid) {
+//    return _.find(this.initialConsultations, function (ic) {
+//        return ic.guid == guid;
+//    });
+//};
 
 Project.prototype.messageCount = function () {
     return this.messages.length;

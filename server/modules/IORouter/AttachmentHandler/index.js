@@ -3,6 +3,7 @@
 var Attacher = require('../Common').attach,
     ProjectModels = require('../../../models/Project'),
     Project = ProjectModels.model('Project'),
+    props = require('../../../models/Project/ProjectSchemaProps').attachment,
     Attachment = ProjectModels.model('Attachment'),
     types = require('../../../config/IOTypes'),
     _ = require('lodash'),
@@ -12,7 +13,9 @@ var filesToAttachments = function (files) {
 
     var promises = _.map(files, function (file) {
         return new Promise(function (resolve, reject) {
+
             var attachment = new Attachment(file);
+
             attachment.save(function (err) {
                 if (err) reject(err);
                 resolve(attachment);
@@ -36,11 +39,27 @@ module.exports = function (io, socket) {
 
                         _.each(attachments, function (attachment) {
                             project.attachments.push(attachment);
-                            console.log(attachment);
                         });
 
+                        var propertiesRequired = props.split(' ');
 
-                        io.to(project.guid).emit(types.attachmentsForProjectGuid, data);
+                        var files = _.map(attachments, function (file) {
+
+                            var obj = {};
+                            _.each(propertiesRequired, function (property) {
+                                obj[property] = file[property];
+                            });
+
+                            return obj;
+                        });
+                        socket.broadcast.to(project.guid).emit(types.attachmentsForProjectGuid, {
+                            projectGuid: project.guid,
+                            files: files
+                        });
+                        //io.to(project.guid).emit(types.attachmentsForProjectGuid, {
+                        //    projectGuid: project.guid,
+                        //    files: files
+                        //});
 
                         return project;
                     });

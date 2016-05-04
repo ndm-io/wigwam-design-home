@@ -3,6 +3,7 @@
 module.exports = angular.module('common.directives', [
         require('./showTab').name,
         require('./calendar-widget').name,
+        require('./attachment-thumbnail').name,
         require('./chat-status-widget').name,
         require('./clickable-map').name,
         require('./location-selector').name,

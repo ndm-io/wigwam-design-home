@@ -8,8 +8,10 @@ module.exports = function (bytes) {
         })
         .then(function (page) {
 
-            var scale = 1.5;
-            var viewport = page.getViewport(scale);
+            //var scale = 1.5;
+            //var viewport = page.getViewport(scale);
+
+            var viewport = page.getViewport(150 / page.getViewport(1.0).width);
 
             var canvas = document.createElement('canvas');
             canvas.height = viewport.height;
@@ -24,7 +26,7 @@ module.exports = function (bytes) {
 
             return page.render(renderContext)
                 .then(function () {
-                    return canvas.toDataURL()
+                    return canvas.toDataURL();
                 });
         });
 

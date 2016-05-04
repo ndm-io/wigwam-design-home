@@ -5,13 +5,18 @@ var Designbrief = require('../../../../../common/models/Designbrief'),
 
 
 function DesignbriefInterface(sf, cache) {
+
+    var state = {};
+
     return {
         briefWithProjectGuid: function (projectGuid) {
             var project = cache.projectWithGuid(projectGuid);
             var brief = project.brief;
 
-            if (!brief) {
+            if (!brief && !state[projectGuid]) {
+                state[projectGuid] = true;
                 brief = new Designbrief();
+                project.brief= brief;
                 sf.emit(types.newDesignbrief, {projectGuid: projectGuid, brief: brief});
             }
 
@@ -20,6 +25,8 @@ function DesignbriefInterface(sf, cache) {
         },
         projectHasCompletedBrief: function (projectGuid) {
             var project = cache.projectWithGuid(projectGuid);
+            if (!project) return false;
+
             var brief = project.brief;
             return (brief) ? brief.locked : false;
         },

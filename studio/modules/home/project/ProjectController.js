@@ -1,7 +1,7 @@
 'use strict';
 
-var MapModel = require('../../../common/models/MapModel'),
-    Helper = require('./ProjectControllerHelper');
+//var MapModel = require('../../../common/models/MapModel'),
+    var Helper = require('./ProjectControllerHelper');
 
 var ProjectController = function ($scope, SessionService, $stateParams, DataFactory) {
 
@@ -24,6 +24,7 @@ var ProjectController = function ($scope, SessionService, $stateParams, DataFact
     $scope.mainColWidth = function () {
         return ($scope.chats.length > 0) ? 'col-md-9' : 'col-md-12';
     };
+
 
 };
 

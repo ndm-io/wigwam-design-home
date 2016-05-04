@@ -1,9 +1,9 @@
 'use strict';
 
 
-function ProjectAttachmentsController ($scope) {
+function ProjectAttachmentsController ($scope, DataFactory) {
 
 }
 
-ProjectAttachmentsController.$inject = ['$scope'];
+ProjectAttachmentsController.$inject = ['$scope', 'DataFactory'];
 module.exports = ProjectAttachmentsController;

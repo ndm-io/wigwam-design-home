@@ -1,35 +1,42 @@
 <div class="tile">
     <h2 class="tile-title">UPLOADS</h2>
-    <div class="row">
-        <div class="col-md-5 col-md-offset-1">
+    <div class="row m-t-20 m-b-20">
+        <div class="col-md-3 col-md-offset-1">
             <input-file-change on-file-change="fileChange"></input-file-change>
         </div>
-        <div class="col-md-5 col-md-offset-1">
-            <button class="btn btn-alt" ng-click="send()">Send</button>
+        <div class="col-md-3" ng-if="files.length > 0">
+            <button class="btn btn-alt" ng-click="send()">Upload</button>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <table class="table">
                 <tr ng-repeat="file in files">
+                    <td class="remove-table-row text-center">
+                        <button class="btn btn-alt btn-sm"
+                                ng-click="remove(file)"><i class="fa fa-close"></i></button>
+                    </td>
                     <td class="preview-table-row">
                         <div class="preview">
-                            <img ng-src="{{file.dataUri()}}"/>
+                            <img ng-src="{{::file.thumbnailUri}}"/>
                         </div>
 
                     </td>
                     <td>
-                        <input class="form-control m-5 m-t-5" type="text" value="{{file.name}}" disabled/>
+                        <input class="form-control m-5 m-t-5"
+                               type="text"
+                               value="{{::file.name}}"
+                               disabled/>
                         <input class="form-control m-5"
                                type="text"
                                ng-model="file.note"
                                placeholder="Optionally enter a note for this image"/>
                     </td>
                     <td>
-                        {{file.size}}
+                        {{::file.size}}
                     </td>
                     <td>
-                        {{file.type}}
+                        {{::file.type}}
                     </td>
                 </tr>
             </table>

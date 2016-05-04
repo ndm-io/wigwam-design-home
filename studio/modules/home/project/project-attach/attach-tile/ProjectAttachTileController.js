@@ -22,7 +22,19 @@ function ProjectAttachTileController($scope, $timeout, DataFactory) {
     };
 
     $scope.send = function () {
-        DataFactory.project.attachment.attachmentsForProjectGuid($scope.files, $scope.project.guid);
+        DataFactory.project.attachment.attachmentsForProjectGuid($scope.files, $scope.project.guid)
+            .then(function () {
+                console.log('returned from attachments');
+                $timeout(function () {
+                    $scope.files.length = 0;
+                },0);
+            });
+    };
+
+    $scope.remove = function (file) {
+        _.remove($scope.files, function(existingFile) {
+            return file.guid === existingFile.guid;
+        });
     };
 }
 

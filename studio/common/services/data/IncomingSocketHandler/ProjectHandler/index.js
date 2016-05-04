@@ -2,11 +2,13 @@
 
 var types = require('../../../../../../server/config/IOTypes'),
     DesignbriefHandler = require('./DesignbriefHandler'),
+    AttachmentHandler = require('./AttachmentHandler'),
     Address = require('../../../../../common/models/Address');
 
 function projectHandler (SocketFactory, user, cache) {
 
     DesignbriefHandler(SocketFactory, user, cache);
+    AttachmentHandler(SocketFactory, cache);
 
     SocketFactory.on(types.newProject, function (data) {
         cache.newProject(data);

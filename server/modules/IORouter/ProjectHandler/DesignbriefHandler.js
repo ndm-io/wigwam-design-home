@@ -18,8 +18,8 @@ function DesignbriefHandler(io, socket) {
                 project.briefs.push(data.brief);
                 return project.saveProject();
             })
-            .then(function () {
-                io.to(data.projectGuid).emit(types.newDesignbrief, data);
+            .then(function (project) {
+                socket.broadcast.to(project.guid).emit(types.newDesignbrief, data);
             })
             .catch(function (err) {
                 console.log(err);
