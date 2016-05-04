@@ -16,7 +16,10 @@ function AttachmentInterface(sf, cache) {
                     return file.model(projectGuid);
                 });
 
-                sf.emit(types.attachmentsForProjectGuid, {projectGuid: projectGuid, files: objs});
+                sf.emit(types.attachmentsForProjectGuid, {
+                    projectGuid: projectGuid,
+                    files: objs
+                });
 
                 cache.projectWithGuid(projectGuid)
                     .addAttachments(files);

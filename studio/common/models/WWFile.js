@@ -20,8 +20,10 @@ function WWFile(file, onload) {
         Thumbnailer.base64UrlWithUint8Array(self.bytes(), self.type)
             .then(function (base64) {
                 self.thumbnailUri = base64;
-                console.log(base64.length);
                 if (self.onload) self.onload();
+            })
+            .catch(function (err) {
+                console.log(err);
             });
     };
 

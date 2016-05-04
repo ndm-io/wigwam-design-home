@@ -35,6 +35,12 @@ exports.projects = function (socket) {
                     emitter.emit(socket, types.newProject, project);
                 });
 
+                socket.emit(types.dataStart);
+                emitter.drain()
+                    .then(function () {
+                        socket.emit(types.dataEnd);
+                    });
+
             })
             .catch(function (err) {
                 console.log('Error getting projects for user: ', err);

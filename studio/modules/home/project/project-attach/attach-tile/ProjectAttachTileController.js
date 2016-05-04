@@ -24,7 +24,6 @@ function ProjectAttachTileController($scope, $timeout, DataFactory) {
     $scope.send = function () {
         DataFactory.project.attachment.attachmentsForProjectGuid($scope.files, $scope.project.guid)
             .then(function () {
-                console.log('returned from attachments');
                 $timeout(function () {
                     $scope.files.length = 0;
                 },0);

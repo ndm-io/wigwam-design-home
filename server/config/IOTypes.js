@@ -20,6 +20,8 @@ module.exports = {
     updateProjectAddress: 'socket:project:update:address',
     removeProject: 'socket:project:remove',
     updateProject: 'socket:project:update',
+    dataStart: 'socket:data:start',
+    dataEnd: 'socket:data:end',
     projects: 'socket:projects',
     newDesignbrief: 'socket:project:brief:new',
     updateDesignbrief: 'socket:project:brief:update',

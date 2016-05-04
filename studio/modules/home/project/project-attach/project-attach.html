@@ -5,7 +5,7 @@
                 <h2 class="tile-title">Attachments in this project</h2>
                 <div class="row row-horizon" ng-if="project.attachments.length > 0">
 
-                    <div class="col-md-4" ng-repeat="file in project.attachments | orderBy:'-timeStamp'">
+                    <div class="col-md-2" ng-repeat="file in project.attachments | orderBy:'-timeStamp'">
                         <attachment-thumbnail file="file">
                         </attachment-thumbnail>
                     </div>
