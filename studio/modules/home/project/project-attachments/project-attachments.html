@@ -1,10 +1,46 @@
 <div class="block-area">
-    <div class="row">
-        <h2>Attachments</h2>
-    </div>
-    <div class="row" ng-repeat="attachment in project.attachments">
-        <div class="col-md-12">
-            <img ng-src="{{::attachment.url}}"/>
+    <div class="block-area">
+        <div superbox class="photo-gallery tile clearfix">
+            <div class="superbox-list" ng-repeat="attachment in project.attachments">
+                <img ng-src="{{::attachment.thumbnailUri}}" data-img="{{::attachment.fullUrl}}" alt=""
+                     class="superbox-img">
+                <div class="superbox-info">
+                    <h4 class="m-t-20">{{::attachment.name}}</h4>
+                    <p class="m-b-20">
+                        {{::attachment.note}}
+                    </p>
+                    <table class="table">
+                        <tr>
+                            <td>
+                                Note
+                            </td>
+                            <td>
+                                {{::attachment.note}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Filesize
+                            </td>
+                            <td>
+                                {{::attachment.size}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Type
+                            </td>
+                            <td>
+                                {{::attachment.type}}
+                            </td>
+                        </tr>
+                    </table>
+
+                    <a href="" class="btn btn-alt" title="">Launch</a>
+                    <a href="" class="btn btn-alt">More Information</a>
+                </div>
+            </div>
         </div>
+
     </div>
 </div>

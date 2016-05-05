@@ -3,7 +3,7 @@
 var Attacher = require('../Common').attach,
     ProjectModels = require('../../../models/Project'),
     Project = ProjectModels.model('Project'),
-    props = require('../../../models/Project/ProjectSchemaProps').attachment,
+    props = require('../../../models/Project/helpers/ProjectSchemaProps').attachment,
     Attachment = ProjectModels.model('Attachment'),
     types = require('../../../config/IOTypes'),
     _ = require('lodash'),
@@ -16,10 +16,23 @@ var filesToAttachments = function (files) {
 
             var attachment = new Attachment(file);
 
-            attachment.save(function (err) {
-                if (err) reject(err);
-                resolve(attachment);
-            })
+            attachment.computeMetaData()
+                .then(function (attachment) {
+                    console.log('files to attachments', attachment);
+                    return attachment.saveAttachment();
+                })
+                .then(function (attachment) {
+                    resolve(attachment);
+                })
+                .catch(function (err) {
+                    console.log('error in saving attachment', err);
+                    reject(err);
+                });
+
+            //attachment.save(function (err) {
+            //    if (err) reject(err);
+            //    resolve(attachment);
+            //})
         })
     });
 
@@ -38,6 +51,7 @@ module.exports = function (io, socket) {
                     .then(function (attachments) {
 
                         _.each(attachments, function (attachment) {
+                            console.log(attachment);
                             project.attachments.push(attachment);
                         });
 

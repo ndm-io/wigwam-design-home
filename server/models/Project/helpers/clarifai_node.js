@@ -23,7 +23,9 @@ var tagPath = "/v1/tag/";
 var requestTokenPath = "/v1/token";
 var feedbackPath = "/v1/feedback";
 
-var lwip = require('../modules/lwip-promise-wrapper/lwip-promise-wrapper');
+var Promise = require('promise');
+
+var lwip = require('../../../modules/lwip-promise-wrapper/lwip-promise-wrapper');
 
 
 /* handle the common responses to HTTP status codes
@@ -381,7 +383,7 @@ Clarifai.prototype._tagImage = function (image, resultHandler, retry) {
 
         lwip.open(data, type)
             .then(function (image) {
-                return image.aspectResize(500,500);
+                return image.aspectResize(500, 500);
             })
             .then(function (resizedImage) {
                 return resizedImage.toBase64EncodedFormData();
@@ -393,6 +395,66 @@ Clarifai.prototype._tagImage = function (image, resultHandler, retry) {
                 resultHandler(err);
             });
     });
+};
+
+var resultToTags = function (result) {
+
+    var r = result.result.tag;
+    var classes, probs;
+
+    var tags = [];
+
+    if (typeof r.classes[0] != 'string') {
+        classes = r.classes[0];
+        probs = r.probs[0];
+    } else {
+        classes = r.classes;
+        probs = r.probs;
+    }
+
+    for (var i = 0; i < classes.length; i++) {
+        var json = {tag: classes[i], prob: probs[i]};
+        tags.push(json);
+    }
+
+    return tags;
+};
+
+Clarifai.prototype.tagAttachment = function (attachment) {
+
+    var self = this;
+
+    var retry = function () {
+
+    }
+
+    return lwip.open(attachment.arrayBuffer, attachment.dimensions.type)
+        .then(function (image) {
+            return image.aspectResize(500, 500);
+        })
+        .then(function (resizedImage) {
+            return resizedImage.toBase64EncodedFormData();
+        })
+        .then(function (form) {
+
+            return new Promise (function (resolve, reject) {
+                self._httpRequest(tagPath, form, attachment.guid, function (err, res) {
+                    if (err) reject(err);
+                    resolve(res.results);
+                }, retry);
+            });
+
+
+        })
+        .then(function (results) {
+            if (results.length > 0) {
+                var tags = resultToTags(results[0]);
+                attachment.tags = tags;
+            }
+            return attachment;
+        });
+
+
 };
 
 // _feedbackTagsDocids is a private method for adding or removing

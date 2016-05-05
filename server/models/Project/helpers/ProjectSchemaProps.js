@@ -13,5 +13,5 @@ module.exports = {
         'quotes',
         'images',
         'attachments'].join(' '),
-    attachment: 'guid projectGuid name type size timeStamp note thumbnailUri'
+    attachment: 'guid projectGuid name type size timeStamp note thumbnailUri tags'
 };

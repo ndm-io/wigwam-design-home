@@ -1,5 +1,7 @@
 'use strict';
 
+var resizeWidth = require('./CONSTS.js').pdfResizeWidth;
+
 module.exports = function (bytes) {
 
     return PDFJS.getDocument(bytes)
@@ -11,7 +13,7 @@ module.exports = function (bytes) {
             //var scale = 1.5;
             //var viewport = page.getViewport(scale);
 
-            var viewport = page.getViewport(150 / page.getViewport(1.0).width);
+            var viewport = page.getViewport(resizeWidth / page.getViewport(1.0).width);
 
             var canvas = document.createElement('canvas');
             canvas.height = viewport.height;

@@ -3,26 +3,28 @@ var defaultBase64 = require('./defaultBase64'),
     pdfFromUint8Array = require('./PDFFromUint8Array'),
     Promise = require('promise');
 
-var resize = function (base64) {
+var resize = function (mime) {
 
-    return new Promise(function (resolve, reject) {
-        var img = new Image();
-        var canvas = document.createElement('canvas');
-        var ctx = canvas.getContext('2d');
+    return function (base64) {
+        return new Promise(function (resolve, reject) {
 
-        img.onload = function () {
-            var height = 100;
-            var width = height * img.height / img.width;
-            canvas.height = height;
-            canvas.width = width;
+            var origImage = new Image();
 
-            ctx.drawImage(img, 0, 0, 100, width);
-            resolve(canvas.toDataURL());
-        };
-        img.src = base64;
-    });
+            origImage.onload = function () {
+                var cvs = document.createElement('canvas');
+                cvs.width = origImage.naturalWidth;
+                cvs.height = origImage.naturalHeight;
+                var ctx = cvs.getContext("2d").drawImage(origImage, 0, 0);
+                var newImageData = cvs.toDataURL(mime, 0.5);
+                resolve(newImageData);
+            };
+
+            origImage.src = base64
+        });
+    };
 
 };
+
 
 var toDataUri = function (type) {
     return function (encoded) {
@@ -38,7 +40,7 @@ var toDataUri = function (type) {
 var returnCompressedImageType = function (bytes, type) {
     return base64WithUint8Array(bytes)
         .then(toDataUri(type))
-        .then(resize);
+        .then(resize(type));
 };
 
 var returnUncompressedImageType = function (bytes, type) {

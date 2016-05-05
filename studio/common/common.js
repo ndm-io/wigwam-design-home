@@ -39,7 +39,6 @@ module.exports = angular.module('common',
         'monospaced.elastic',
         require('./constants').name,
         require('./directives').name,
-        require('./resources').name,
         require('./services').name
     ]);
 

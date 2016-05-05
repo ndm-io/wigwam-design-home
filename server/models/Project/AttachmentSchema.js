@@ -1,6 +1,15 @@
 'use strict';
 
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    tagSchema = require('./TagSchema');
+
+var ColorThief = require('color-thief');
+var colorThief = new ColorThief();
+var sizeOf = require('image-size');
+
+var Promise = require('promise');
+var attachmentMetaData = require('./helpers/AttachmentMetaData');
+
 
 var attachmentSchema = mongoose.Schema({
     guid: String,
@@ -11,7 +20,32 @@ var attachmentSchema = mongoose.Schema({
     timeStamp: String,
     note: String,
     arrayBuffer: Buffer,
-    thumbnailUri: String
+    thumbnailUri: String,
+    dimensions: {
+        width: {type:Number},
+        height: {type: Number},
+        type: {type: String}
+    },
+    tags: [tagSchema]
 });
+
+attachmentSchema.methods.computeMetaData = function computeMetaData () {
+    var att = this;
+    return attachmentMetaData(att)
+        .then(function (attachment) {
+            console.log('at compute', attachment);
+            return attachment;
+        });
+};
+
+attachmentSchema.methods.saveAttachment = function saveAttachment () {
+    var att = this;
+    return new Promise(function (resolve, reject) {
+        att.save(function (err) {
+            if (err) reject(err);
+            resolve(att);
+        });
+    });
+};
 
 module.exports = attachmentSchema;

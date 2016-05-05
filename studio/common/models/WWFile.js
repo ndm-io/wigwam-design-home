@@ -29,6 +29,8 @@ function WWFile(file, onload) {
 
 
     fileReader.readAsArrayBuffer(file);
+
+    self.initGetters();
 }
 
 
@@ -38,8 +40,20 @@ WWFile.prototype.bytes = function () {
 
 WWFile.prototype.initPrimitives = Base.initPrimitives;
 
+WWFile.prototype.initGetters = function () {
+    var self = this;
+
+    Object.defineProperty(this, 'fullUrl', {
+        get: function () {
+            return self.thumbnailUri;
+        }
+    });
+
+};
+
 WWFile.prototype.initFromJson = function (json) {
     this.initPrimitives(json);
+    this.initGetters();
 };
 
 WWFile.prototype.model = function (projectGuid) {
@@ -54,7 +68,6 @@ WWFile.prototype.model = function (projectGuid) {
         arrayBuffer: this.arrayBuffer
     };
 };
-
 
 
 module.exports = WWFile;

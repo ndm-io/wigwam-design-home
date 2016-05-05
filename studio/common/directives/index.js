@@ -12,7 +12,8 @@ module.exports = angular.module('common.directives', [
         require('./clock-widget').name,
         require('./project-tile').name,
         require('./shortcut-tile').name,
-        require('./progress-bar-horizontal').name
+        require('./progress-bar-horizontal').name,
+        require('./superbox').name
     ])
     .directive('formAutofillFix', require('./formAutofillFix.js'))
     .directive('ukChart', require('./ukChart.js'));

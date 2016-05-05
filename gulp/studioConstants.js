@@ -61,7 +61,8 @@ var paths = {
             './bower_components/domready/ready.js',
             './bower_components/lodash/lodash.js',
             './bower_components/restangular/dist/restangular.js',
-            './bower_components/angular-md/dist/angular-md.min.js'
+            './bower_components/angular-md/dist/angular-md.min.js',
+            './bower_components/angular-superbox/dist/angular-superbox.min.js'
         ],
         dest:'server/public/js'
     },

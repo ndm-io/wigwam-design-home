@@ -1,6 +1,7 @@
 'use strict';
 
 function projectAttachmentsDirective() {
+
     return {
         controller: 'ProjectAttachmentsCtrl',
         controllerAs: 'projectAttachmentsCtrl',

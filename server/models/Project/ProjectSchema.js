@@ -8,11 +8,10 @@ var mongoose = require('mongoose'),
     deepPopulate = require('mongoose-deep-populate')(mongoose),
     roles = require('../../config/constants').ROLES,
     _ = require('lodash'),
-    props = require('./ProjectSchemaProps');
+    props = require('./helpers/ProjectSchemaProps');
 
 var projectSchema = new mongoose.Schema({
     guid: {type: String, default: ''},
-    sha256: {type: String, default: ''},
     createdDate: {type: Date},
     submissionDate: {type: Date},
     acceptedDate: {type: Date},
@@ -43,14 +42,7 @@ var projectSchema = new mongoose.Schema({
     name: {type: String, default: ''},
     description: {type: String, default: ''},
     clients: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    tasks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
-    events: [{type: mongoose.Schema.Types.ObjectId, ref: 'Task'}],
-    messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],
     briefs: [designbriefSchema],
-    products: [{type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
-    invoices: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
-    quotes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Invoice'}],
-    images: [{type: mongoose.Schema.Types.ObjectId, ref: 'Image'}],
     attachments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Attachment'}]
 });
 
@@ -67,7 +59,6 @@ projectSchema.methods.saveProject = function saveProject() {
 projectSchema.methods.hasClient = function hasClient(clientId, callback) {
     var objId = new ObjectId(clientId);
     return this.model('Project')
-        //.find({_id:this._id, clients: { $elemMatch: { _id:objId}}},
         .find({_id: this._id, clients: objId},
             function (err, docs) {
                 var success = (docs.length > 0);
@@ -82,86 +73,6 @@ projectSchema.plugin(deepPopulate, {
         }
     }
 });
-
-projectSchema.methods.addProduct = function addProduct(productJson, userId, done) {
-    var project = this;
-
-    var cb = function (err, product) {
-
-        if (!product || !product._id) {
-            var error = new Error('Product not created');
-            done(error);
-        } else {
-
-            var existing = _.find(project.products, function (p) {
-                return p.guid === product.guid;
-            });
-
-            if (!existing) {
-                project.products.push(product._id);
-            }
-
-            project.save(function (err) {
-                done(err, product);
-            });
-        }
-    };
-
-    mongoose.model('Product').updateProduct(productJson, userId, cb);
-
-};
-
-projectSchema.methods.deleteProducts = function deleteProducts(productsJson, done) {
-    var self = this;
-    async.each(productsJson, function (pJ, callback) {
-        self.products.pull(pJ);
-        callback();
-    }, function (err) {
-        self.save(function (error) {
-            done(error);
-        });
-
-    });
-};
-
-projectSchema.methods.markAllMessagesReadBy = function markAllMessagesReadBy(userId, dateStr, cb) {
-    var projectGuid = this.guid;
-    mongoose.model('Message').find({projectGuid: projectGuid}, function (err, messages) {
-        if (err) {
-            cb(err);
-            return;
-        }
-        async.each(messages, function (message, callback) {
-            message.markReadBy(userId, dateStr, function (err) {
-                callback(err);
-            });
-        }, function (err) {
-            if (err) {
-                cb(errorsFromErr(err));
-                return;
-            }
-            cb();
-        });
-    });
-};
-
-projectSchema.methods.markMessagesRead = function (msgs, userId, dateStr, done) {
-    var Message = mongoose.model('Message');
-    async.each(msgs, function (msg, cb) {
-            Message.findOne({_id: msg._id}, function (err, message) {
-                message.markReadBy(userId, dateStr, function () {
-                });
-                if (err) {
-                    cb(err);
-                } else {
-                    cb();
-                }
-            });
-        }, function (err) {
-            done(err);
-        }
-    );
-};
 
 projectSchema.methods.briefWithGuid = function (briefGuid) {
     var self = this;

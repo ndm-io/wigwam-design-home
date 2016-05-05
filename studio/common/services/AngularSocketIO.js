@@ -10,6 +10,29 @@ var types = require('../../../server/config/IOTypes');
 var ss = require('socket.io-stream');
 //var Buffer = require('buffer').Buffer;
 
+var socketDefaults = function (socket, $rootScope, SessionService, $timeout) {
+
+    var perform = function (obj, key, value) {
+        $timeout(function () {
+            obj[key] = value;
+        },0);
+    };
+
+    socket.on(types.socketId, function (data) {
+        SessionService.user.socketId = data;
+    });
+
+    socket.on(types.dataStart, function () {
+        perform($rootScope, 'loading', true);
+
+    });
+
+    socket.on(types.dataEnd, function () {
+        perform($rootScope, 'loading', false);
+    });
+
+};
+
 var SocketFactory = function ($rootScope, $timeout, SessionService) {
 
     'use strict';
@@ -37,9 +60,7 @@ var SocketFactory = function ($rootScope, $timeout, SessionService) {
                 socket.emit(types.authenticate, {email: user.email, ioToken: user.ioToken});
             });
 
-        socket.on(types.socketId, function (data) {
-            SessionService.user.socketId = data;
-        });
+        socketDefaults(socket, $rootScope, SessionService, $timeout);
 
         var prefix = options.prefix === undefined ? defaultPrefix : options.prefix;
         var defaultScope = options.scope || $rootScope;
