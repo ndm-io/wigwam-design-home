@@ -3,8 +3,9 @@
 var mongoose = require('mongoose');
 
 var tagSchema = new mongoose.Schema({
-    tag: {type: String},
-    prob: {type: Number}
+    "class":[{type: String}],
+    conceptId:[{type:String}],
+    probability:[{type:Number}]
 });
 
 module.exports = tagSchema;

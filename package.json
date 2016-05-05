@@ -97,6 +97,7 @@
     "buffer": "^4.6.0",
     "canvas": "1.3.6",
     "cheerio": "^0.17.0",
+    "clarifai": "^0.4.0",
     "clockwork": "^0.1.1",
     "color-thief": "*",
     "compression": "^1.2.0",

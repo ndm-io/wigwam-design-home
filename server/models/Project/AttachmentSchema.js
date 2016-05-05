@@ -33,7 +33,6 @@ attachmentSchema.methods.computeMetaData = function computeMetaData () {
     var att = this;
     return attachmentMetaData(att)
         .then(function (attachment) {
-            console.log('at compute', attachment);
             return attachment;
         });
 };

@@ -10,13 +10,8 @@ module.exports = {
         return process.env.HOST;
     },
     clarifai: {
-        clientId: process.env.CLARIFAI_CLIENT_ID,
-        clientSecret: process.env.CLARIFAI_CLIENT_SECRET
-    },
-
-    mandrill: {
-        user: process.env.MANDRILL_USER ,
-        password: process.env.MANDRILL_PASSWORD
+        clientId: process.env.CLARIFAI_ID,
+        clientSecret: process.env.CLARIFAI_SECRET
     },
 
     sparkpost: {

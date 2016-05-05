@@ -1,25 +1,39 @@
 'use strict';
 
 var Promise = require('promise'),
-    _ = require('lodash'),
-    Clarifai = require('./clarifai_node'),
-    secrets = require('../../../config/secrets'),
+    Clarifai = require('clarifai'),
     sizeOf = require('image-size');
 
-Clarifai.initAPI(secrets.clarifai.clientId, secrets.clarifai.clientSecret);
+var client = new Clarifai();
 
 var addDimensionMetaData = function (attachment) {
-    var dimensions = sizeOf(attachment.arrayBuffer);
+    //var dimensions = sizeOf(attachment.arrayBuffer);
+    //
+    //attachment.dimensions.width = dimensions.width;
+    //attachment.dimensions.height = dimensions.height;
+    //attachment.dimensions.type = dimensions.type;
+    //
+    //return Promise.resolve(attachment);
+    return new Promise(function (resolve) {
+        var dimensions = sizeOf(attachment.arrayBuffer);
 
-    attachment.dimensions.width = dimensions.width;
-    attachment.dimensions.height = dimensions.height;
-    attachment.dimensions.type = dimensions.type;
+        attachment.dimensions.width = dimensions.width;
+        attachment.dimensions.height = dimensions.height;
+        attachment.dimensions.type = dimensions.type;
 
-    return Promise.resolve(attachment);
+        resolve(attachment);
+    });
 };
 
 var addImageMetaData = function (attachment) {
-    return Clarifai.tagAttachment(attachment);
+
+    return new Promise(function (resolve, reject) {
+        client.tagFromBuffers('image', attachment.arrayBuffer, function (err, results) {
+            if (err) reject(err);
+            attachment.tags = results.tags;
+            resolve(attachment);
+        })
+    });
 };
 
 
