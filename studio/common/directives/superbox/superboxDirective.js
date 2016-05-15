@@ -1,20 +1,36 @@
 'use strict';
 
-require('./superbox');
+require('./superbox.js');
 
+var _ = require('lodash');
 
-function superboxDirective ($timeout) {
+function superboxDirective($timeout, $compile) {
+
+    var superbox = function (scope, el) {
+        jQuery(el).SuperBox({
+            scope: scope,
+            compile: $compile
+        });
+    };
 
     var link = function (scope, el) {
         $timeout(function () {
-            jQuery(el).SuperBox();
-        },10);
+
+            superbox(scope, el);
+            scope.refreshSuperbox = function () {
+                superbox(scope, el);
+            };
+
+        }, 10);
     };
 
     return {
-        link:link
+        link: link,
+        controller:'SuperboxCtrl',
+        controllerAs: 'superboxCtrl',
+        scope: true
     };
 }
 
-superboxDirective.$inject = ['$timeout'];
+superboxDirective.$inject = ['$timeout', '$compile'];
 module.exports = superboxDirective;

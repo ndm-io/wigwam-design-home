@@ -78,9 +78,14 @@
             </ul>
         </li>
         <li>
-            <a class="sa-side-folder" href="file-manager.html">
-                <span class="menu-item">File Manager</span>
+            <a class="sa-side-form" ui-sref="home.projects">
+                <span class="menu-item">Projects</span>
             </a>
+            <ul class="list-unstyled menu-item">
+                <li ng-repeat="project in projects()">
+                    <a ui-sref="home.project.summary({project:project})">{{project.formattedName()}}</a>
+                </li>
+            </ul>
         </li>
         <li>
             <a class="sa-side-calendar" ui-sref="home.calendar">

@@ -2,13 +2,14 @@
     <div class="block-area">
         <div superbox class="photo-gallery tile clearfix">
             <div class="superbox-list" ng-repeat="attachment in project.attachments">
-                <img ng-src="{{::attachment.thumbnailUri}}" data-img="{{::attachment.fullUrl}}" alt=""
+                <img ng-src="{{::attachment.thumbnailUri}}" data-img="{{fullUrlForAttachment(attachment)}}" alt=""
                      class="superbox-img">
                 <div class="superbox-info">
                     <h4 class="m-t-20">{{::attachment.name}}</h4>
                     <p class="m-b-20">
                         {{::attachment.note}}
                     </p>
+
                     <table class="table">
                         <tr>
                             <td>
@@ -34,10 +35,33 @@
                                 {{::attachment.type}}
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                Tags
+                            </td>
+                            <td>
+                                <span ng-repeat="str in attachment.tagStrings()">
+                                    {{::str}} &nbsp;
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Dominant Colours
+                            </td>
+                            <td>
+                                <div class="palette-item"
+                                     ng-repeat="color in attachment.palette"
+                                     style="background-color: {{::color.rgbValue()}}"></div>
+                            </td>
+                        </tr>
                     </table>
-
-                    <a href="" class="btn btn-alt" title="">Launch</a>
-                    <a href="" class="btn btn-alt">More Information</a>
+                    <button superbox-trash-button
+                            id='btn-{{attachment.guid}}'
+                            class='btn btn-alt trash-btn'
+                            click-handler="remove">
+                        Trash
+                    </button>
                 </div>
             </div>
         </div>

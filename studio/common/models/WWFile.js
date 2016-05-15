@@ -1,4 +1,6 @@
 var Base = require('./WWBase'),
+    WWColor = require('./WWColor'),
+    _ = require('lodash'),
     Thumbnailer = require('./Thumbnailer');
 
 function WWFile(file, onload) {
@@ -30,7 +32,6 @@ function WWFile(file, onload) {
 
     fileReader.readAsArrayBuffer(file);
 
-    self.initGetters();
 }
 
 
@@ -39,21 +40,23 @@ WWFile.prototype.bytes = function () {
 };
 
 WWFile.prototype.initPrimitives = Base.initPrimitives;
+WWFile.prototype.initArrayProperty = Base.initArrayProperty;
 
-WWFile.prototype.initGetters = function () {
-    var self = this;
-
-    Object.defineProperty(this, 'fullUrl', {
-        get: function () {
-            return self.thumbnailUri;
-        }
-    });
-
-};
 
 WWFile.prototype.initFromJson = function (json) {
+    this.updateFromJson(json);
+};
+
+WWFile.prototype.updateFromJson = function (json) {
     this.initPrimitives(json);
-    this.initGetters();
+    this.initArrayProperty('palette', json.palette, WWColor);
+    this.tags = json.tags;
+
+    if (json.arrayBuffer) {
+        var uint8Array = new Uint8Array(json.arrayBuffer.data);
+        this.arrayBuffer = uint8Array.buffer;
+    }
+
 };
 
 WWFile.prototype.model = function (projectGuid) {
@@ -67,6 +70,12 @@ WWFile.prototype.model = function (projectGuid) {
         thumbnailUri: this.thumbnailUri,
         arrayBuffer: this.arrayBuffer
     };
+};
+
+WWFile.prototype.tagStrings = function () {
+    return _.map(this.tags, function (tag) {
+        return tag['class'];
+    });
 };
 
 

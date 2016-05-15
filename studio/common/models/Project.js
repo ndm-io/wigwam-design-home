@@ -287,6 +287,34 @@ Project.prototype.addAttachments = function (files) {
     });
 };
 
+Project.prototype.removeAttachment = function (attachment) {
+
+    var attachmentGuid = (typeof attachment === 'string') ? attachment : attachment.guid;
+
+    _.remove(this.attachments, function (file) {
+        return file.guid === attachmentGuid;
+    });
+};
+
+Project.prototype.upsertAttachments = function (jsonArray) {
+    var self = this;
+
+    _.each(jsonArray, function (jsonAttachment) {
+
+        var att = _.find(self.attachments, function (attachment) {
+            return attachment.guid === jsonAttachment.guid;
+        });
+
+        if (att) {
+            att.updateFromJson(jsonAttachment);
+        } else {
+            att = new WWFile();
+            att.initFromJson(jsonAttachment);
+            self.attachments.push(att);
+        }
+
+    });
+};
 
 //Project.prototype.addImage = function (image) {
 //    this.images.push(image);

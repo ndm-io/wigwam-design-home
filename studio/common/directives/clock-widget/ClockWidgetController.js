@@ -21,7 +21,6 @@ var ClockWidgetCtrl = function ($scope, $interval) {
 
     $interval(function () {
         $scope.time = time();
-        console.log($scope.time);
     }, 1000 * 60);
 
 };

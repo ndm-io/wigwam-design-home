@@ -53,7 +53,23 @@ exports.attach = function (socket) {
     return function (event, fn) {
         socket.on(event, function (data) {
             if (!socket.user) return;
-            fn(data);
+
+            if (data.projectGuid) {
+                Project.projectWithGuid(data.projectGuid)
+                    .then(function (project) {
+                        return project.hasClient(socket.user);
+                    })
+                    .then(function () {
+                        fn(data);
+                    })
+                    .catch(function (err) {
+                        console.log('error in locating project', err);
+                    })
+            } else {
+                fn(data);
+            }
+
+
         });
     };
 };

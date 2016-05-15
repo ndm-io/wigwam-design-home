@@ -1,11 +1,8 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    tagSchema = require('./TagSchema');
-
-var ColorThief = require('color-thief');
-var colorThief = new ColorThief();
-var sizeOf = require('image-size');
+    tagSchema = require('./TagSchema'),
+    _ = require('lodash');
 
 var Promise = require('promise');
 var attachmentMetaData = require('./helpers/AttachmentMetaData');
@@ -26,25 +23,42 @@ var attachmentSchema = mongoose.Schema({
         height: {type: Number},
         type: {type: String}
     },
-    tags: [tagSchema]
+    tags: [tagSchema],
+    palette: []
 });
 
-attachmentSchema.methods.computeMetaData = function computeMetaData () {
-    var att = this;
-    return attachmentMetaData(att)
-        .then(function (attachment) {
-            return attachment;
-        });
+
+
+attachmentSchema.statics.computeMetaData = function computeMetaData (attachment) {
+    if (attachment.needsMeta) return attachmentMetaData(attachment);
+    return Promise.resolve(attachment);
 };
+
+var saveAtt = function (attachment) {
+    return new Promise(function (resolve, reject) {
+        attachment.save(function (err) {
+            if (err) {
+                console.log('A saving error in Static method', err);
+                reject(err);
+            }
+            resolve(attachment);
+        });
+    });
+};
+
+var imageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+
+attachmentSchema.virtual('needsMeta').get(function needsMeta () {
+    return _.contains(imageTypes, this.type);
+});
 
 attachmentSchema.methods.saveAttachment = function saveAttachment () {
     var att = this;
-    return new Promise(function (resolve, reject) {
-        att.save(function (err) {
-            if (err) reject(err);
-            resolve(att);
-        });
-    });
+    return saveAtt(att);
+};
+
+attachmentSchema.statics.save = function save (attachment) {
+    return saveAtt(attachment);
 };
 
 module.exports = attachmentSchema;

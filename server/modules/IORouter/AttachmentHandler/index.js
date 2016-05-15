@@ -16,24 +16,18 @@ var filesToAttachments = function (files) {
 
             var attachment = new Attachment(file);
 
-            attachment.computeMetaData()
-                .then(function (attachment) {
-                    console.log('files to attachments', attachment);
-                    return attachment.saveAttachment();
-                })
+            Attachment.save(attachment)
+                .then(Attachment.computeMetaData)
+                .then(Attachment.save)
                 .then(function (attachment) {
                     resolve(attachment);
                 })
                 .catch(function (err) {
-                    console.log('error in saving attachment', err);
+                    console.log('error in filesToAttachemnts', err);
                     reject(err);
                 });
 
-            //attachment.save(function (err) {
-            //    if (err) reject(err);
-            //    resolve(attachment);
-            //})
-        })
+        });
     });
 
     return Promise.all(promises);
@@ -51,7 +45,6 @@ module.exports = function (io, socket) {
                     .then(function (attachments) {
 
                         _.each(attachments, function (attachment) {
-                            console.log(attachment);
                             project.attachments.push(attachment);
                         });
 
@@ -61,20 +54,18 @@ module.exports = function (io, socket) {
 
                             var obj = {};
                             _.each(propertiesRequired, function (property) {
-                                obj[property] = file[property];
+                                if (property !== 'arrayBuffer') {
+                                    obj[property] = file[property];
+                                }
                             });
 
                             return obj;
                         });
-                        socket.broadcast.to(project.guid).emit(types.attachmentsForProjectGuid, {
+
+                        io.to(project.guid).emit(types.attachmentsForProjectGuid, {
                             projectGuid: project.guid,
                             files: files
                         });
-                        //io.to(project.guid).emit(types.attachmentsForProjectGuid, {
-                        //    projectGuid: project.guid,
-                        //    files: files
-                        //});
-
                         return project;
                     });
 
@@ -86,6 +77,15 @@ module.exports = function (io, socket) {
                 console.log('an err occured', err);
             });
 
+    });
 
+    attach(types.removeAttachment, function (data) {
+        Attachment.findOneAndRemove({guid: data.attachmentGuid}, function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                socket.broadcast.to(data.projectGuid).emit(types.removeAttachment, data);
+            }
+        });
     });
 };

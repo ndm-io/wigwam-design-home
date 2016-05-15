@@ -10,6 +10,7 @@
  SuperBox, the lightbox reimagined. Fully responsive HTML5 image galleries.
  */
 
+var _ = require('lodash');
 
 ;(function($) {
 
@@ -37,7 +38,6 @@
                     imgInfo = '';
                 }
 
-
                 superboximg.attr('src', imgData);
 
                 $('.img-info').remove();
@@ -55,7 +55,28 @@
                     scrollTop:superbox.position().top - currentimg.width()
                 }, 'medium');
 
-                $('.superbox-show').append('<div class="img-info media-body">'+ imgInfo +'</div>');
+                var show = $('<div>')
+                    .addClass('img-info media-body')
+                    .append(imgInfo);
+
+                var btns = show.find('.btn');
+
+                _.each(btns, function (btn) {
+                    btn = $(btn);
+                    var fn = options.scope[btn.attr('click-handler')];
+                    $(btn).click(function () {
+                        fn(btn.attr('id').substring(4));
+                    });
+                });
+
+                //var attrs = btn[0].attr('ng-click');
+
+
+
+                $('.superbox-show').append(show);
+
+
+                //$('.superbox-show').append('<div class="img-info media-body">'+ imgInfo +'</div>');
 
             });
 

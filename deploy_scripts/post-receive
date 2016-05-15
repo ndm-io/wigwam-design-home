@@ -1,0 +1,78 @@
+#!/bin/sh
+#
+# from http://javascript.tutorialhorizon.com/2014/08/17/push-to-deploy-a-nodejs-application-using-git-hooks/
+
+
+read prevCommitSHA latestCommitSHA fullbranchName
+
+branch=${fullbranchName##*/}
+
+WEBROOT="/home/rob/sites"
+REPOROOT="/home/rob/repos"
+PROJECT="wigwam-design-coming-soon"
+LOGFILE="$WEBROOT/$PROJECT/post-receive.log"
+DEPLOYDIR=null
+PORT=null
+
+echo "log: $LOGFILE"
+
+##  Record the fact that the push has been received
+echo "Received Push Request at $( date +"%F %T" ) for #branch $branch"  >> $LOGFILE
+
+echo "Checking deployment rules for project:$PROJECT, branch: $branch"
+
+# Log the branch name
+echo "---------------------------Deploy Start-------------------------------------"
+echo "---------------------------Deploy Start-------------------------------------">> $LOGFILE
+echo "--"
+
+if [ $branch = "master" ]
+    then
+    DEPLOYDIR="$WEBROOT/$PROJECT/production"
+    PORT=1234
+fi
+
+if [ $branch = "test" ]
+    then
+    DEPLOYDIR="$WEBROOT/$PROJECT/test"
+    PORT=5678
+fi
+
+if [ $DEPLOYDIR = null ]
+    then
+    echo "Received branch $branch, not deploying."
+    exit
+fi
+
+echo "Deploying to $DEPLOYDIR" >> $LOGFILE
+echo "Deploying to $DEPLOYDIR"
+
+echo "-----> Starting code checkout"  >> $LOGFILE
+echo "-----> Starting code checkout"
+echo "--"
+
+# GIT_WORK_TREE="$DEPLOYDIR" git checkout -f "$branch"
+
+git --work-tree=$DEPLOYDIR --git-dir=$REPOROOT/$PROJECT.git checkout -f
+
+echo "-----> Finished code checkout"  >> $LOGFILE
+echo "-----> Finished code checkout"
+echo "--"
+
+echo "-----> Starting npm install" >> $LOGFILE
+echo "-----> Starting npm install"
+echo "--"
+
+cd "$DEPLOYDIR"
+rm -rf node_modules
+npm install  >> $LOGFILE
+
+echo "-----> Finished npm install"  >> $LOGFILE
+echo "-----> Finished npm install"
+echo "--"
+
+echo "Restart completed at $( date +"%F %T" )"  >> $LOGFILE
+echo "Restart completed at $( date +"%F %T" )"
+
+echo "---------------------------Deploy Complete---------------------------------" >> $LOGFILE
+echo "---------------------------Deploy Complete---------------------------------"

@@ -3,8 +3,6 @@
 
 module.exports = function attachmentThumbnailDirective() {
 
-
-
     return {
         restrict: 'EA',
         scope: {

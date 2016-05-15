@@ -10,6 +10,13 @@
                    title="Summary">
     </shortcut-tile>
 
+    <shortcut-tile sref="home.project.location"
+                   on-src="img/shortcuts/map_pin_located.svg"
+                   off-src="img/shortcuts/map_pin_.svg"
+                   toggle-on="project.hasVerifiedAddress()"
+                   title="Location">
+    </shortcut-tile>
+
     <shortcut-tile sref="home.project.designbrief"
                    on-src="img/shortcuts/design_brief_checked.svg"
                    off-src="img/shortcuts/design_brief.svg"
@@ -32,6 +39,14 @@
                    off-src="img/shortcuts/presentation_empty.svg"
                    toggle-on="project.hasAttachments()"
                    title="Attachments">
+
+    </shortcut-tile>
+
+    <shortcut-tile sref="home.project.attachments"
+                   on-src="img/shortcuts/shopping_cart_empty.svg"
+                   off-src="img/shortcuts/shopping_cart_empty.svg"
+                   toggle-on="project.hasAttachments()"
+                   title="Products">
 
     </shortcut-tile>
 

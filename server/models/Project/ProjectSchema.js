@@ -57,13 +57,40 @@ projectSchema.methods.saveProject = function saveProject() {
 };
 
 projectSchema.methods.hasClient = function hasClient(clientId, callback) {
-    var objId = new ObjectId(clientId);
-    return this.model('Project')
-        .find({_id: this._id, clients: objId},
-            function (err, docs) {
-                var success = (docs.length > 0);
-                callback(success);
+
+    var objId = (typeof clientId === 'string') ? new ObjectId(clientId) : new ObjectId(clientId.id);
+
+    var Project = this.model('Project'),
+        thisId = this._id;
+
+    var query = {_id: thisId};
+
+    if (typeof clientId != 'string' && clientId.role < roles.editor) {
+        query = {clients: user.id};
+    }
+
+    var doFn = function (done, reject) {
+
+        Project.find(query)
+            .limit(1)
+            .deepPopulate(props.project)
+            .exec(function (err, projects) {
+                if (err) reject(err);
+                if (projects.length < 1) reject(new Error('Project not found with that guid'));
+                done(projects[0]);
             });
+    };
+
+    if (callback) {
+        doFn(callback, function (err) {
+            console.log('error checking for client', err);
+        });
+    } else {
+        return new Promise(function (resolve, reject) {
+            doFn(resolve, reject);
+        });
+    }
+
 };
 
 projectSchema.plugin(deepPopulate, {

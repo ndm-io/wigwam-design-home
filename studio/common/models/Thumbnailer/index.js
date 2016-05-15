@@ -48,7 +48,7 @@ var returnUncompressedImageType = function (bytes, type) {
         .then(toDataUri(type));
 };
 
-var base64WithUint8ArrayAndType = function (bytes, type) {
+var _base64WithUint8ArrayAndType = function (bytes, type, compressed) {
 
     var ret;
 
@@ -57,11 +57,13 @@ var base64WithUint8ArrayAndType = function (bytes, type) {
 
         case 'image/jpg':
 
+        case 'image/jpeg':
+
         case 'image/gif':
 
         case 'application/x-photoshop':
         {
-            ret = returnCompressedImageType(bytes, type);
+            ret = (compressed) ? returnCompressedImageType(bytes, type) : returnUncompressedImageType(bytes, type);
             break;
         }
         case 'image/svg+xml':
@@ -86,13 +88,21 @@ var base64WithUint8ArrayAndType = function (bytes, type) {
 
 };
 
+var base64WithUint8ArrayAndType = function (bytes, type) {
+    return _base64WithUint8ArrayAndType(bytes, type, true);
+};
+
 var base64UrlWithUint8Array = function (bytes, type) {
     if (!bytes || bytes.length === 0) type = 'unknown';
     return base64WithUint8ArrayAndType(bytes, type);
 
 };
 
+var uncompressedBase64WithUint8Array = function (bytes, type) {
+    return _base64WithUint8ArrayAndType(bytes, type, false);
+};
 
 module.exports = {
-    base64UrlWithUint8Array: base64UrlWithUint8Array
+    base64UrlWithUint8Array: base64UrlWithUint8Array,
+    uncompressedBase64WithUint8Array: uncompressedBase64WithUint8Array
 };

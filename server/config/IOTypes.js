@@ -28,5 +28,6 @@ module.exports = {
     lockBrief: 'socket:project:brief:lock',
     terms:'socket:terms',
     termsStream:'socket:stream:terms',
-    attachmentsForProjectGuid: 'socket:project:attachments:new'
+    attachmentsForProjectGuid: 'socket:project:attachments:new',
+    removeAttachment: 'socket:project:attachment:remove'
 };

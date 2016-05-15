@@ -72,6 +72,11 @@ var states = {
         template: '<div project-summary-view></div>'
     },
 
+    projectLocation: {
+        name: 'home.project.location',
+        template: '<div project-location-view></div>'
+    },
+
     projectImages: {
         name: 'home.project.attachments',
         template: '<div project-attachments-view></div>'

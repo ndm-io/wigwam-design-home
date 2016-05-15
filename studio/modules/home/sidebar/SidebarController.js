@@ -39,6 +39,10 @@ var SidebarCtrl = function ($scope, $rootScope, SessionService, DataFactory) {
         return DataFactory.project.projects().length;
     };
 
+    vm.projects = function () {
+        return DataFactory.project.projects();
+    };
+
     //$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options) {
     //});
 };

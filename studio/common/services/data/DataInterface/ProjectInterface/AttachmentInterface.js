@@ -27,6 +27,16 @@ function AttachmentInterface(sf, cache) {
                 resolve(objs);
             });
 
+        },
+        removeAttachmentForProjectGuid: function (attachmentGuid, projectGuid) {
+
+            sf.emit(types.removeAttachment, {
+                projectGuid: projectGuid,
+                attachmentGuid: attachmentGuid
+            });
+
+            cache.projectWithGuid(projectGuid)
+                .removeAttachment(attachmentGuid);
         }
     };
 }

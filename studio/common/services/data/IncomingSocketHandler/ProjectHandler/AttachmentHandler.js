@@ -7,7 +7,13 @@ var types = require('../../../../../../server/config/IOTypes'),
 function AttachmentHandler(sf, cache) {
 
     sf.on(types.attachmentsForProjectGuid, function (data) {
-        console.log('new attachments got', data);
+        cache.projectWithGuid(data.projectGuid)
+            .upsertAttachments(data.files);
+    });
+
+    sf.on(types.removeAttachment, function (data) {
+        cache.projectWithGuid(data.projectGuid)
+            .removeAttachment(data.attachmentGuid);
     });
 }
 
