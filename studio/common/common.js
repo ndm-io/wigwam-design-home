@@ -1,6 +1,7 @@
 window.jQuery = window.$ = require('jquery');
 window._ = require('lodash');
 
+require('jquery-ui');
 require('bootstrap');
 require('angular-bootstrap');
 require('angular-ui-switch');
@@ -17,6 +18,8 @@ require('ui-leaflet');
 require('angular-simple-logger');
 require('angular-elastic');
 require('pdfjs-dist');
+require('./calendar.min.js');
+require('angular-ui-calendar');
 
 PDFJS.workerSrc = 'js/bundle.pdf.worker.js';
 
@@ -37,6 +40,7 @@ module.exports = angular.module('common',
         'restangular',
         'yaru22.md',
         'monospaced.elastic',
+        'ui.calendar',
         require('./constants').name,
         require('./directives').name,
         require('./services').name

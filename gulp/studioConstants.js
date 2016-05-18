@@ -57,11 +57,15 @@ var paths = {
             './bower_components/angular-sanitize/angular-sanitize.js',
             './bower_components/angular-ui-router/release/angular-ui-router.js',
             './bower_components/jquery/dist/jquery.js',
+            './bower_components/jquery-ui/jquery-ui.min.js',
             './bower_components/bootstrap/dist/js/bootstrap.js',
             './bower_components/domready/ready.js',
             './bower_components/lodash/lodash.js',
             './bower_components/restangular/dist/restangular.js',
-            './bower_components/angular-md/dist/angular-md.min.js'
+            './bower_components/angular-md/dist/angular-md.min.js',
+            './bower_components/moment/min/moment.min.js',
+            './bower_components/angular-ui-calendar/src/calendar.js'
+
         ],
         dest:'server/public/js'
     },

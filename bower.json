@@ -29,7 +29,9 @@
     "lodash": "~3.10.1",
     "restangular": "~1.5.1",
     "angular-ui-bootstrap": "^1.1.2",
-    "angular-md": "^1.0.0"
+    "angular-md": "^1.0.0",
+    "angular-ui-calendar": "^1.0.1",
+    "jquery-ui": "^1.11.4"
   },
   "homepage": "https://github.com/ndm-io/wigwam-design-home",
   "moduleType": [

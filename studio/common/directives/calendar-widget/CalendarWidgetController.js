@@ -1,14 +1,26 @@
 'use strict';
 
-var CalendarWidgetCtrl = function ($scope) {
+var $ = require('jquery');
 
-    var vm = $scope;
+var CalendarWidgetCtrl = function ($scope, DataFactory) {
 
-    vm.view = function (type) {
-       vm.el.fullCalendar('changeView', type);
-    }
+    $scope.events = DataFactory.events.allEvents;
+
+    var eventRender = function () {
+        return $('<td>').css('background-color', 'rgba(5,5,5,0.5)');
+    };
+
+
+    $scope.uiConfig = {
+        calendar: {
+            editable: false,
+            eventRender: eventRender
+        }
+    };
+
+    $scope.eventSources = [$scope.events];
 
 };
 
-CalendarWidgetCtrl.$inject = ['$scope'];
+CalendarWidgetCtrl.$inject = ['$scope', 'DataFactory'];
 module.exports = CalendarWidgetCtrl;

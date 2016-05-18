@@ -2,17 +2,20 @@
 
 var ChatInterface = require('./ChatInterface'),
     ProjectInterface = require('./ProjectInterface'),
-    TermsInterface = require('./TermsInterface');
+    TermsInterface = require('./TermsInterface'),
+    EventsInterface = require('./EventsInterface');
 
 var DataInterface = function (SocketFactory, cache) {
     var chat = ChatInterface(SocketFactory, cache),
         project = ProjectInterface(SocketFactory, cache),
-        terms = TermsInterface(SocketFactory, cache);
+        terms = TermsInterface(SocketFactory, cache),
+        events = EventsInterface(SocketFactory, cache);
 
     return {
         chat: chat,
         project: project,
-        terms: terms
+        terms: terms,
+        events: events
     };
 
 };
