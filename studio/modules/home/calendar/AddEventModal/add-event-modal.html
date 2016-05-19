@@ -3,13 +3,54 @@
 </div>
 <div class="modal-body">
 
-    <ul>
-        <li ng-repeat="project in projects">{{project.formattedName()}}</li>
-    </ul>
+    <div class="row m-t-20 m-b-20">
+        <div class="col-md-12">
+            <div class="shortcut-area">
 
-    <pre>
-        {{newEvent}}
-    </pre>
+                <a ng-repeat="project in projects"
+                   class="shortcut tile {{classForProject(project)}}"
+                   ng-click="choose(project)">
+                    <img src="img/shortcuts/project.svg" alt="">
+                    <small class="t-overflow">{{project.formattedName()}}</small>
+                </a>
+
+
+            </div>
+        </div>
+    </div>
+
+    <hr class="whiter m-b-20"/>
+
+    <div class="row m-t-20 m-b-20">
+        <div class="col-md-6">
+            <uib-timepicker ng-model="newEvent.start"
+                            ng-change="changed()"
+                            hour-step="1"
+                            minute-step="15"
+                            show-meridian="false">
+
+            </uib-timepicker>
+        </div>
+        <div class="col-md-6">
+            <uib-timepicker ng-model="newEvent.end"
+                            ng-change="changed()"
+                            hour-step="1"
+                            minute-step="15"
+                            show-meridian="false">
+
+            </uib-timepicker>
+        </div>
+
+    </div>
+
+    <hr class="whiter m-b-20"/>
+
+    <div class="row m-t-20 m-b-20">
+        <input ng-model="newEvent.title"
+               type="text"
+               class="form-control m-b-10"
+               placeholder="Event title">
+    </div>
 
 </div>
 <div class="modal-footer">

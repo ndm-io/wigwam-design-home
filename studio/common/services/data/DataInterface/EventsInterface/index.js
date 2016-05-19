@@ -45,10 +45,17 @@ module.exports = function EventsInterface(sf, cache) {
         callback(mockAllEvents);
     };
 
+    var addEventToProjectGuid = function (projectGuid, event) {
+        cache.projectWithGuid(projectGuid)
+            .addEvent(event);
+        _events.push(event);
+    };
+
     var eventInterface = {
         hasEventsForDate: hasEventsForDate,
         eventsForDate: eventsForDate,
-        eventSource: eventSource
+        eventSource: eventSource,
+        addEventToProjectGuid: addEventToProjectGuid
     };
 
     Object.defineProperty(eventInterface, 'allEvents', {

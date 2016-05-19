@@ -5,7 +5,7 @@ var CONSTS = require('../../../common/directives/EventConsts'),
 
 var CalendarController = function ($scope, DataFactory, uiCalendarConfig, $uibModal) {
 
-    $scope.events = DataFactory.events.allEvents;
+    //$scope.events = DataFactory.events.allEvents;
 
     var month = new Date().getMonth();
     $scope.viewedEvents = _.filter($scope.events, function (event) {
@@ -38,7 +38,6 @@ var CalendarController = function ($scope, DataFactory, uiCalendarConfig, $uibMo
     };
 
     var dayClick = function (date) {
-        //var projects = $scope.projects;
         var modalInstance = $uibModal.open({
             animation: true,
             template: require('./AddEventModal/add-event-modal.html'),
@@ -55,7 +54,8 @@ var CalendarController = function ($scope, DataFactory, uiCalendarConfig, $uibMo
         });
 
         modalInstance.result.then(function (newEvent) {
-            console.log(newEvent);
+            DataFactory.events.addEventToProjectGuid(newEvent.projectGuid, newEvent);
+            console.log($scope.projects);
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
         });
@@ -75,7 +75,7 @@ var CalendarController = function ($scope, DataFactory, uiCalendarConfig, $uibMo
         }
     };
 
-    $scope.eventSources = [$scope.events];
+    $scope.eventSources = [DataFactory.events.allEvents];
 
     var filter = function (calendar) {
         var view = uiCalendarConfig.calendars[calendar].fullCalendar('getView');
