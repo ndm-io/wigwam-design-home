@@ -1,87 +1,63 @@
 <h4 class="page-title">CALENDAR</h4>
 
+<div ng-if="projects.length > 0">
+    <!-- Shortcuts -->
+    <div class="block-area shortcut-area">
+        <a class="shortcut tile"
+           ng-repeat="project in projects"
+           ui-sref="home.project({project: project})">
+            <img src="img/shortcuts/project.svg" alt="">
+            <small class="t-overflow">{{project.formattedName()}}</small>
+
+        </a>
+    </div>
+
+
+    <hr class="whiter"/>
+
+    <div class="block-area">
+
+        <div class="row m-b-20">
+
+            <div class="col-md-12">
+                <ul class="calendar-actions list-inline clearfix">
+                    <li class="p-r-0">
+                        <a ng-click="changeView('mainCalendar', 'month')" href class="tooltips" title="Month">
+                            <i class="sa-list-month"></i>
+                        </a>
+                    </li>
+                    <li class="p-r-0">
+                        <a ng-click="changeView('mainCalendar', 'agendaWeek')" href class="tooltips" title="Week">
+                            <i class="sa-list-week"></i>
+                        </a>
+                    </li>
+                    <li class="p-r-0">
+                        <a ng-click="changeView('mainCalendar', 'agendaDay')" href class="tooltips" title="Day">
+                            <i class="sa-list-day"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12 clearfix m-t-20">
+                <div class="fc-admin"
+                     calendar="mainCalendar"
+                     ui-calendar="uiConfig.calendar"
+                     ng-model="eventSources"></div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
 <div class="block-area">
-
-    <div class="row m-b-20">
-
-        <div class="col-md-8">
-            <ul class="calendar-actions list-inline clearfix">
-                <li class="p-r-0">
-                    <a ng-click="changeView('mainCalendar', 'month')" href class="tooltips" title="Month">
-                        <i class="sa-list-month"></i>
-                    </a>
-                </li>
-                <li class="p-r-0">
-                    <a ng-click="changeView('mainCalendar', 'agendaWeek')" href class="tooltips" title="Week">
-                        <i class="sa-list-week"></i>
-                    </a>
-                </li>
-                <li class="p-r-0">
-                    <a ng-click="changeView('mainCalendar', 'agendaDay')" href class="tooltips" title="Day">
-                        <i class="sa-list-day"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-    </div>
-
-    <div class="row">
-
-        <div class="col-md-8 clearfix m-t-20">
-            <div class="fc-admin"
-                 calendar="mainCalendar"
-                 ui-calendar="uiConfig.calendar"
-                 ng-model="eventSources"></div>
-        </div>
-
-        <div class="col-md-4">
-            <h4 class="m-l-5">Upcoming Events</h4>
-            <div class="listview narrow">
-
-                <div class="media p-l-5" ng-repeat="event in events">
-                    <div class="media-body">
-                        <small class="text-muted">{{event.start | date:'dd-MM-yyyy HH:mm'}}</small>
-                        <br>
-                        <a class="t-overflow" href="">{{event.title}}</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-<!-- Add event -->
-<div class="modal fade" id="addNew-event">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Add an Event</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-validation" role="form">
-                    <div class="form-group">
-                        <label for="eventName">Event Name</label>
-                        <input type="text" class="input-sm form-control validate[required]" id="eventName"
-                               placeholder="...">
-                    </div>
-
-                    <input type="hidden" id="getStart"/>
-                    <input type="hidden" id="getEnd"/>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-                <input type="submit" class="btn btn-info btn-sm" id="addEvent" value="Add Event">
-                <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+    <div ng-if="projects.length == 0">
+        <no-projects></no-projects>
     </div>
 </div>
 
-
-<br/><br/>

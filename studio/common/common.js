@@ -3,7 +3,7 @@ window._ = require('lodash');
 
 require('jquery-ui');
 require('bootstrap');
-require('angular-bootstrap');
+require('angular-ui-bootstrap');
 require('angular-ui-switch');
 require('angular-ui-router');
 require('angular-animate');

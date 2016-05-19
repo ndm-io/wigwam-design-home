@@ -56,7 +56,6 @@ module.exports = function EventsInterface(sf, cache) {
             return _events;
         },
         set: function (events) {
-            console.log('setting events', events);
             _events = events;
         }
     });

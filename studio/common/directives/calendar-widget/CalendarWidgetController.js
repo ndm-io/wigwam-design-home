@@ -1,8 +1,9 @@
 'use strict';
 
-var $ = require('jquery');
+var $ = require('jquery'),
+    CONSTS = require('../EventConsts');
 
-var CalendarWidgetCtrl = function ($scope, DataFactory) {
+var CalendarWidgetCtrl = function ($scope, DataFactory, $rootScope) {
 
     $scope.events = DataFactory.events.allEvents;
 
@@ -10,11 +11,16 @@ var CalendarWidgetCtrl = function ($scope, DataFactory) {
         return $('<td>').css('background-color', 'rgba(5,5,5,0.5)');
     };
 
+    var dayClick = function (date) {
+        $rootScope.$broadcast(CONSTS.calendarChangeDay, date);
+    };
+
 
     $scope.uiConfig = {
         calendar: {
             editable: false,
-            eventRender: eventRender
+            eventRender: eventRender,
+            dayClick: dayClick
         }
     };
 
@@ -22,5 +28,5 @@ var CalendarWidgetCtrl = function ($scope, DataFactory) {
 
 };
 
-CalendarWidgetCtrl.$inject = ['$scope', 'DataFactory'];
+CalendarWidgetCtrl.$inject = ['$scope', 'DataFactory', '$rootScope'];
 module.exports = CalendarWidgetCtrl;
