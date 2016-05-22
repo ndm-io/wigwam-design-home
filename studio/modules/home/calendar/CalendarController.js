@@ -5,13 +5,6 @@ var CONSTS = require('../../../common/directives/EventConsts'),
 
 var CalendarController = function ($scope, DataFactory, uiCalendarConfig, $uibModal) {
 
-    //$scope.events = DataFactory.events.allEvents;
-
-    var month = new Date().getMonth();
-    $scope.viewedEvents = _.filter($scope.events, function (event) {
-            return (event.start.getMonth() === month);
-        });
-
     var mainCalendar = 'mainCalendar';
 
     var eventClick = function (event) {
@@ -30,12 +23,6 @@ var CalendarController = function ($scope, DataFactory, uiCalendarConfig, $uibMo
         console.log('resize', event);
     };
 
-    var viewRender = function () {
-        var evts = uiCalendarConfig.calendars[mainCalendar].fullCalendar('clientEvents', filter(mainCalendar));
-        if (evts && evts.length > 0) {
-            $scope.viewedEvents = evts;
-        }
-    };
 
     var dayClick = function (date) {
         var modalInstance = $uibModal.open({
@@ -55,7 +42,8 @@ var CalendarController = function ($scope, DataFactory, uiCalendarConfig, $uibMo
 
         modalInstance.result.then(function (newEvent) {
             DataFactory.events.addEventToProjectGuid(newEvent.projectGuid, newEvent);
-            console.log($scope.projects);
+            uiCalendarConfig.calendars[mainCalendar].fullCalendar('refetchEvents');
+
         }, function () {
             console.log('Modal dismissed at: ' + new Date());
         });
@@ -70,21 +58,12 @@ var CalendarController = function ($scope, DataFactory, uiCalendarConfig, $uibMo
             eventRender: eventRender,
             eventDrop: eventDrop,
             eventResize: eventResize,
-            viewRender: viewRender,
+            //viewRender: viewRender,
             dayClick: dayClick
         }
     };
 
-    $scope.eventSources = [DataFactory.events.allEvents];
-
-    var filter = function (calendar) {
-        var view = uiCalendarConfig.calendars[calendar].fullCalendar('getView');
-        var start = view.visStart;
-        var end   = view.visEnd;
-        return function (e) {
-            return (e.start >= start && e.start <= end)
-        };
-    };
+    $scope.eventSources = [DataFactory.events.eventSource];
 
     $scope.changeView = function (calendar, view) {
         uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);

@@ -8,23 +8,39 @@ function AddEventController($scope, $uibModalInstance, date, projects) {
     var h = new Date().getHours();
 
     var start = new Date(y, m, d);
-    start.setHours(h);
+    start.setHours(h + 1);
 
     var end = new Date(y, m, d);
-    end.setHours(h + 1);
+    end.setHours(h + 2);
+
+    var defaultProjectGuid = function () {
+        return projects[projects.length - 1].guid;
+    };
+
+    var selectedProjectGuid = defaultProjectGuid();
 
     $scope.newEvent = {
         start: start,
         end: end,
         title: '',
-        projectGuid: projects[0].guid,
+        projectGuid: defaultProjectGuid(),
         editable: true,
         allDay: false
     };
 
     $scope.projects = projects;
 
-    var selectedProjectGuid = projects[0];
+    $scope.title = function () {
+        return (selectedProjectGuid) ? 'Add event to Project' : 'Select a project for this event';
+    };
+
+    $scope.changed = function () {
+        var event = $scope.newEvent;
+        if (event.start.getTime() > event.end.getTime()) {
+            event.end.setHours(event.start.getHours() + 1);
+            event.end = new Date(event.end);
+        }
+    };
 
     $scope.classForProject = function (project) {
         return (selectedProjectGuid === project.guid) ? 'calendar-add-event-project-selected' : '';
